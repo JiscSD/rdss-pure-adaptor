@@ -1,9 +1,18 @@
+import abc
 
-
-class BasePureDownloadManager(object):
-
-    """Docstring for PureDownloadManager. """
+class BasePureDownloadManager(abc.ABC):
 
     def __init__(self):
         """TODO: to be defined1. """
+
+    @abc.abstractproperty
+    def temp_dir(self):
+
         
+    @abc.abstractmethod
+    def download_file(self, url, file_name):
+        """
+
+        :returns: string
+        """
+        pass

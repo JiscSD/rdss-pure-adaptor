@@ -1,6 +1,8 @@
 import tempfile
 import os
 
+from pure.base import BasePureDownloadManager
+
 
 class PureDownloadManager(object):
     
