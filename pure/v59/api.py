@@ -2,9 +2,10 @@ import requests
 import collections
 import certifi
 import urllib
-from pure.models import PureDataset
 
-class PureAPI(object):
+from pure.base import BasePureAPI
+
+class PureAPI(BasePureAPI):
 
     """Abstraction over the Pure API v5.9"""
 
@@ -106,9 +107,9 @@ class PureAPI(object):
         response = self._get(url, *args, **kwargs)
         return response.json() 
 
-    def _streaming_download(self, url, dest, *args, **kwargs):
+    def download_file(self, url, dest, *args, **kwargs):
         """ Wrapper around the get method to use for streaming download
-            of files. .
+            of files.
 
         :url: TODO
         :dest: TODO
@@ -153,13 +154,8 @@ class PureAPI(object):
         endpoint = "/datasets/{uuid}".format(uuid=uuid)
         return self._get_json(self._create_url(endpoint))
 
-    def get_dataset_files(self, url_dest_pairs):
-        """  
+    def changed_datasets(self, changed_condition):
+        pass
 
-        """
-        downloaded_files = []
-        for dest, url in url_dest_pairs:
-            self._streaming_download(url, dest)
-            downloaded_files.append(dest)
-        return downloaded_files
-        
+
+

@@ -1,0 +1,30 @@
+
+File:
+    fileIdentifier, documentURL
+    fileDateCreated, created
+    fileRights, (RIGHTS)
+    filehasMimeType, documentType
+
+Object:
+    objectTitle, 'title[0].value'
+    objectDescription, description
+    objectKeywords, keywords
+    objectResourceType, documentType
+    objectRelatedIdentifier, relatedResearchOutputsLink
+
+Person:
+    personIdentifier, id
+    personFirstName, firstName
+    personSecondName, lastName
+    personOrganisationalUnit, organisationalUnitsValue
+
+
+Rights:
+    licence, documentLicense
+    Licence:
+        licenceName, documentLicenseValue 
+        licenceIdentifier, documentLicenseURI
+    Access:
+        accessType: visibility
+        accessStatement: visibilityValue
+        

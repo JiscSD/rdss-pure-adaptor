@@ -1,6 +1,6 @@
 
 
-class PureDownloadManager(object):
+class BasePureDownloadManager(object):
 
     """Docstring for PureDownloadManager. """
 

@@ -2,17 +2,28 @@ import abc
 
 class BasePureDataset(abc.ABC):
 
-    """ An Abstract Base Class for interactions with PURE APIs """
+    @abc.abstractproperty
+    def doi_upload_key(self):
+        """ The DOI for this dataset if available, or another key in the 
+            format "no_doi/<header_identifier>"
+        :returns: TODO
 
-    def __init__(self):
-        """TODO: to be defined1. """
-        abc.ABC.__init__(self)
-
-    def documents(self):
+        """
         pass
 
-    def doi(self):
+    @abc.abstractproperty
+    def original_metadata(self):
+        """ The original metadata that this class is instantiated from 
+            for upload as original_pure_metadata.json.
+        :returns: string
+
+        """
         pass
 
-    def metadata(self):
+    @abc.abstractproperty
+    def rdss_canonical_metadata(self):
+        """ The metadata for this dataset mapped to the schema from the 
+            canonical data model.
+        :returns: string
+        """
         pass

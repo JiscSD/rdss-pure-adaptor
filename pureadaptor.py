@@ -1,18 +1,18 @@
-from pure import PureAPI, PureDataset
+from pure import versioned_pure_interface
 import urllib
-from canonical_data_model import PureToRDSSCanonicalDataModel
-
 
 url = 'https://riswebtest.st-andrews.ac.uk/ws/api/59/'
 api_key = 'f39e70b7-c2b2-48a2-8175-92ccc6978128'
 
 test_object_id = '83957a84-2186-4c14-8e55-f961a19ec9a9'
 
-pure_api = PureAPI(url, api_key)
 
+pure = versioned_pure_interface('v59')
+pure_api = pure.API(url, api_key)
+download_manager = pure.DownloadManager(pure_api) 
 dataset_json = pure_api.get_dataset(test_object_id)
 
-dataset = PureDataset(dataset_json)
+dataset = pure.Dataset(dataset_json)
 
 def ws_url_remap(pure_data_url):
     """ Modifies a data location url to be http and /portal rather than /ws """
@@ -22,14 +22,13 @@ def ws_url_remap(pure_data_url):
     url_parts[0] = 'http'
     return urllib.parse.urlunsplit(url_parts)
 
-doc_down_paths = [(fs_path, ws_url_remap(url)) 
-    for fs_path, url in dataset.document_download_paths()]
+remapped_urls = [(ws_url_remap(url), file_name) for url, file_name
+                in dataset.documents()]
 
-# Download dataset
-dataset_files = pure_api.get_dataset_files(doc_down_paths)
+downloaded_files = [download_manager.download_file(*doc) for doc in remapped_urls] 
 
 # Create path structure from DOI
-
+datasets = pure_api.list_all_datasets()
 
 # Upload data, metadata and original_metadata
 

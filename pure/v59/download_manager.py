@@ -1,10 +1,12 @@
 import tempfile
+import os
 
 
 class PureDownloadManager(object):
     
     def __init__(self, pure_api):
         self._pure_api = pure_api
+        self._temp_dir = None
 
     @property
     def temp_dir(self):
@@ -15,3 +17,12 @@ class PureDownloadManager(object):
             self._temp_dir = tempfile.TemporaryDirectory()
         return self._temp_dir.name
 
+    def _document_temp_path(self, file_name):
+        """ Constructs a path within the temp_dir for a given file. 
+            """
+        return os.path.join(self.temp_dir, file_name)
+
+    def download_file(self, url, file_name):
+        dest = self._document_temp_path(file_name)
+        self._pure_api.download_file(url, dest)
+        return dest

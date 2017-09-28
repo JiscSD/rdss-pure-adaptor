@@ -3,16 +3,20 @@ import abc
 class BasePureAPI(abc.ABC):
 
     """ An Abstract Base Class for interactions with PURE APIs """
-
-    def list_changed_datasets():
+    
+    @abc.abstractmethod
+    def changed_datasets():
         pass
 
+    @abc.abstractmethod
     def list_all_datasets():
         pass
 
+    @abc.abstractmethod
     def get_dataset():
         pass
 
-    def get_dataset_file():
+    @abc.abstractmethod
+    def download_file(self, url, dest):
         pass
 
