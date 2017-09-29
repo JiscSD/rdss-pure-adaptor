@@ -1,6 +1,6 @@
 {
   objectUuid: '', 
-  objectTitle: title.value || title[].value,
+  objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
         personIdentifier: id,
@@ -11,46 +11,69 @@
       role: personRole.value
     },
   objectDescription: description.value,
-  objectRights: [
-    {
+  objectRights: @[].{
       rightsStatement: '',
       rightsHolder: '',
-      licence: documentLicense[*].{
-          licenceName: value,
-          licenceIdentifier: uri
-        },
-      access: [
-        {
+      licence: @[].{
+          licenceName: '',
+          licenceIdentifier: ''
+          },
+      access: @[].{
           accessType: '',
           accessStatement: ''
         }
-      ] 
-    }
-  ],
-  objectDate: [
-    {
+    },
+  objectDate: @[].{
       dateValue: '',
       dateType: ''
-    }
-  ],
+    },
   objectKeywords: keywordGroups[].keywords[].value,
   objectCategory: '',
   objectResourceType: '',
   objectValue: '',
-  objectIdentifier: [
-    {
+  objectIdentifier: @[].{
       identifierValue: '', 
       identifierType: '', 
       relationType: ''
     }
-  ],
   objectRelatedIdentifier: '',
-  objectOrganisationRole: [
-    {
+  objectOrganisationRole: @[].{
       organisation: '', 
       role: ''
     }
-  ],
   objectPreservationEvent: '',
-  objectFile: ''
+  objectFile: documents[*].{
+    fileUUID: '', 
+    fileIdentifier: url, 
+    fileName: '', 
+    fileSize: '', 
+    fileLabel: '', 
+    fileDateCreated: created, 
+    fileRights: @[].{
+      rightsStatement: '',
+      rightsHolder: '',
+      licence: documentLicense[*].{
+        licenceName: value, 
+        licenceIdentifier: uri
+      },
+      access: visibility[*].{
+        accessType: value, 
+        accessStatement: ''
+      },
+    },
+    fileChecksum: '', 
+    fileFormatType: '',
+    fileCompositionLevel: '', 
+    filehasMimeType: documentType.value, 
+    fileDate: '', 
+    filePUID: '', 
+    fileUse: '', 
+    preservationEvent: '',
+    uploadStatus: '',
+    storageStatus: '',
+    fileSoftware: '',
+    fileEquipment: '',
+    fileLastDownloaded: '',
+    fileTechnicalAttributes: '',
+  }
 }
