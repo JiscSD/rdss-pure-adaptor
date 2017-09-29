@@ -1,7 +1,14 @@
 import requests
 import os
+from pure.base import BasePureDataset
+from pure.base import JSONRemapper
 
-class PureDataset(object):
+with open(os.path.join(os.path.dirname(__file__), 'research_object_mapping.txt'), 'r') as config_in:
+    mapper_config = config_in.read()
+
+pure_to_canonical_mapper = JSONRemapper(mapper_config)
+
+class PureDataset(BasePureDataset):
 
     """Abstraction around the dataset responses from the Pure API.
         """
@@ -12,23 +19,28 @@ class PureDataset(object):
             """
         self._dataset_json = dataset_json
 
-    def _document_info(self, document_json):
-        """ Extracts the url and file name for a document 
+    def _file_info(self, file_json):
+        """ Extracts the url and file name for a file. 
             """
-        title = document_json.get('title')
-        url = document_json.get('url')
+        title = file_json.get('title')
+        url = file_json.get('url')
         return url, title
+
+    @property
+    def doi_upload_key(self):
+        return self._dataset_json.get('doi', "") 
     
     @property
-    def metadata(self):
+    def original_metadata(self):
         """ """
         return self._dataset_json
+
+    @property
+    def rdss_canonical_metadata(self):
+        return pure_to_canonical_mapper.remap(self._dataset_json) 
         
     @property
-    def doi(self):
-        return self._dataset_json.get('doi', "") 
-
-    def documents(self):
-        return [self._document_info(doc_obj) for doc_obj in 
+    def files(self):
+        return [self._file_info(file_json) for file_json in 
                 self._dataset_json.get('documents')]
             

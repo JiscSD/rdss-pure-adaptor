@@ -6,7 +6,7 @@ class BasePureDataset(abc.ABC):
     def doi_upload_key(self):
         """ The DOI for this dataset if available, or another key in the 
             format "no_doi/<header_identifier>"
-        :returns: TODO
+        :returns: string
 
         """
         pass
@@ -25,5 +25,12 @@ class BasePureDataset(abc.ABC):
         """ The metadata for this dataset mapped to the schema from the 
             canonical data model.
         :returns: string
+        """
+        pass
+
+    @abc.abstractproperty
+    def files(self):
+        """ A list of urls and file names for all files in this dataset. 
+        :returns: [(string,string),]
         """
         pass

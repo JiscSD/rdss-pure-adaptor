@@ -7,6 +7,7 @@ class BasePureDownloadManager(abc.ABC):
 
     @abc.abstractproperty
     def temp_dir(self):
+        pass
 
         
     @abc.abstractmethod

@@ -1,0 +1,55 @@
+{
+  "objectUuid": , 
+  "objectTitle": ,
+  "objectPersonRole": [
+    {
+      "person": {}, 
+      "role": 
+    }
+  ],
+  "objectDescription": ,
+  "objectRights": [
+    {
+      "rightsStatement": ,
+      "rightsHolder": ,
+      "licence": [
+        {
+          "licenceName": ,
+          "licenceIdentifier": 
+        }
+      ],
+      "access": [
+        {
+          "accessType": ,
+          "accessStatement": 
+        }
+      ] 
+    }
+  ],
+  "objectDate": [
+    {
+      "dateValue":
+      "dateType":
+    }
+  ],
+  "objectKeywords": ,
+  "objectCategory": ,
+  "objectResourceType": ,
+  "objectValue": ,
+  "objectIdentifier": [
+    {
+      "identifierValue": , 
+      "identifierType": , 
+      "relationType": 
+    }
+  ],
+  "objectRelatedIdentifier": ,
+  "objectOrganisationRole": [
+    {
+      "organisation": {}, 
+      "role":
+    }
+  ],
+  "objectPreservationEvent": ,
+  "objectFile": 
+}
