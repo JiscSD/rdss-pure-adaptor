@@ -28,7 +28,11 @@ class PureDataset(BasePureDataset):
 
     @property
     def doi_upload_key(self):
-        return self._dataset_json.get('doi', "") 
+        doi_key = self._dataset_json.get('doi') 
+        if not doi_key:
+            alternate_key = self._dataset_json.get('uuid')
+            doi_key = "no_doi/{}".format(alternate_key)
+        return doi_key.strip()
     
     @property
     def original_metadata(self):

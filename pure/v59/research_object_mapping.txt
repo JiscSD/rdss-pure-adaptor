@@ -11,36 +11,15 @@
       role: personRole.value
     },
   objectDescription: description.value,
-  objectRights: @[].{
-      rightsStatement: '',
-      rightsHolder: '',
-      licence: @[].{
-          licenceName: '',
-          licenceIdentifier: ''
-          },
-      access: @[].{
-          accessType: '',
-          accessStatement: ''
-        }
-    },
-  objectDate: @[].{
-      dateValue: '',
-      dateType: ''
-    },
+  objectRights: '',
+  objectDate: '',
   objectKeywords: keywordGroups[].keywords[].value,
   objectCategory: '',
   objectResourceType: '',
   objectValue: '',
-  objectIdentifier: @[].{
-      identifierValue: '', 
-      identifierType: '', 
-      relationType: ''
-    }
+  objectIdentifier: '',
   objectRelatedIdentifier: '',
-  objectOrganisationRole: @[].{
-      organisation: '', 
-      role: ''
-    }
+  objectOrganisationRole: '',
   objectPreservationEvent: '',
   objectFile: documents[*].{
     fileUUID: '', 
@@ -49,9 +28,9 @@
     fileSize: '', 
     fileLabel: '', 
     fileDateCreated: created, 
-    fileRights: @[].{
+    fileRights: [@.{
       rightsStatement: '',
-      rightsHolder: '',
+      rightsHolder: ''
       licence: documentLicense[*].{
         licenceName: value, 
         licenceIdentifier: uri
@@ -59,12 +38,12 @@
       access: visibility[*].{
         accessType: value, 
         accessStatement: ''
-      },
-    },
+      }
+    }],
     fileChecksum: '', 
     fileFormatType: '',
     fileCompositionLevel: '', 
-    filehasMimeType: documentType.value, 
+    filehasMimeType: documentType[0].value, 
     fileDate: '', 
     filePUID: '', 
     fileUse: '', 
@@ -74,6 +53,6 @@
     fileSoftware: '',
     fileEquipment: '',
     fileLastDownloaded: '',
-    fileTechnicalAttributes: '',
+    fileTechnicalAttributes: ''
   }
 }

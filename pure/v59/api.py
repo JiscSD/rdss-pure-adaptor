@@ -4,6 +4,7 @@ import certifi
 import urllib
 
 from pure.base import BasePureAPI
+from .models import PureDataset
 
 class PureAPI(BasePureAPI):
 
@@ -142,7 +143,7 @@ class PureAPI(BasePureAPI):
             cont, items = self._response_items(json_response, items, continue_func)
             next_url = self._navigation_links(json_response).get('next')
 
-        return items
+        return [PureDataset(dataset_json) for dataset_json in items]
 
     def get_dataset(self, uuid):
         """ Get the metadata object for a single dataset.
@@ -152,7 +153,8 @@ class PureAPI(BasePureAPI):
 
         """
         endpoint = "/datasets/{uuid}".format(uuid=uuid)
-        return self._get_json(self._create_url(endpoint))
+        dataset_json = self._get_json(self._create_url(endpoint))
+        return PureDataset(dataset_json)
 
     def changed_datasets(self, changed_condition):
         pass
