@@ -38,7 +38,7 @@ def main():
     if not api_key:
         raise ValueError("An API key is required to communicate with the PURE API")
     upload_bucket = args.get('--upload_bucket', 'testdata.researchdata.alpha.jisc.ac.uk')
-    bucket_prefix = args.get('--bucket_prefix', 'pure_st_andrews')
+    bucket_prefix = args.get('--bucket_prefix', 'unsorted/pure_st_andrews')
 
     pure = versioned_pure_interface(api_version)
     pure_api = pure.API(api_url, api_key)

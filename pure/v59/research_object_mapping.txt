@@ -6,9 +6,9 @@
         personIdentifier: id,
         personFirstName: name.firstName,
         personSecondName: name.lastName, 
-        personOrganisationalUnit: organisationalUnits[0].name.value
+        personOrganisationalUnit: organisationalUnits[].name[].value
         },
-      role: personRole.value
+      role: personRole[0].value
     },
   objectDescription: description.value,
   objectRights: '',
