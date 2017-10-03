@@ -1,6 +1,6 @@
 aspy.yaml==0.3.0
 boto3==1.4.7
-botocore==1.7.18
+botocore==1.7.21
 cached-property==1.3.1
 certifi==2017.7.27.1
 chardet==3.0.4
@@ -9,9 +9,9 @@ identify==1.0.6
 idna==2.6
 jmespath==0.9.3
 nodeenv==1.2.0
-objectpath==0.5
-pkg-resources==0.0.0
 pre-commit==1.1.2
+py==1.4.34
+pytest==3.2.2
 python-dateutil==2.6.1
 PyYAML==3.12
 requests==2.18.4

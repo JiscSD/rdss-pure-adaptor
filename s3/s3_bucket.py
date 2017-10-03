@@ -1,8 +1,8 @@
 import boto3
 import os
-import logging
 import json
 import io
+
 
 class BucketUploader(object):
 
@@ -15,16 +15,16 @@ class BucketUploader(object):
     def _build_key(self, prefix, file_name):
         if self._top_level_prefix:
             return os.path.join(
-                    self._top_level_prefix, 
-                    prefix, 
-                    os.path.basename(file_name)
-                    )
+                self._top_level_prefix,
+                prefix,
+                os.path.basename(file_name)
+            )
         else:
             return os.path.join(
-                    prefix, 
-                    os.path.basename(file_name)
-                    )
-    
+                prefix,
+                os.path.basename(file_name)
+            )
+
     @property
     def bucket(self):
         if not self._bucket:
@@ -42,4 +42,3 @@ class BucketUploader(object):
         key = self._build_key(prefix, file_name)
         json_data = io.BytesIO(json.dumps(json_obj, indent=2).encode('utf-8'))
         self.bucket.upload_fileobj(json_data, key)
-

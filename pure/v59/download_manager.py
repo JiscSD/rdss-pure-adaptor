@@ -4,15 +4,15 @@ import os
 from pure.base import BasePureDownloadManager
 
 
-class PureDownloadManager(object):
-    
+class PureDownloadManager(BasePureDownloadManager):
+
     def __init__(self, pure_api):
         self._pure_api = pure_api
         self._temp_dir = None
 
     @property
     def temp_dir(self):
-        """ Initialises a temporary directory to store data files from this 
+        """ Initialises a temporary directory to store data files from this
             dataset.
             """
         if not self._temp_dir:
@@ -20,7 +20,7 @@ class PureDownloadManager(object):
         return self._temp_dir.name
 
     def _document_temp_path(self, file_name):
-        """ Constructs a path within the temp_dir for a given file. 
+        """ Constructs a path within the temp_dir for a given file.
             """
         return os.path.join(self.temp_dir, file_name)
 

@@ -1,11 +1,11 @@
 {
-  objectUuid: '', 
+  objectUuid: '',
   objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
         personIdentifier: id,
         personFirstName: name.firstName,
-        personSecondName: name.lastName, 
+        personSecondName: name.lastName,
         personOrganisationalUnit: organisationalUnits[].name[].value
         },
       role: personRole[0].value
@@ -22,31 +22,31 @@
   objectOrganisationRole: '',
   objectPreservationEvent: '',
   objectFile: documents[*].{
-    fileUUID: '', 
-    fileIdentifier: url, 
-    fileName: '', 
-    fileSize: '', 
-    fileLabel: '', 
-    fileDateCreated: created, 
+    fileUUID: '',
+    fileIdentifier: url,
+    fileName: '',
+    fileSize: '',
+    fileLabel: '',
+    fileDateCreated: created,
     fileRights: [@.{
       rightsStatement: '',
       rightsHolder: ''
       licence: documentLicense[*].{
-        licenceName: value, 
+        licenceName: value,
         licenceIdentifier: uri
       },
       access: visibility[*].{
-        accessType: value, 
+        accessType: value,
         accessStatement: ''
       }
     }],
-    fileChecksum: '', 
+    fileChecksum: '',
     fileFormatType: '',
-    fileCompositionLevel: '', 
-    filehasMimeType: documentType[0].value, 
-    fileDate: '', 
-    filePUID: '', 
-    fileUse: '', 
+    fileCompositionLevel: '',
+    filehasMimeType: documentType[0].value,
+    fileDate: '',
+    filePUID: '',
+    fileUse: '',
     preservationEvent: '',
     uploadStatus: '',
     storageStatus: '',

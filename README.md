@@ -7,12 +7,12 @@
 > This section should describe what the new service is.
 
 ### Language / Framework
-> E.g. 
+> E.g.
 > - Python 3.6+
 > - Flask
 
 ### Service Infrastructure
- 
+
  > E.g. Supported environments
  > - dev
  > - uat

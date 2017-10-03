@@ -3,6 +3,7 @@ import json
 import jsonschema
 import sys
 
+
 def the_great_filter(json):
 
     def _dict_iter(item):
@@ -15,17 +16,17 @@ def the_great_filter(json):
 
     def _list_iter(items):
         return [_or(i) for i in items]
-        
 
     def _or(item):
         if type(item) == list:
-            return _list_iter(item) 
+            return _list_iter(item)
         if type(item) == dict:
             return _dict_iter(item)
         else:
             return item
 
     return _or(json)
+
 
 def open_json(path):
     with open(path, 'r') as json_in:
@@ -45,14 +46,14 @@ def main():
         datasets = [pure.Dataset(p) for p in input_json]
     else:
         datasets = [pure.Dataset(input_json)]
-    
+
     cdm_datasets = []
     for ds in datasets:
         filtered_json = the_great_filter(ds.rdss_canonical_metadata)
         jsonschema.validate(filtered_json, json_schema)
         cdm_datasets.append(filtered_json)
 
-    with open("CDM_st_andrews.json", "w") as json_out:
+    with open('CDM_st_andrews.json', 'w') as json_out:
         json_out.write(json.dumps(cdm_datasets, indent=2))
 
 

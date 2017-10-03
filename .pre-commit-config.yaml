@@ -1,0 +1,35 @@
+
+- repo: https://github.com/kintoandar/pre-commit.git
+  sha: v0.0.2
+  hooks:
+  - id: terraform_validate
+
+- repo: https://github.com/antonbabenko/pre-commit-terraform.git
+  sha: v1.1.0
+  hooks:
+  - id: terraform_fmt
+
+- repo: git://github.com/pre-commit/pre-commit-hooks
+  sha: v0.9.5
+  hooks:
+  - id: check-added-large-files
+  - id: check-case-conflict
+  - id: check-json
+  - id: check-merge-conflict
+  - id: check-yaml
+  - id: debug-statements
+    language_version: "python3.6"
+  - id: detect-private-key
+  - id: double-quote-string-fixer
+  - id: end-of-file-fixer
+  - id: forbid-new-submodules
+  - id: requirements-txt-fixer
+  - id: trailing-whitespace
+  - id: flake8
+    language_version: "python3.6"
+
+- repo: git://github.com/pre-commit/mirrors-autopep8
+  sha: v1.3
+  hooks:
+  - id: autopep8
+    language_version: "python3.6"

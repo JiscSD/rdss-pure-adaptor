@@ -1,9 +1,10 @@
 import abc
 
+
 class BasePureAPI(abc.ABC):
 
     """ An Abstract Base Class for interactions with PURE APIs """
-    
+
     @abc.abstractmethod
     def changed_datasets():
         pass
@@ -19,4 +20,3 @@ class BasePureAPI(abc.ABC):
     @abc.abstractmethod
     def download_file(self, url, dest):
         pass
-
