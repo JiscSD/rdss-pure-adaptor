@@ -35,3 +35,10 @@ class BasePureDataset(abc.ABC):
         :returns: [(string,string),]
         """
         pass
+
+    @abc.abstractproperty
+    def modified_date(self):
+        """ The last updated date for the dataset as a python datetime object.
+        : returns: datetime.datetime
+        """
+        pass

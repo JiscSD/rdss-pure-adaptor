@@ -1,5 +1,6 @@
 import requests
 import urllib
+import dateutil.parser
 
 from pure.base import BasePureAPI
 from .models import PureDataset
@@ -18,6 +19,12 @@ class PureAPI(BasePureAPI):
         self._split_endpoint_url = urllib.parse.urlsplit(endpoint_url)
         self._api_key = api_key
 
+    def _to_dataset(self, dataset_json):
+        """ Initialise a PureDataset from dataset json, binding this instance
+            of the PureAPI to it for use by the PureDownloadManager.
+            """
+        return PureDataset(dataset_json, self)
+
     def _create_path(self, path):
         path_parts = self._split_endpoint_url[2].split('/')
         path_parts.extend(path.split('/'))
@@ -30,7 +37,6 @@ class PureAPI(BasePureAPI):
         :returns: TODO
 
         """
-
         url_parts = [
             self._split_endpoint_url[0],
             self._split_endpoint_url[1],
@@ -75,7 +81,7 @@ class PureAPI(BasePureAPI):
         new_items = json_dict.get('items', list())
         cont = True
         if cont_func:
-            filtered_new_items = filter(cont_func, new_items)
+            filtered_new_items = list(filter(cont_func, new_items))
             if len(filtered_new_items) != len(new_items):
                 new_items = filtered_new_items
                 cont = False
@@ -127,7 +133,7 @@ class PureAPI(BasePureAPI):
     def list_all_datasets(self, size=20, order='-modified', cont_func=None):
         """ List the metadata objects for all datasets.
             Defaults to most recently modified objects first.
-        :returns: TODO
+        :returns: [PureDataset]
 
         """
         endpoint = '/datasets'
@@ -144,18 +150,27 @@ class PureAPI(BasePureAPI):
                 json_response, items, cont_func)
             next_url = self._navigation_links(json_response).get('next')
 
-        return [PureDataset(dataset_json) for dataset_json in items]
+        return [self._to_dataset(dataset_json) for dataset_json in items]
 
     def get_dataset(self, uuid):
         """ Get the metadata object for a single dataset.
 
         :uuid: String: ID of the dataset
-        :returns: TODO
+        :returns: PureDataset
 
         """
         endpoint = '/datasets/{uuid}'.format(uuid=uuid)
         dataset_json = self._get_json(self._create_url(endpoint))
-        return PureDataset(dataset_json)
+        return self._to_dataset(dataset_json)
 
-    def changed_datasets(self, changed_condition):
-        pass
+    def changed_datasets(self, since_datetime):
+        """ List the metadata objects for all datasets that have been modified
+            since the provided datetime.
+        :since_datetime: DateTime
+        :returns: [PureDataset]
+        """
+        def changed_since(dataset_json):
+            updated = dataset_json.get('info').get('modifiedDate')
+            return dateutil.parser.parse(updated) > since_datetime
+
+        return self.list_all_datasets(cont_func=changed_since)
