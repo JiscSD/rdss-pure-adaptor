@@ -16,8 +16,12 @@ class PureAPI(BasePureAPI):
         :api_key: The api key provided for authentication
 
         """
+        self._endpoint_url = endpoint_url
         self._split_endpoint_url = urllib.parse.urlsplit(endpoint_url)
         self._api_key = api_key
+
+    def __str__(self):
+        return 'Pure REST API v5.9: {}'.format(self._endpoint_url)
 
     def _to_dataset(self, dataset_json):
         """ Initialise a PureDataset from dataset json, binding this instance

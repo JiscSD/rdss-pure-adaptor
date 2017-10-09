@@ -39,6 +39,10 @@ class PureDataset(BasePureDataset):
             self._download_manager = PureDownloadManager(pure_api_instance)
         self._dataset_json = dataset_json
         self.local_files = []
+        self.local_file_checksums = {}  # Attached by a checksum generator
+
+    def __str__(self):
+        return 'PureDataset: {}'.format(self.uuid)
 
     def query_dataset_json(self, query):
         return jmespath.search(query, self._dataset_json)

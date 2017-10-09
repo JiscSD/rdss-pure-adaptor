@@ -1,6 +1,4 @@
 from pure import versioned_pure_interface
-from dataset_hash import DatasetHasher
-from dynamodb import AdaptorStateStore
 
 environment = 'local_pure_test'
 pure = versioned_pure_interface('v59')
@@ -29,28 +27,19 @@ datasets = pure_api.list_all_datasets()
 # Get the most recent of the changed datasets and create highwater mark
 # from that.
 
-
-def dataset_for_state_store(dataset):
-    return {
-        'uuid': dataset.uuid,
-        'date_modified': dataset.modified_date.isoformat(),
-        'dataset_watched_fields': {
-            'title': dataset.query_dataset_json('title[0].value'),
-            'files': dataset.file_checksums,
-        }
-    }
+datasets.sort(key=lambda ds: ds.modified_date, reverse=True)
+print(datasets[0].modified_date)
 
 
-state_store = AdaptorStateStore(environment)
+# state_store = AdaptorStateStore(environment)
 
-hashr = DatasetHasher()
-for ds in datasets:
-    ds_info = state_store.get_dataset_info(ds.uuid)
-    watched_fields = ds_info.get('dataset_watched_fields')
+# hashr = DatasetHasher()
+# for ds in datasets:
+#    ds_info = state_store.get_dataset_info(ds.uuid)
+#    watched_fields = ds_info.get('dataset_watched_fields')
 
-    """
-    if ds.files:
-        ds.download_files()
-        ds.file_checksums = hashr.file_checksums(ds)
-        ds_info = dataset_for_state_store(ds)
-        state_store.put_dataset_info(ds_info)"""
+#    if ds.files:
+#        ds.download_files()
+#        ds.file_checksums = hashr.file_checksums(ds)
+#        ds_info = dataset_for_state_store(ds)
+#        state_store.put_dataset_info(ds_info)"""
