@@ -167,14 +167,17 @@ class PureAPI(BasePureAPI):
         dataset_json = self._get_json(self._create_url(endpoint))
         return self._to_dataset(dataset_json)
 
-    def changed_datasets(self, since_datetime):
+    def changed_datasets(self, since_datetime=None):
         """ List the metadata objects for all datasets that have been modified
-            since the provided datetime.
+            since the provided datetime. If no datetime object is provided then
+            will default to listing all the datasets.
         :since_datetime: DateTime
         :returns: [PureDataset]
         """
         def changed_since(dataset_json):
             updated = dataset_json.get('info').get('modifiedDate')
             return dateutil.parser.parse(updated) > since_datetime
-
-        return self.list_all_datasets(cont_func=changed_since)
+        if since_datetime:
+            return self.list_all_datasets(cont_func=changed_since)
+        else:
+            return self.list_all_datasets()
