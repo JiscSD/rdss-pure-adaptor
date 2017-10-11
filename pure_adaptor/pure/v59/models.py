@@ -7,11 +7,8 @@ from pure.base import JSONRemapper
 
 from .download_manager import PureDownloadManager
 
-with open(os.path.join(os.path.dirname(__file__),
-                       'research_object_mapping.txt'), 'r') as config_in:
-    mapper_config = config_in.read()
-
-pure_to_canonical_mapper = JSONRemapper(mapper_config)
+pure_to_canonical_mapper = JSONRemapper(
+        os.path.join(os.path.dirname(__file__), 'research_object_mapping.txt'))
 
 
 def ws_url_remap(pure_data_url):

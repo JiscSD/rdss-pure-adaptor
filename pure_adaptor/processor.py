@@ -3,18 +3,21 @@ from pure import versioned_pure_interface
 from adaptor.s3_bucket import BucketUploader
 from adaptor.checksum import ChecksumGenerator
 from adaptor.state_storage import AdaptorStateStore, DatasetState
+from adaptor.messages import MetadataCreate, MetadataUpdate
 
 logger = logging.getLogger(__name__)
 
 
 class PureAdaptor(object):
 
-    def __init__(self, api_version, api_url, api_key, s3_bucket):
+    def __init__(self, api_version, api_url, api_key, environment):
+        self.environment = environment
+
         self.instance_info = '{}'.format(api_version)
         self.pure = versioned_pure_interface(api_version)
         self.pure_api = pure.API(api_url, api_key)
         self.state_store = AdaptorStateStore(environment)
-        self.upload_manager = BucketUploader(upload_bucket, bucket_prefix)
+        self.upload_manager = BucketUploader(environment)
         self.checksum_gen = DatasetHasher()
 
     def _poll_for_changed_datasets():
@@ -43,13 +46,12 @@ class PureAdaptor(object):
         prev_dataset_state = state_store.get_dataset_state(dataset.uuid)
 
         if dataset_state == prev_dataset_state:
-            # UPDATE
-            print('UPDATE')
-
+            message_creator = MetadataUpdate(self.environment)
         else:
-            # CREATE
-            print('CREATE')
+            message_creator = MetadataCreate(self.environment)
 
+        message = message_creator.generate(dataset.rdss_canonical_metadata)
+        
         return dataset_state
 
     def _upload_dataset(dataset):

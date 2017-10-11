@@ -1,3 +1,5 @@
+import json
+
 from .message_header import RDSSMessageHeader
 
 
@@ -7,17 +9,24 @@ class BaseRDSSMessage:
         self._header = RDSSMessageHeader(environment)
 
     def generate(self, payload):
-        message_header = self._header(
+        message_header = self._header.generate(
             self.message_class,
             self.message_type,
         )
 
         message = {
-            'messageHeader': self._header.generate(),
+            'messageHeader': message_header,
             'messageBody': payload
         }
 
+        return json.dumps(message) 
+
 
 class MetadataCreate(BaseRDSSMessage):
-    message_class = 'MetadataCreate'
+    message_class = 'Event'
     message_type = 'MetadataCreate'
+
+
+class MetadataUpdate(BaseRDSSMessage):
+    message_class = 'Event'
+    message_type = 'MetadataUpdate'
