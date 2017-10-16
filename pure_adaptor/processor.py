@@ -1,6 +1,7 @@
 import logging
 from pure import versioned_pure_interface
 from adaptor.s3_bucket import BucketUploader
+from adaptor.kinesis_client import KinesisClient
 from adaptor.checksum import ChecksumGenerator
 from adaptor.state_storage import AdaptorStateStore, DatasetState
 from adaptor.messages import MetadataCreate, MetadataUpdate
@@ -10,27 +11,38 @@ logger = logging.getLogger(__name__)
 
 class PureAdaptor(object):
 
-    def __init__(self, api_version, api_url, api_key, environment):
-        self.environment = environment
+    def __init__(self,
+                 api_version,
+                 api_url,
+                 api_key,
+                 instance_id,
+                 input_queue,
+                 invalid_queue,
+                 error_queue,
+                 region
+                 ):
 
+        self.instance_id = instance_id
         self.instance_info = '{}'.format(api_version)
+        self.kinesis_client = KinesisClient(input_queue, invalid_queue,
+                                            error_queue)
         self.pure = versioned_pure_interface(api_version)
-        self.pure_api = pure.API(api_url, api_key)
-        self.state_store = AdaptorStateStore(environment)
-        self.upload_manager = BucketUploader(environment)
-        self.checksum_gen = DatasetHasher()
+        self.pure_api = self.pure.API(api_url, api_key)
+        self.state_store = AdaptorStateStore(instance_id)
+        self.upload_manager = BucketUploader(instance_id)
+        self.checksum_gen = ChecksumGenerator()
 
-    def _poll_for_changed_datasets():
+    def _poll_for_changed_datasets(self):
         """ Scrape the API for datasets that have changed since the last time
             the adaptor was run.
             :returns: [PureDataset]
             """
-        latest_date = self.state_store.latest_modified_date()
-        changed_datasets = pure_api.changed_datasets(last_datetime)
+        latest_datetime = self.state_store.latest_modified_date()
+        changed_datasets = self.pure_api.changed_datasets(latest_datetime)
         changed_datasets.sort(key=lambda ds: ds.modified_date)
         return changed_datasets
 
-    def _process_dataset(dataset):
+    def _process_dataset(self, dataset):
         """ Undertakes the processing of a single dataset, managing all data
             download and upload, as well as sending messages to the appropriate
             stream.
@@ -42,19 +54,21 @@ class PureAdaptor(object):
         dataset.local_file_checksums = self.checksum_gen.file_checksums(
             dataset)
         self._upload_dataset(dataset)
-        dataset_state = StoredDatasetData.create_from_dataset(dataset)
-        prev_dataset_state = state_store.get_dataset_state(dataset.uuid)
+        dataset_state = DatasetState.create_from_dataset(dataset)
+        prev_dataset_state = self.state_store.get_dataset_state(dataset.uuid)
 
         if dataset_state == prev_dataset_state:
-            message_creator = MetadataUpdate(self.environment)
+            message_creator = MetadataUpdate(self.instance_id)
         else:
-            message_creator = MetadataCreate(self.environment)
+            message_creator = MetadataCreate(self.instance_id)
 
         message = message_creator.generate(dataset.rdss_canonical_metadata)
-        
+
+        self.kinesis_client.put_record(message)
+
         return dataset_state
 
-    def _upload_dataset(dataset):
+    def _upload_dataset(self, dataset):
         """ Effects the upload of dataset files and associated metadata to the
             appropriate S3 bucket for retrieval by other RDSS components.
             :dataset: PureDataset
@@ -80,7 +94,9 @@ class PureAdaptor(object):
             """
         self.state_store.update_latest(latest_dataset_state)
 
-    def run():
+    def run(self):
+        """ Runs the adaptor.
+            """
 
         changed_datasets = self._poll_for_changed_datasets()
 

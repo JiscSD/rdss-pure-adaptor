@@ -1,4 +1,3 @@
-import json
 import re
 import uuid
 import datetime
@@ -62,8 +61,8 @@ class RDSSMessageHeader(object):
             $
             ''', re.VERBOSE | re.IGNORECASE)
 
-    def __init__(self, environment):
-        self._machine_id = environment
+    def __init__(self, instance_id):
+        self._machine_id = instance_id
         self._machine_address = self._get_machine_ip()
 
     def _get_machine_ip(self):

@@ -1,5 +1,6 @@
 import jmespath
 
+
 class JSONRemapper(object):
 
     """ To effect the remapping of data in one JSON format to another using a
