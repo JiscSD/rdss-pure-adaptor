@@ -6,9 +6,11 @@ from pure.base import BasePureDataset
 from pure.base import JSONRemapper
 
 from .download_manager import PureDownloadManager
+from .checksum import ChecksumGenerator
 
 pure_to_canonical_mapper = JSONRemapper(
     os.path.join(os.path.dirname(__file__), 'research_object_mapping.txt'))
+checksum_generator = ChecksumGenerator()
 
 
 def ws_url_remap(pure_data_url):
@@ -36,7 +38,7 @@ class PureDataset(BasePureDataset):
             self._download_manager = PureDownloadManager(pure_api_instance)
         self._dataset_json = dataset_json
         self.local_files = []
-        self.local_file_checksums = {}  # Attached by a checksum generator
+        self.local_file_checksums = {}
 
     def __str__(self):
         return 'PureDataset: {}'.format(self.uuid)
@@ -50,6 +52,22 @@ class PureDataset(BasePureDataset):
         file_name = file_json.get('title')
         url = ws_url_remap(file_json.get('url'))
         return url, file_name
+
+    def _update_with_local_data(self, canonical_metadata):
+        """ Updates fields in the canonical data model with data that
+            has been generated locally and was not available through 
+            the Pure API. 
+            """
+        object_files = canonical_metadata.get('objectFile')
+        if not object_files:
+            return canonical_metadata
+        else:
+            new_object_files = []
+            for obj_file in object_files:
+                obj_file['fileChecksum'] = self.local_file_checksums.get(
+                        obj_file['fileName'])
+            canonical_metadata['objectFile'] = new_object_files
+            return canonical_metadata
 
     @property
     def doi_upload_key(self):
@@ -65,7 +83,8 @@ class PureDataset(BasePureDataset):
 
     @property
     def rdss_canonical_metadata(self):
-        return pure_to_canonical_mapper.remap(self._dataset_json)
+        metadata = pure_to_canonical_mapper.remap(self._dataset_json)
+        return self._update_with_local_data(metadata)
 
     @property
     def files(self):
@@ -86,3 +105,4 @@ class PureDataset(BasePureDataset):
             self.local_files.append(
                 self._download_manager.download_file(url, file_name)
             )
+        self.local_file_checksums = checksum_generator.file_checksums(self)

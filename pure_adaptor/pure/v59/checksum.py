@@ -41,6 +41,8 @@ class ChecksumGenerator(object):
             return checksum_dict
 
         for f_path in dataset.local_files:
+            logger.info('Generating %s checksum for %s',
+                        self.hasher().name, f_path)
             path_hash = self._hash_file(f_path)
             file_name = os.path.basename(f_path)
             checksum_dict[file_name] = path_hash

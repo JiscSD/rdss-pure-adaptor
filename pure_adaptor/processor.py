@@ -2,7 +2,6 @@ import logging
 from pure import versioned_pure_interface
 from adaptor.s3_bucket import BucketUploader
 from adaptor.kinesis_client import KinesisClient
-from adaptor.checksum import ChecksumGenerator
 from adaptor.state_storage import AdaptorStateStore, DatasetState
 from adaptor.messages import MetadataCreate, MetadataUpdate
 
@@ -19,18 +18,16 @@ class PureAdaptor(object):
                  input_queue,
                  invalid_queue,
                  error_queue,
-                 region
-                 ):
+                 region):
 
         self.instance_id = instance_id
-        self.instance_info = '{}'.format(api_version)
+        self.api_version = api_version
         self.kinesis_client = KinesisClient(input_queue, invalid_queue,
                                             error_queue)
         self.pure = versioned_pure_interface(api_version)
         self.pure_api = self.pure.API(api_url, api_key)
         self.state_store = AdaptorStateStore(instance_id)
         self.upload_manager = BucketUploader(instance_id)
-        self.checksum_gen = ChecksumGenerator()
 
     def _poll_for_changed_datasets(self):
         """ Scrape the API for datasets that have changed since the last time
@@ -51,8 +48,6 @@ class PureAdaptor(object):
             """
 
         dataset.download_files()
-        dataset.local_file_checksums = self.checksum_gen.file_checksums(
-            dataset)
         self._upload_dataset(dataset)
         dataset_state = DatasetState.create_from_dataset(dataset)
         prev_dataset_state = self.state_store.get_dataset_state(dataset.uuid)
@@ -78,7 +73,7 @@ class PureAdaptor(object):
 
         self.upload_manager.upload_json_obj(
             dataset.doi_upload_key,
-            'original_pure{}_metadata.json'.format(self.instance_info),
+            'original_pure{}_metadata.json'.format(self.api_version),
             dataset.original_metadata
         )
         self.upload_manager.upload_json_obj(
