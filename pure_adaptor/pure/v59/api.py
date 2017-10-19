@@ -1,9 +1,12 @@
 import requests
 import urllib
 import dateutil.parser
+import logging
 
 from pure.base import BasePureAPI
 from .models import PureDataset
+
+logger = logging.getLogger(__name__)
 
 
 class PureAPI(BasePureAPI):
@@ -114,6 +117,7 @@ class PureAPI(BasePureAPI):
 
         """
         kwargs = self._update_headers(kwargs, {'Accept': 'application/json'})
+        logger.info('Getting json response from %s.', url)
         response = self._get(url, *args, **kwargs)
         return response.json()
 
@@ -178,6 +182,9 @@ class PureAPI(BasePureAPI):
             updated = dataset_json.get('info').get('modifiedDate')
             return dateutil.parser.parse(updated) > since_datetime
         if since_datetime:
+            logger.info('Getting all datasets updated since %s from %s.',
+                        since_datetime, self._endpoint_url)
             return self.list_all_datasets(cont_func=changed_since)
         else:
+            logger.info('Getting all datasets from %s.', self._endpoint_url)
             return self.list_all_datasets()

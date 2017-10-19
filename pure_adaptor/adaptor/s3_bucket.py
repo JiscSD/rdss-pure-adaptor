@@ -46,6 +46,7 @@ class BucketUploader(object):
         """ Attempts to upload the provided file to the s3 bucket.
             """
         key = self._build_key(prefix, source_file)
+        logger.info('Uploading %s to %s.', source_file, key)
         with open(source_file, 'rb') as data:
             self.bucket.upload_fileobj(data, key)
 
@@ -53,5 +54,6 @@ class BucketUploader(object):
         """ Attempts to upload a json object to the s3 bucket.
             """
         key = self._build_key(prefix, file_name)
+        logger.info('Uploading json object to %s.', key)
         json_data = io.BytesIO(json.dumps(json_obj, indent=2).encode('utf-8'))
         self.bucket.upload_fileobj(json_data, key)

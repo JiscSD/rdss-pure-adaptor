@@ -22,7 +22,8 @@ class PureAdaptor(object):
 
         self.instance_id = instance_id
         self.api_version = api_version
-        self.kinesis_client = KinesisClient(input_queue, invalid_queue,
+        self.kinesis_client = KinesisClient(input_queue,
+                                            invalid_queue,
                                             error_queue)
         self.pure = versioned_pure_interface(api_version)
         self.pure_api = self.pure.API(api_url, api_key)
@@ -34,7 +35,7 @@ class PureAdaptor(object):
             the adaptor was run.
             :returns: [PureDataset]
             """
-        latest_datetime = self.state_store.latest_modified_date()
+        latest_datetime = self.state_store.latest_modified_datetime()
         changed_datasets = self.pure_api.changed_datasets(latest_datetime)
         changed_datasets.sort(key=lambda ds: ds.modified_date)
         return changed_datasets
@@ -97,7 +98,7 @@ class PureAdaptor(object):
 
         if not changed_datasets:
             logger.info(
-                'No new datasets available from {}, exiting.', self.pure_api)
+                'No new datasets available from %s, exiting.', self.pure_api)
 
         else:
             for dataset in changed_datasets:

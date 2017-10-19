@@ -1,7 +1,10 @@
 import tempfile
 import os
+import logging
 
 from pure.base import BasePureDownloadManager
+
+logger = logging.getLogger(__name__)
 
 
 class PureDownloadManager(BasePureDownloadManager):
@@ -26,5 +29,6 @@ class PureDownloadManager(BasePureDownloadManager):
 
     def download_file(self, url, file_name):
         dest = self._document_temp_path(file_name)
+        logger.info('Downloading %s to %s', url, dest)
         self._pure_api.download_file(url, dest)
         return dest

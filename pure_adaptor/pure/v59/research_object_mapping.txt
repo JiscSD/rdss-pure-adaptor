@@ -10,17 +10,17 @@
         },
       role: personRole[0].value
     },
-  objectDescription: description.value,
-  objectRights: '',
-  objectDate: '',
-  objectKeywords: keywordGroups[].keywords[].value,
-  objectCategory: '',
+  objectDescription: description.value || '',
+  objectRights: `[]`,
+  objectDate: `[]`,
+  objectKeywords: keywordGroups[].keywords[].value || `[]`,
+  objectCategory: `[]`,
   objectResourceType: '',
   objectValue: '',
-  objectIdentifier: '',
-  objectRelatedIdentifier: '',
-  objectOrganisationRole: '',
-  objectPreservationEvent: '',
+  objectIdentifier: `[]`,
+  objectRelatedIdentifier: `[]`,
+  objectOrganisationRole: `[]`,
+  objectPreservationEvent: `[]`,
   objectFile: documents[*].{
     fileUUID: '',
     fileIdentifier: url,
@@ -28,7 +28,7 @@
     fileSize: '',
     fileLabel: '',
     fileDateCreated: created,
-    fileRights: [@.{
+    fileRights: @.{
       rightsStatement: '',
       rightsHolder: ''
       licence: documentLicense[*].{
@@ -39,7 +39,7 @@
         accessType: value,
         accessStatement: ''
       }
-    }],
+    },
     fileChecksum: '',
     fileFormatType: '',
     fileCompositionLevel: '',
@@ -54,5 +54,5 @@
     fileEquipment: '',
     fileLastDownloaded: '',
     fileTechnicalAttributes: ''
-  }
+  } || `[]`
 }

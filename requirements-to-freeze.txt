@@ -1,4 +1,6 @@
 boto3
+jmespath
+jsonschema
 pre-commit
 pytest
 requests

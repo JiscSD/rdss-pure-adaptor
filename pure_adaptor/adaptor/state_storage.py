@@ -16,9 +16,11 @@ class AdaptorStateStore(object):
         :table_name: String
         """
         try:
-            dynamodb = boto3.resource(
-                'dynamodb', endpoint_url='http://localhost:8000')
+            dynamodb = boto3.resource('dynamodb')
             self.table = dynamodb.Table(table_name)
+            self.table.load()
+            logging.info('Successfully initialised connection to '
+                         'AdaptorStateStore %s', self.table.name)
         except ClientError as e:
             logging.error('AdaptorStateStore initialisation: %s', e)
             raise
@@ -30,6 +32,8 @@ class AdaptorStateStore(object):
             :dataset_state: DatasetState
             """
         try:
+            logging.info('Putting DatasetState for %s into AdaptorStateStore.',
+                         dataset_state.uuid)
             self.table.put_item(Item=dataset_state.json)
         except ClientError as e:
             logging.error('AdaptorStateStore put_dataset_state failure: %s', e)
@@ -42,6 +46,8 @@ class AdaptorStateStore(object):
             :returns: DatasetState
             """
         try:
+            logging.info('Getting DatasetState for %s from AdaptorStateStore.',
+                         dataset_uuid)
             response = self.table.get_item(Key={'uuid': dataset_uuid})
             item = response.get('Item', {})
             return DatasetState(item)
@@ -54,6 +60,8 @@ class AdaptorStateStore(object):
             :returns: DateTime
             """
         try:
+            logging.info(
+                'Retrieving latest_modified_datetime from AdaptorStateStore.')
             response = self.table.get_item(
                 Key={'uuid': self.LATEST_TAG},
                 ProjectionExpression='date_modified',
@@ -83,6 +91,10 @@ class DatasetState(object):
             dynamodb AdaptorStateStore.
             """
         self.json = state_json
+
+    @property
+    def uuid(self):
+        return self.json['uuid']
 
     @classmethod
     def create_from_dataset(cls, dataset):

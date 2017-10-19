@@ -31,13 +31,13 @@ class ChecksumGenerator(object):
             """
         checksum_dict = {}
         if not dataset.files:
-            logger.debug('%s has no associated files to generate checksums \
-                    for.', dataset)
+            logger.debug('%s has no associated files to generate checksums'
+                         ' for.', dataset)
             return checksum_dict
 
         if not dataset.local_files:
-            logger.error('%s files have not been downloaded prior to checksum \
-                    generation.', dataset)
+            logger.error('%s files have not been downloaded prior to checksum'
+                         ' generation.', dataset)
             return checksum_dict
 
         for f_path in dataset.local_files:

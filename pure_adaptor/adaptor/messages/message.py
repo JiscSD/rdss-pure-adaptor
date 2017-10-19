@@ -1,11 +1,16 @@
 import json
+import logging
 from .validator import RDSSMessageValidator
 from .message_header import RDSSMessageHeader
+
+logger = logging.getLogger(__name__)
 
 message_validator = RDSSMessageValidator()
 
 
 class BaseRDSSMessageCreator:
+    message_class = ''
+    message_type = ''
 
     def __init__(self, instance_id):
         self._header = RDSSMessageHeader(instance_id)
@@ -15,7 +20,7 @@ class BaseRDSSMessageCreator:
             self.message_class,
             self.message_type,
         )
-
+        logger.info('Generating message %s', message_header['messageId'])
         return RDSSMessage(message_header, message_body)
 
 
@@ -40,15 +45,17 @@ class RDSSMessage:
         self.validate_body()
 
     def _set_error(self, error_code, error_description):
+        logger.info('Setting the following error on message: %s - %s',
+                    error_code, error_description)
         self._message['messageHeader']['errorCode'] = error_code
         self._message['messageHeader']['errorDescription'] = error_description
 
     def validate_body(self):
         body_errors = message_validator.message_body_errors(
-                self._message['messageBody']
-                )
+            self._message['messageBody']
+        )
         if body_errors:
-            self._set_error("GENERR001", "\n".join(body_errors))
+            self._set_error('GENERR001', ' | '.join(body_errors))
             self.validation_errors.extend(body_errors)
 
     @property
@@ -57,4 +64,4 @@ class RDSSMessage:
 
     @property
     def as_json(self):
-        return json.dumps(self._message_json)
+        return json.dumps(self._message)

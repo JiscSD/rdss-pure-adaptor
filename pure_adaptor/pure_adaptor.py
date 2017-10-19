@@ -6,6 +6,11 @@ import sys
 from processor import PureAdaptor
 
 logger = logging.getLogger(__name__)
+std_out_handler = logging.StreamHandler(sys.stdout)
+std_out_handler.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
+std_out_handler.setLevel(logging.INFO)
+logger.addHandler(std_out_handler)
+logger.setLevel(logging.INFO)
 
 
 def all_env_vars_exist(var_names):
@@ -14,8 +19,8 @@ def all_env_vars_exist(var_names):
     env_vars = {name: os.environ.get(name) for name in var_names}
     if not all(env_vars.values()):
         missing = (name for name, exists in env_vars.items() if not exists)
-        err_msg = 'The following env variables have not been set: {}'
-        sys.stderr.write(err_msg.format(', '.join(missing)))
+        logger.error('The following env variables have not been set: %s',
+                     ', '.join(missing))
         sys.exit(2)
     return env_vars
 
