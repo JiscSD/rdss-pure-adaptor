@@ -105,18 +105,19 @@ class DatasetState(object):
             'date_modified': dataset.modified_date.isoformat(),
             'watched_fields': {
                 'title': dataset.query_dataset_json('title[0].value'),
-                'files': dataset.file_checksums,
+                'files': dataset.local_file_checksums,
             }
         }
         return cls(dataset_json)
 
+    @property
     def watched_fields(self):
         """ Extract and return a dict of the fields being watched in datasets.
             Used as the basis of comparison for whether a dataset re-appearing
             in the API should trigger a CREATE or UPDATE message.
             :return: dict
             """
-        return self._json.get('watched_fields', {})
+        return self.json.get('watched_fields', {})
 
     def __eq__(self, other):
         return (self.watched_fields == other.watched_fields)

@@ -62,7 +62,7 @@ class PureAdaptor(object):
 
         self.kinesis_client.put_record(message)
 
-        return dataset_state
+        self._update_adaptor_state(dataset_state)
 
     def _upload_dataset(self, dataset):
         """ Effects the upload of dataset files and associated metadata to the
@@ -101,7 +101,6 @@ class PureAdaptor(object):
                 'No new datasets available from %s, exiting.', self.pure_api)
 
         else:
-            for dataset in changed_datasets:
-                latest_dataset_state = self._process_dataset(dataset)
-
-        self._update_adaptor_state(latest_dataset_state)
+            # For the sake of testing atm, I'm limiting this to 20 at a time.
+            for dataset in changed_datasets[:20]:
+                self._process_dataset(dataset)

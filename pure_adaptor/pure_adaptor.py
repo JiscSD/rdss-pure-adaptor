@@ -43,7 +43,7 @@ def main():
         api_version=env_vars['PURE_API_VERSION'],
         api_url=env_vars['PURE_API_URL'],
         api_key=env_vars['PURE_API_KEY'],
-        environment=env_vars['INSTANCE_ID'],
+        instance_id=env_vars['INSTANCE_ID'],
         input_queue=env_vars['RDSS_INTERNAL_INPUT_QUEUE'],
         invalid_queue=env_vars['RDSS_MESSAGE_INVALID_QUEUE'],
         error_queue=env_vars['RDSS_MESSAGE_ERROR_QUEUE'],
