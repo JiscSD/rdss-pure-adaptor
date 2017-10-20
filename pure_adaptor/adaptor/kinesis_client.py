@@ -9,7 +9,7 @@ class KinesisClient(object):
     """Client for managing kinesis messages."""
 
     def __init__(self, input_stream_name, invalid_stream_name,
-                 error_stream_name, region):
+                 error_stream_name):
         self.input_stream_name = input_stream_name
         self.invalid_stream_name = invalid_stream_name
         self.error_stream_name = error_stream_name
