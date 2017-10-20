@@ -35,7 +35,6 @@ def main():
         'RDSS_INTERNAL_INPUT_QUEUE',
         'RDSS_MESSAGE_INVALID_QUEUE',
         'RDSS_MESSAGE_ERROR_QUEUE',
-        'REGION'
     )
     env_vars = all_env_vars_exist(required_env_variables)
 
@@ -47,7 +46,6 @@ def main():
         input_queue=env_vars['RDSS_INTERNAL_INPUT_QUEUE'],
         invalid_queue=env_vars['RDSS_MESSAGE_INVALID_QUEUE'],
         error_queue=env_vars['RDSS_MESSAGE_ERROR_QUEUE'],
-        region=env_vars['REGION']
     )
 
     adaptor.run()

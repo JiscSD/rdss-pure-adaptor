@@ -17,8 +17,7 @@ class PureAdaptor(object):
                  instance_id,
                  input_queue,
                  invalid_queue,
-                 error_queue,
-                 region):
+                 error_queue):
 
         self.instance_id = instance_id
         self.api_version = api_version
