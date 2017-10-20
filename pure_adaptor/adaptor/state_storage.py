@@ -68,7 +68,7 @@ class AdaptorStateStore(object):
             )
             date_string = response.get('Item', {}).get('date_modified')
             if date_string:
-                return dateutil.parser.parse()
+                return dateutil.parser.parse(date_string)
             else:
                 return None
         except ClientError as e:
