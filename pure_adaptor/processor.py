@@ -21,13 +21,18 @@ class PureAdaptor(object):
 
         self.instance_id = instance_id
         self.api_version = api_version
-        self.kinesis_client = KinesisClient(input_queue,
-                                            invalid_queue,
-                                            error_queue)
         self.pure = versioned_pure_interface(api_version)
-        self.pure_api = self.pure.API(api_url, api_key)
-        self.state_store = AdaptorStateStore(instance_id)
-        self.upload_manager = BucketUploader(instance_id)
+
+        try:
+            self.pure_api = self.pure.API(api_url, api_key)
+            self.kinesis_client = KinesisClient(input_queue,
+                                                invalid_queue,
+                                                error_queue)
+            self.state_store = AdaptorStateStore(instance_id)
+            self.upload_manager = BucketUploader(instance_id)
+        except:
+            logging.error('PureAdaptor Initialisation failed.')
+            raise
 
     def _poll_for_changed_datasets(self):
         """ Scrape the API for datasets that have changed since the last time
