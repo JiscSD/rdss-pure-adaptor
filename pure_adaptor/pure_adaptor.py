@@ -57,7 +57,7 @@ def main():
         )
     except:
         logging.error('Cannot run the Pure Adaptor.')
-        sys.exit(2)
+        sys.exit(1)
 
     adaptor.run()
 
