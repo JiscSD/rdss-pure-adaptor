@@ -43,7 +43,7 @@ class PureAPI(BasePureAPI):
         try:
             response = requests.head(url, **kwargs)
             response.raise_for_status()
-        except requests.exceptions.HTTPError as e:
+        except requests.exceptions.RequestException as e:
             logging.error('Unable to access Pure API v59 due to: %s', e)
             raise
 
