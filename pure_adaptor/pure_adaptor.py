@@ -14,11 +14,6 @@ std_out_handler.setFormatter(log_formatter)
 std_out_handler.setLevel(logging.INFO)
 logger.addHandler(std_out_handler)
 
-logfile_handler = logging.FileHandler('pure_adaptor.log', mode='a')
-logfile_handler.setFormatter(log_formatter)
-logfile_handler.setLevel(logging.DEBUG)
-logger.addHandler(logfile_handler)
-
 
 def all_env_vars_exist(var_names):
     """ Ensure all environment variables exist and return them.

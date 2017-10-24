@@ -12,6 +12,5 @@ WORKDIR /app
 ADD . /app
 
 RUN make deps
-RUN touch /app/pure_adaptor.log
 
-CMD printenv >> /etc/environment && tail -f /app/pure_adaptor.log && cron -f
+CMD printenv >> /etc/environment && cron -f
