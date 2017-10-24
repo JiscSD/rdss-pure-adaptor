@@ -25,8 +25,8 @@ class KinesisClient(object):
             """
         if not message.is_valid:
             self.__move_to_invalid_stream(message.as_json)
-
-        self.__put_record(self.input_stream_name, message.as_json)
+        else:
+            self.__put_record(self.input_stream_name, message.as_json)
 
     def __put_record(self, stream_name, payload):
         """Attempt to put the payload in the provided stream name."""

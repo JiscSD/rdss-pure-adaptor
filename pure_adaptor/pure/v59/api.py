@@ -22,9 +22,30 @@ class PureAPI(BasePureAPI):
         self._endpoint_url = endpoint_url
         self._split_endpoint_url = urllib.parse.urlsplit(endpoint_url)
         self._api_key = api_key
+        try:
+            self._api_is_accessible()
+        except:
+            logging.error('PureAPI v59 initialisation failed.')
+            raise
 
     def __str__(self):
         return 'Pure REST API v5.9: {}'.format(self._endpoint_url)
+
+    def _api_is_accessible(self, **kwargs):
+        """ Checks that the API is accessible and it is possible to
+            authenticate against it.
+            :returns: Boolean
+            """
+        endpoint = '/datasets'
+        url = self._create_url(endpoint)
+        kwargs = self._update_headers(kwargs, {'api-key': self._api_key})
+        kwargs['verify'] = False
+        try:
+            response = requests.head(url, **kwargs)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            logging.error('Unable to access Pure API v59 due to: %s', e)
+            raise
 
     def _to_dataset(self, dataset_json):
         """ Initialise a PureDataset from dataset json, binding this instance

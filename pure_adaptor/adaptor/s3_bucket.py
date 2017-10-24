@@ -3,17 +3,30 @@ import os
 import json
 import io
 import logging
+from botocore.exceptions import ClientError
 
 logger = logging.getLogger(__name__)
 
 
 class BucketUploader(object):
 
-    def __init__(self, bucket_name, top_level_prefix=None, profile=None):
+    def __init__(self, bucket_name, top_level_prefix=None):
+        """ Initialises a BucketUploader instance with the name of the bucket
+            being uploaded to, ensuring that the bucket is accessible.
+            :bucket_name: String
+            :top_level_prefix: String
+            """
         self._bucket_name = bucket_name
         self._top_level_prefix = top_level_prefix
-        self._profile = profile or None
-        self._bucket = None
+        try:
+            s3 = boto3.resource('s3')
+            self.bucket = s3.Bucket(self._bucket_name)
+            self.bucket.load()
+            logging.info('Successfully initialised connection to '
+                         's3 bucket %s', self.bucket.name)
+        except ClientError as e:
+            logging.error('s3 Bucket initialisation: %s', e)
+            raise
 
     def _build_key(self, prefix, file_name):
         """ Builds a full key for file upload to the s3 bucket, using the
@@ -33,14 +46,6 @@ class BucketUploader(object):
                 prefix,
                 os.path.basename(file_name)
             )
-
-    @property
-    def bucket(self):
-        if not self._bucket:
-            session = boto3.Session(profile_name=self._profile)
-            s3 = session.resource('s3')
-            self._bucket = s3.Bucket(self._bucket_name)
-        return self._bucket
 
     def upload_file(self, prefix, source_file):
         """ Attempts to upload the provided file to the s3 bucket.

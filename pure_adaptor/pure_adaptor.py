@@ -6,11 +6,18 @@ import sys
 from processor import PureAdaptor
 
 logger = logging.getLogger(__name__)
+log_formatter = logging.Formatter('%(asctime)s %(name)s'
+                                  ' %(levelname)s %(message)s')
+
 std_out_handler = logging.StreamHandler(sys.stdout)
-std_out_handler.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
+std_out_handler.setFormatter(log_formatter)
 std_out_handler.setLevel(logging.INFO)
 logger.addHandler(std_out_handler)
-logger.setLevel(logging.INFO)
+
+logfile_handler = logging.FileHandler('pure_adaptor.log', mode='a')
+logfile_handler.setFormatter(log_formatter)
+logfile_handler.setLevel(logging.DEBUG)
+logger.addHandler(logfile_handler)
 
 
 def all_env_vars_exist(var_names):

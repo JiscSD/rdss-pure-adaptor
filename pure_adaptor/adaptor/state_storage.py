@@ -13,8 +13,8 @@ class AdaptorStateStore(object):
     def __init__(self, table_name):
         """ Initialises the AdaptorStateStore with the name of the dynamodb
             table used as a store.
-        :table_name: String
-        """
+            :table_name: String
+            """
         try:
             dynamodb = boto3.resource('dynamodb')
             self.table = dynamodb.Table(table_name)

@@ -60,7 +60,6 @@ class PureAdaptor(object):
         message = message_creator.generate(dataset.rdss_canonical_metadata)
 
         self.kinesis_client.put_record(message)
-
         self._update_adaptor_state(dataset_state)
 
     def _upload_dataset(self, dataset):
@@ -87,6 +86,7 @@ class PureAdaptor(object):
             of datasets downloaded during this run of the adaptor.
             :latest_dataset_state: DatasetState
             """
+        self.state_store.put_dataset_state(latest_dataset_state)
         self.state_store.update_latest(latest_dataset_state)
 
     def run(self):
