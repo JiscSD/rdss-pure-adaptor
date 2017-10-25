@@ -92,7 +92,7 @@ class PureAdaptor(object):
             :latest_dataset_state: DatasetState
             """
         self.state_store.put_dataset_state(latest_dataset_state)
-        self.state_store.update_latest(latest_dataset_state)
+        self.state_store.update_latest_modified(latest_dataset_state)
 
     def run(self):
         """ Runs the adaptor.

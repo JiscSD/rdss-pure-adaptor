@@ -75,7 +75,7 @@ class AdaptorStateStore(object):
             logging.error('AdaptorStateStore latest_modified_datetime \
                     failure: %s', e)
 
-    def update_latest(self, dataset_state):
+    def update_latest_modified(self, dataset_state):
         """ Sets the provided DatasetState as the most recently modified dataset
             in the state store.
             :dataset_state: DatasetState

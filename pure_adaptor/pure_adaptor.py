@@ -6,8 +6,8 @@ import sys
 from processor import PureAdaptor
 
 logger = logging.getLogger(__name__)
-log_formatter = logging.Formatter('%(asctime)s %(name)s'
-                                  ' %(levelname)s %(message)s')
+log_formatter = logging.Formatter('%(asctime)s %(name)s:'
+                                  ' [%(levelname)s] %(message)s')
 
 std_out_handler = logging.StreamHandler(sys.stdout)
 std_out_handler.setFormatter(log_formatter)
