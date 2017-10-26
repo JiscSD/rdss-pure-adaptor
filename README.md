@@ -13,60 +13,55 @@ A per-institution adaptor for installations of the [Pure research information sy
 
 #### Sub-Services
 
-The RDSS Pure Adaptor depends on the following pieces of infrastructure:  
+The RDSS Pure Adaptor depends on the following infrastructure:
 - AWS Kinesis Streams
 - AWS DynamoDB
 - AWS S3 Buckets
 - AWS EC2 Clusters
 
 
-## Configuration
+(##configuration)
 The RDSS Pure Adaptor requires that the following environment variables are set:
 
--`PURE_API_VERSION`
+- `PURE_API_VERSION`
 
    A string description of the Pure API version being targeted. Used to select the Pure API integration used by the RDSS Pure Adaptor.
 
--`PURE_API_URL`
+- `PURE_API_URL`
 
    The url of the Pure API endpoint.
 
--`PURE_API_KEY`
+- `PURE_API_KEY`
 
    The api key which is used to authorise access to the Pure API endpoint.
 
--`INSTANCE_ID`
+- `INSTANCE_ID`
 
    A string describing the institution and environment which this instance of the RDSS Pure Adaptor is targeting, e.g. `pure-adaptor-<jisc_id>-<env>`. This is the name of the DynamoDB table used to store the state of the adaptor, as well as the name of the s3 bucket which the adaptor will upload downloaded datasets.
 
--`RDSS_INTERNAL_INPUT_QUEUE`
+- `RDSS_INTERNAL_INPUT_QUEUE`
 
    The name of the RDSS internal input queue to which the Pure Adaptor will write messages.
 
--`RDSS_MESSAGE_INVALID_QUEUE`
+- `RDSS_MESSAGE_INVALID_QUEUE`
 
    The name of the RDSS invalid message queue to which the Pure Adaptor will write invalid messages.
 
--`RDSS_MESSAGE_ERROR_QUEUE`
+- `RDSS_MESSAGE_ERROR_QUEUE`
 
    The name of the RDSS error message queue to which the Pure Adaptor will write error messages.
 
 In addition to the aforementioned variables, the following environment variables are also required by the `boto3` library to access the AWS resources utilised by the RDSS Pure Adaptor:
 
--`AWS_ACCESS_KEY_ID`
--`AWS_SECRET_ACCESS_KEY`
--`AWS_DEFAULT_REGION`
-
-
-
-
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_DEFAULT_REGION`
 
 ---------------------------------------------------------
 
 ## Deployment
 
-This adaptor is intended to be deployed as part of the RDSS institutional ECS clusters infrastructure.
-The Dockerfile
+The RDSS Pure Adaptor is intended to be deployed as a service on a per-institution and per-environment basis as part of the RDSS institutional ECS clusters infrastructure. This repository is targeted by a build task defined in the [RDSS Institutional ECS Clusters](https://github.com/JiscRDSS/rdss-institutional-ecs-clusters) repository. This task will build the Docker image defined by the [Dockerfile](/Dockerfile) in this repository. The RDSS Pure Adaptor is provided as a generic docker image which is configured by the environmental variables outlined in the [Configuration](##configuration) section.
 
 ### Setup
 
