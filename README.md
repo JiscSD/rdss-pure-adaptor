@@ -20,7 +20,7 @@ The RDSS Pure Adaptor depends on the following infrastructure:
 - AWS EC2 Clusters
 
 
-(##configuration)
+## Configuration
 The RDSS Pure Adaptor requires that the following environment variables are set:
 
 - `PURE_API_VERSION`
