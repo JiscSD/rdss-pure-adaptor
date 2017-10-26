@@ -3,8 +3,8 @@ import dateutil.parser
 import urllib
 import jmespath
 import logging
-from pure.base import BasePureDataset
-from pure.base import JSONRemapper
+from ..base import BasePureDataset
+from ..base import JSONRemapper
 
 from .download_manager import PureDownloadManager
 from .checksum import ChecksumGenerator

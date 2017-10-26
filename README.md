@@ -1,22 +1,15 @@
 # RDSS Pure Adaptor
-> E.g. rdss-default-service-ac
 
-## { Service Name }
-
-### Description
-> This section should describe what the new service is.
+A per-institution adaptor for installations of the [Pure research information system](https://www.elsevier.com/solutions/pure). This adaptor periodically polls the datasets endpoint of a Pure installation, fetching new and modified datasets, and relaying these datasets on to the Jisc Research Data Shared Service (RDSS). At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, but is designed to easily accommodate interaction with other versions of the API in future.  
 
 ### Language / Framework
-> E.g.
-> - Python 3.6+
-> - Flask
+- Python 3.6+
 
 ### Service Infrastructure
 
- > E.g. Supported environments
- > - dev
- > - uat
- > - prod
+- dev
+- uat
+- prod
 
 #### Sub-Services
 > E.g.
@@ -24,9 +17,37 @@
 > - AWS RDS
 
 
+## Configuration
+The following environmental variables are required
+The RDSS Pure Adaptor requires the following variables
+
+`PURE_API_VERSION`
+A string description of the Pure API version being targeted.
+`PURE_API_URL`
+The url of the Pure API endpoint.
+`PURE_API_KEY`
+The api key which is used to authorise access to the Pure API endpoint.
+`INSTANCE_ID`
+A string describing the institution and environment which this instance of the RDSS Pure Adaptor is targeting, e.g. `pure-adaptor-<jisc_id>-<env>`. This is the name of the DynamoDB table used to store the state of the adaptor, as well as the name of the s3 bucket which the adaptor will upload downloaded datasets.
+`RDSS_INTERNAL_INPUT_QUEUE`
+The name of the RDSS internal input queue to which the Pure Adaptor will write messages.
+`RDSS_MESSAGE_INVALID_QUEUE`
+The name of the RDSS invalid message queue to which the Pure Adaptor will write invalid messages.
+`RDSS_MESSAGE_ERROR_QUEUE`
+The name of the RDSS error message queue to which the Pure Adaptor will write error messages.
+
+The following
+`AWS_ACCESS_KEY_ID`
+`AWS_SECRET_ACCESS_KEY`
+`AWS_DEFAULT_REGION`
+
+
 ---------------------------------------------------------
 
 ## Deployment
+
+This adaptor is intended to be deployed as part of the RDSS institutional ECS clusters infrastructure.
+The Dockerfile
 
 ### Setup
 

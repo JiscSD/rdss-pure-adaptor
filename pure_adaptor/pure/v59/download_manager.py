@@ -2,7 +2,7 @@ import tempfile
 import os
 import logging
 
-from pure.base import BasePureDownloadManager
+from ..base import BasePureDownloadManager
 
 logger = logging.getLogger(__name__)
 

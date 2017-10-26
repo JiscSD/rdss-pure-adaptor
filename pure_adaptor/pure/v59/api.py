@@ -3,7 +3,7 @@ import urllib
 import dateutil.parser
 import logging
 
-from pure.base import BasePureAPI
+from ..base import BasePureAPI
 from .models import PureDataset
 
 logger = logging.getLogger(__name__)

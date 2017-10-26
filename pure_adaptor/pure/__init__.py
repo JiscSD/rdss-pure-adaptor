@@ -1,6 +1,6 @@
 from collections import namedtuple
-import pure.base
-import pure.v59
+from . import base
+from . import v59
 
 PureInterface = namedtuple(
     'PureInterface',
@@ -13,14 +13,14 @@ PureInterface = namedtuple(
 
 api_version_mappings = {
     'base': PureInterface(
-        API=pure.base.BasePureAPI,
-        Dataset=pure.base.BasePureDataset,
-        DownloadManager=pure.base.BasePureDownloadManager,
+        API=base.BasePureAPI,
+        Dataset=base.BasePureDataset,
+        DownloadManager=base.BasePureDownloadManager,
     ),
     'v59': PureInterface(
-        API=pure.v59.PureAPI,
-        Dataset=pure.v59.PureDataset,
-        DownloadManager=pure.v59.PureDownloadManager,
+        API=v59.PureAPI,
+        Dataset=v59.PureDataset,
+        DownloadManager=v59.PureDownloadManager,
     )
 }
 
