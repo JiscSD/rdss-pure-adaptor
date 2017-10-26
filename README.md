@@ -12,34 +12,53 @@ A per-institution adaptor for installations of the [Pure research information sy
 - prod
 
 #### Sub-Services
-> E.g.
-> - AWS Lambda
-> - AWS RDS
+
+The RDSS Pure Adaptor depends on the following pieces of infrastructure:  
+- AWS Kinesis Streams
+- AWS DynamoDB
+- AWS S3 Buckets
+- AWS EC2 Clusters
 
 
 ## Configuration
-The following environmental variables are required
-The RDSS Pure Adaptor requires the following variables
+The RDSS Pure Adaptor requires that the following environment variables are set:
 
-`PURE_API_VERSION`
-A string description of the Pure API version being targeted.
-`PURE_API_URL`
-The url of the Pure API endpoint.
-`PURE_API_KEY`
-The api key which is used to authorise access to the Pure API endpoint.
-`INSTANCE_ID`
-A string describing the institution and environment which this instance of the RDSS Pure Adaptor is targeting, e.g. `pure-adaptor-<jisc_id>-<env>`. This is the name of the DynamoDB table used to store the state of the adaptor, as well as the name of the s3 bucket which the adaptor will upload downloaded datasets.
-`RDSS_INTERNAL_INPUT_QUEUE`
-The name of the RDSS internal input queue to which the Pure Adaptor will write messages.
-`RDSS_MESSAGE_INVALID_QUEUE`
-The name of the RDSS invalid message queue to which the Pure Adaptor will write invalid messages.
-`RDSS_MESSAGE_ERROR_QUEUE`
-The name of the RDSS error message queue to which the Pure Adaptor will write error messages.
+-`PURE_API_VERSION`
 
-The following
-`AWS_ACCESS_KEY_ID`
-`AWS_SECRET_ACCESS_KEY`
-`AWS_DEFAULT_REGION`
+   A string description of the Pure API version being targeted. Used to select the Pure API integration used by the RDSS Pure Adaptor.
+
+-`PURE_API_URL`
+
+   The url of the Pure API endpoint.
+
+-`PURE_API_KEY`
+
+   The api key which is used to authorise access to the Pure API endpoint.
+
+-`INSTANCE_ID`
+
+   A string describing the institution and environment which this instance of the RDSS Pure Adaptor is targeting, e.g. `pure-adaptor-<jisc_id>-<env>`. This is the name of the DynamoDB table used to store the state of the adaptor, as well as the name of the s3 bucket which the adaptor will upload downloaded datasets.
+
+-`RDSS_INTERNAL_INPUT_QUEUE`
+
+   The name of the RDSS internal input queue to which the Pure Adaptor will write messages.
+
+-`RDSS_MESSAGE_INVALID_QUEUE`
+
+   The name of the RDSS invalid message queue to which the Pure Adaptor will write invalid messages.
+
+-`RDSS_MESSAGE_ERROR_QUEUE`
+
+   The name of the RDSS error message queue to which the Pure Adaptor will write error messages.
+
+In addition to the aforementioned variables, the following environment variables are also required by the `boto3` library to access the AWS resources utilised by the RDSS Pure Adaptor:
+
+-`AWS_ACCESS_KEY_ID`
+-`AWS_SECRET_ACCESS_KEY`
+-`AWS_DEFAULT_REGION`
+
+
+
 
 
 ---------------------------------------------------------

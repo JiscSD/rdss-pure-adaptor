@@ -24,7 +24,7 @@ class PureAPI(BasePureAPI):
         self._api_key = api_key
         try:
             self._api_is_accessible()
-        except:
+        except requests.exceptions.RequestException:
             logging.error('PureAPI v59 initialisation failed.')
             raise
 
