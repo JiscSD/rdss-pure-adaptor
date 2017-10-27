@@ -30,7 +30,7 @@ class PureAdaptor(object):
                                                 invalid_queue,
                                                 error_queue)
             self.pure_api = self.pure.API(api_url, api_key)
-        except:
+        except Exception:
             logging.error('PureAdaptor Initialisation failed.')
             raise
 

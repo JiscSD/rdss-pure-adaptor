@@ -119,7 +119,7 @@ class KinesisClient(object):
             )
 
             self.__do_put_record(self.error_stream_name, payload, 1)
-        except:
+        except Exception:
             self.logger.exception(
                 'Unable to move payload [%s] to stream [%s]',
                 payload,
@@ -134,7 +134,7 @@ class KinesisClient(object):
                 self.invalid_stream_name
             )
             self.__do_put_record(self.invalid_stream_name, payload, 1)
-        except:
+        except Exception:
             self.logger.exception(
                 'Unable to move payload [%s] to stream [%s]',
                 payload,

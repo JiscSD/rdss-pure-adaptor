@@ -50,7 +50,7 @@ def main():
             invalid_queue=env_vars['RDSS_MESSAGE_INVALID_QUEUE'],
             error_queue=env_vars['RDSS_MESSAGE_ERROR_QUEUE'],
         )
-    except:
+    except Exception:
         logging.error('Cannot run the Pure Adaptor.')
         sys.exit(1)
 
