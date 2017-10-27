@@ -37,7 +37,7 @@ class PureDataset(BasePureDataset):
     """Abstraction around the dataset responses from the Pure API.
         """
 
-    def __init__(self, dataset_json, pure_api_instance):
+    def __init__(self, dataset_json, pure_api_instance=None):
         """ Initialises the dataset with the dataset json object returned
             from the Pure API
             """
