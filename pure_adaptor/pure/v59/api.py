@@ -38,7 +38,6 @@ class PureAPI(BasePureAPI):
         endpoint = '/datasets'
         url = self._create_url(endpoint)
         kwargs = self._update_headers(kwargs, {'api-key': self._api_key})
-        kwargs['verify'] = False
         try:
             response = requests.head(url, **kwargs)
             response.raise_for_status()
@@ -123,7 +122,6 @@ class PureAPI(BasePureAPI):
 
         """
         kwargs = self._update_headers(kwargs, {'api-key': self._api_key})
-        kwargs['verify'] = False
         return requests.get(url, *args, **kwargs)
 
     def _get_json(self, url, *args, **kwargs):
