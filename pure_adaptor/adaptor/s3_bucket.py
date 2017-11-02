@@ -25,8 +25,7 @@ class BucketUploader(object):
             logging.info('Successfully initialised connection to '
                          's3 bucket %s', self.bucket.name)
         except ClientError as e:
-            logging.error('s3 Bucket initialisation: %s', e)
-            raise
+            logging.exception('s3 Bucket initialisation: %s', e)
 
     def _build_key(self, prefix, file_name):
         """ Builds a full key for file upload to the s3 bucket, using the

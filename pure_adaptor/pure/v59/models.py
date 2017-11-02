@@ -33,7 +33,6 @@ def file_name_from_url(url):
 
 
 class PureDataset(BasePureDataset):
-
     """Abstraction around the dataset responses from the Pure API.
         """
 

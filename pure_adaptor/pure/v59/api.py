@@ -25,8 +25,7 @@ class PureAPI(BasePureAPI):
         try:
             self._api_is_accessible()
         except requests.exceptions.RequestException:
-            logging.error('PureAPI v59 initialisation failed.')
-            raise
+            logging.exception('PureAPI v59 initialisation failed.')
 
     def __str__(self):
         return 'Pure REST API v5.9: {}'.format(self._endpoint_url)
@@ -44,8 +43,7 @@ class PureAPI(BasePureAPI):
             response = requests.head(url, **kwargs)
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            logging.error('Unable to access Pure API v59 due to: %s', e)
-            raise
+            logging.exception('Unable to access Pure API v59 due to: %s', e)
 
     def _to_dataset(self, dataset_json):
         """ Initialise a PureDataset from dataset json, binding this instance
@@ -167,8 +165,8 @@ class PureAPI(BasePureAPI):
         """
         endpoint = '/datasets'
         query = {'size': size, 'order': order}
-        url = self._create_url(endpoint, query=query)
-        json_response = self._get_json(url)
+        url = self._create_url(endpoint)
+        json_response = self._get_json(url, params=query)
         cont, items = self._response_items(
             json_response, list(), cont_func)
         next_url = self._navigation_links(json_response).get('next')

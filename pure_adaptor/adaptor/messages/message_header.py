@@ -17,7 +17,7 @@ RDSS_ERROR_CODES = {
     'GENERR007': 'Malformed JSON was detected in the Message Body.',
     'GENERR008': 'An attempt to roll back a transaction failed.',
     'GENERR009': 'An unexpected or unknown error occurred.',
-    'GENERR010': 'Maximum number of Message resend retries exceeded.',
+    'GENERR010': 'Received an invalid / malformed UUID.',
     'APPERRMET001': 'Received a Metadata UPDATE with a datasetUuid that does'
     'not exist.',
     'APPERRMET002': 'Received a Metadata DELETE with a datasetUuid that does'

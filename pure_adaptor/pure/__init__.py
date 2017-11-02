@@ -1,6 +1,8 @@
+import logging
 from collections import namedtuple
-from . import base
 from . import v59
+
+logger = logging.getLogger(__name__)
 
 PureInterface = namedtuple(
     'PureInterface',
@@ -11,12 +13,7 @@ PureInterface = namedtuple(
     ]
 )
 
-api_version_mappings = {
-    'base': PureInterface(
-        API=base.BasePureAPI,
-        Dataset=base.BasePureDataset,
-        DownloadManager=base.BasePureDownloadManager,
-    ),
+API_VERSION_MAPPINGS = {
     'v59': PureInterface(
         API=v59.PureAPI,
         Dataset=v59.PureDataset,
@@ -26,13 +23,13 @@ api_version_mappings = {
 
 
 def versioned_pure_interface(api_version_tag):
-    """TODO: Docstring for get_pure_interface.
-
-    :api_version_tag: TODO
-    :returns: PureInterface
-
-    """
-    return api_version_mappings.get(api_version_tag)
+    try:
+        return API_VERSION_MAPPINGS[api_version_tag]
+    except KeyError:
+        logging.exception(
+            'The provided Pure API version tag must be one of: %s',
+            ', '.join(API_VERSION_MAPPINGS.keys())
+        )
 
 
 __all__ = ['versioned_pure_interface']

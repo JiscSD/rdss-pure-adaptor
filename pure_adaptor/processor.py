@@ -31,8 +31,7 @@ class PureAdaptor(object):
                                                 error_queue)
             self.pure_api = self.pure.API(api_url, api_key)
         except Exception:
-            logging.error('PureAdaptor Initialisation failed.')
-            raise
+            logging.exception('PureAdaptor Initialisation failed.')
 
     def _poll_for_changed_datasets(self):
         """ Scrape the API for datasets that have changed since the last time
@@ -105,6 +104,5 @@ class PureAdaptor(object):
                 'No new datasets available from %s, exiting.', self.pure_api)
 
         else:
-            # For the sake of testing atm, I'm limiting this to 20 at a time.
-            for dataset in changed_datasets[:20]:
+            for dataset in changed_datasets:
                 self._process_dataset(dataset)

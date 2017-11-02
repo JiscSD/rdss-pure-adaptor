@@ -1,5 +1,4 @@
 boto3
-google-compute-engine
 jmespath
 jsonschema
 moto

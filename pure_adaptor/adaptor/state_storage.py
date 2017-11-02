@@ -21,9 +21,8 @@ class AdaptorStateStore(object):
             self.table.load()
             logging.info('Successfully initialised connection to '
                          'AdaptorStateStore %s', self.table.name)
-        except ClientError as e:
-            logging.error('AdaptorStateStore initialisation: %s', e)
-            raise
+        except ClientError:
+            logging.exception('AdaptorStateStore initialisation failed.')
 
     def put_dataset_state(self, dataset_state):
         """ Attempts to put a DatasetState into the AdaptorStateStore.
@@ -35,8 +34,8 @@ class AdaptorStateStore(object):
             logging.info('Putting DatasetState for %s into AdaptorStateStore.',
                          dataset_state.uuid)
             self.table.put_item(Item=dataset_state.json)
-        except ClientError as e:
-            logging.error('AdaptorStateStore put_dataset_state failure: %s', e)
+        except ClientError:
+            logging.exception('AdaptorStateStore put_dataset_state failure.')
 
     def get_dataset_state(self, dataset_uuid):
         """ Attempts to retrieve by UUID the state of a dataset from the
@@ -51,8 +50,8 @@ class AdaptorStateStore(object):
             response = self.table.get_item(Key={'uuid': dataset_uuid})
             item = response.get('Item', {})
             return DatasetState(item)
-        except ClientError as e:
-            logging.error('AdaptorStateStore get_dataset_state failure: %s', e)
+        except ClientError:
+            logging.exception('AdaptorStateStore get_dataset_state failure.')
 
     def latest_modified_datetime(self):
         """ Retrieves the datetime of the most recently modified dataset
@@ -71,9 +70,9 @@ class AdaptorStateStore(object):
                 return dateutil.parser.parse(date_string)
             else:
                 return None
-        except ClientError as e:
-            logging.error('AdaptorStateStore latest_modified_datetime \
-                    failure: %s', e)
+        except ClientError:
+            logging.exception('AdaptorStateStore latest_modified_datetime \
+                    failure.')
 
     def update_latest_modified(self, dataset_state):
         """ Sets the provided DatasetState as the most recently modified dataset
