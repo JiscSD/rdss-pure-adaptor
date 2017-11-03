@@ -38,17 +38,17 @@ The RDSS Pure Adaptor requires that the following environment variables are set:
 
    A string describing the institution and environment which this instance of the RDSS Pure Adaptor is targeting, e.g. `pure-adaptor-<jisc_id>-<env>`. This is the name of the DynamoDB table used to store the state of the adaptor, as well as the name of the s3 bucket which the adaptor will upload downloaded datasets.
 
-- `RDSS_INTERNAL_INPUT_QUEUE`
+- `RDSS_INTERNAL_INPUT_STREAM`
 
-   The name of the RDSS internal input queue to which the Pure Adaptor will write messages.
+   The name of the RDSS internal input stream to which the Pure Adaptor will write messages.
 
-- `RDSS_MESSAGE_INVALID_QUEUE`
+- `RDSS_MESSAGE_INVALID_STREAM`
 
-   The name of the RDSS invalid message queue to which the Pure Adaptor will write invalid messages.
+   The name of the RDSS invalid message stream to which the Pure Adaptor will write invalid messages.
 
-- `RDSS_MESSAGE_ERROR_QUEUE`
+- `RDSS_MESSAGE_ERROR_STREAM`
 
-   The name of the RDSS error message queue to which the Pure Adaptor will write error messages.
+   The name of the RDSS error message stream to which the Pure Adaptor will write error messages.
 
 In addition to the aforementioned variables, the following environment variables are also required by the `boto3` library to access the AWS resources utilised by the RDSS Pure Adaptor:
 

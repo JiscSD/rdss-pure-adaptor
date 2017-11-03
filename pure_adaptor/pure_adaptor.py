@@ -34,9 +34,9 @@ def main():
         'PURE_API_URL',
         'PURE_API_KEY',
         'INSTANCE_ID',
-        'RDSS_INTERNAL_INPUT_QUEUE',
-        'RDSS_MESSAGE_INVALID_QUEUE',
-        'RDSS_MESSAGE_ERROR_QUEUE',
+        'RDSS_INTERNAL_INPUT_STREAM',
+        'RDSS_MESSAGE_INVALID_STREAM',
+        'RDSS_MESSAGE_ERROR_STREAM',
     )
     env_vars = all_env_vars_exist(required_env_variables)
 
@@ -46,9 +46,9 @@ def main():
             api_url=env_vars['PURE_API_URL'],
             api_key=env_vars['PURE_API_KEY'],
             instance_id=env_vars['INSTANCE_ID'],
-            input_queue=env_vars['RDSS_INTERNAL_INPUT_QUEUE'],
-            invalid_queue=env_vars['RDSS_MESSAGE_INVALID_QUEUE'],
-            error_queue=env_vars['RDSS_MESSAGE_ERROR_QUEUE'],
+            input_stream=env_vars['RDSS_INTERNAL_INPUT_STREAM'],
+            invalid_stream=env_vars['RDSS_MESSAGE_INVALID_STREAM'],
+            error_stream=env_vars['RDSS_MESSAGE_ERROR_STREAM'],
         )
     except Exception:
         logging.exception('Cannot run the Pure Adaptor.')

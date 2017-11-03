@@ -15,9 +15,9 @@ class PureAdaptor(object):
                  api_url,
                  api_key,
                  instance_id,
-                 input_queue,
-                 invalid_queue,
-                 error_queue):
+                 input_stream,
+                 invalid_stream,
+                 error_stream):
 
         self.instance_id = instance_id
         self.api_version = api_version
@@ -26,9 +26,9 @@ class PureAdaptor(object):
         try:
             self.state_store = AdaptorStateStore(instance_id)
             self.upload_manager = BucketUploader(instance_id)
-            self.kinesis_client = KinesisClient(input_queue,
-                                                invalid_queue,
-                                                error_queue)
+            self.kinesis_client = KinesisClient(input_stream,
+                                                invalid_stream,
+                                                error_stream)
             self.pure_api = self.pure.API(api_url, api_key)
         except Exception:
             logging.exception('PureAdaptor Initialisation failed.')
