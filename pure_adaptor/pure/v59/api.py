@@ -56,12 +56,6 @@ class PureAPI(BasePureAPI):
         return '/'.join([p for p in path_parts if p])
 
     def _create_url(self, path, query={}):
-        """ TODO: Docstring for _create_url.
-
-        :paths: TODO
-        :returns: TODO
-
-        """
         url_parts = [
             self._split_endpoint_url[0],
             self._split_endpoint_url[1],
@@ -113,26 +107,14 @@ class PureAPI(BasePureAPI):
         return cont, items + new_items
 
     def _get(self, url, *args, **kwargs):
-        """Abstraction over requests.get that includes PURE api key.
-
-        :url: TODO
-        :*args: TODO
-        :**kwargs: TODO
-        :returns: TODO
-
-        """
+        """ Abstraction over requests.get that includes PURE api key.
+            """
         kwargs = self._update_headers(kwargs, {'api-key': self._api_key})
         return requests.get(url, *args, **kwargs)
 
     def _get_json(self, url, *args, **kwargs):
         """ GET json from url and return json object
-
-        :url: TODO
-        :*args: TODO
-        :**kwargs: TODO
-        :returns: TODO
-
-        """
+            """
         kwargs = self._update_headers(kwargs, {'Accept': 'application/json'})
         logger.info('Getting json response from %s.', url)
         response = self._get(url, *args, **kwargs)
@@ -141,14 +123,7 @@ class PureAPI(BasePureAPI):
     def download_file(self, url, dest, *args, **kwargs):
         """ Wrapper around the get method to use for streaming download
             of files.
-
-        :url: TODO
-        :dest: TODO
-        :*args: TODO
-        :**kwargs: TODO
-        :returns: TODO
-
-        """
+            """
         with self._get(url, stream=True) as r:
             with open(dest, 'wb') as f:
                 for chunk in r.iter_content(chunk_size=1024):
