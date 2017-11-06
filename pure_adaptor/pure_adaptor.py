@@ -2,7 +2,7 @@
 import logging
 import os
 import sys
-
+import tempfile
 from processor import PureAdaptor
 
 logger = logging.getLogger(__name__)
@@ -39,7 +39,7 @@ def main():
         'RDSS_MESSAGE_ERROR_STREAM',
     )
     env_vars = all_env_vars_exist(required_env_variables)
-
+    logging.info('Temp dir: %s', tempfile.gettempdir())
     try:
         adaptor = PureAdaptor(
             api_version=env_vars['PURE_API_VERSION'],
