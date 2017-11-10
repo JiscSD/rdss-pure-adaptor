@@ -104,5 +104,5 @@ class PureAdaptor(object):
                 'No new datasets available from %s, exiting.', self.pure_api)
 
         else:
-            for dataset in changed_datasets[:20]:
+            for dataset in changed_datasets:
                 self._process_dataset(dataset)
