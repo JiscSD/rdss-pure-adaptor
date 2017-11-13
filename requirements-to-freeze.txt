@@ -1,0 +1,6 @@
+boto3
+jmespath
+jsonschema
+moto
+pytest
+requests

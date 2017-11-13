@@ -1,0 +1,58 @@
+{
+  objectUuid: '',
+  objectTitle: title.value || join(`, `, title[].value),
+  objectPersonRole: personAssociations[*].{
+      person: {
+        personIdentifier: id,
+        personFirstName: name.firstName,
+        personSecondName: name.lastName,
+        personOrganisationalUnit: organisationalUnits[].name[].value
+        },
+      role: personRole[0].value
+    },
+  objectDescription: description.value || '',
+  objectRights: `[]`,
+  objectDate: `[]`,
+  objectKeywords: keywordGroups[].keywords[].value || `[]`,
+  objectCategory: `[]`,
+  objectResourceType: '',
+  objectValue: '',
+  objectIdentifier: `[]`,
+  objectRelatedIdentifier: `[]`,
+  objectOrganisationRole: `[]`,
+  objectPreservationEvent: `[]`,
+  objectFile: documents[*].{
+    fileUUID: '',
+    fileIdentifier: url,
+    fileName: '',
+    fileSize: '',
+    fileLabel: '',
+    fileDateCreated: created,
+    fileRights: @.{
+      rightsStatement: '',
+      rightsHolder: ''
+      licence: documentLicense[*].{
+        licenceName: value,
+        licenceIdentifier: uri
+      },
+      access: visibility[*].{
+        accessType: value,
+        accessStatement: ''
+      }
+    },
+    fileChecksum: '',
+    fileFormatType: '',
+    fileCompositionLevel: '',
+    filehasMimeType: documentType[0].value,
+    fileDate: '',
+    filePUID: '',
+    fileUse: '',
+    preservationEvent: '',
+    uploadStatus: '',
+    storageStatus: '',
+    fileSoftware: '',
+    fileEquipment: '',
+    fileLastDownloaded: '',
+    fileTechnicalAttributes: ''
+  } || `[]`
+}

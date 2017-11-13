@@ -30,7 +30,8 @@ deps: ## Install development dependencies
 
 deps-update: ## Update python dependencies
 	@pip install -r requirements-to-freeze.txt --upgrade
-	@pip freeze > requirements.txt
+	# Workaround for an ubuntu bug: https://github.com/pypa/pip/issues/4022
+	@pip freeze | grep -v "pkg-resources" > requirements.txt
 
 deps-uninstall: ## Uninstall python dependencies
 	@pip uninstall -yr requirements.txt
