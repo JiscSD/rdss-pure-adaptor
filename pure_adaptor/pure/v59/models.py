@@ -45,6 +45,7 @@ class PureDataset(BasePureDataset):
         self._dataset_json = dataset_json
         self.local_files = []
         self.local_file_checksums = {}
+        self.file_s3_urls = {}
 
     def __str__(self):
         return 'PureDataset: {}'.format(self.uuid)
@@ -65,6 +66,15 @@ class PureDataset(BasePureDataset):
             'checksumValue': self.local_file_checksums.get(file_name)
         }]
 
+    def _format_local_data(self, obj_file):
+        file_name = file_name_from_url(obj_file['fileIdentifier'])
+        obj_file['fileChecksum'] = self._format_checksum(file_name)
+        obj_file['fileStorageLocation'] = self.file_s3_urls.get(file_name)
+        obj_file['fileStorageType'] = 0  # s3
+        obj_file['fileStorageStatus'] = 0  # online
+        obj_file['fileUploadStatus'] = 1  # uploadComplete
+        return obj_file
+
     def _update_with_local_data(self, canonical_metadata):
         """ Updates fields in the canonical data model with data that
             has been generated locally and was not available through
@@ -76,10 +86,8 @@ class PureDataset(BasePureDataset):
         else:
             new_object_files = []
             for obj_file in object_files:
-                obj_file['fileChecksum'] = self._format_checksum(
-                    file_name_from_url(obj_file['fileIdentifier']))
-
-                new_object_files.append(obj_file)
+                new_obj_file = self._format_local_data(obj_file)
+                new_object_files.append(new_obj_file)
             canonical_metadata['objectFile'] = new_object_files
             return canonical_metadata
 
