@@ -70,9 +70,9 @@ class PureDataset(BasePureDataset):
         file_name = file_name_from_url(obj_file['fileIdentifier'])
         obj_file['fileChecksum'] = self._format_checksum(file_name)
         obj_file['fileStorageLocation'] = self.file_s3_urls.get(file_name)
-        obj_file['fileStorageType'] = 0  # s3
-        obj_file['fileStorageStatus'] = 0  # online
-        obj_file['fileUploadStatus'] = 1  # uploadComplete
+        obj_file['fileStorageType'] = 1  # s3
+        obj_file['fileStorageStatus'] = 1  # online
+        obj_file['fileUploadStatus'] = 2  # uploadComplete
         return obj_file
 
     def _update_with_local_data(self, canonical_metadata):
