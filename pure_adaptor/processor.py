@@ -1,3 +1,4 @@
+import os
 import logging
 from pure import versioned_pure_interface
 from adaptor.s3_bucket import BucketUploader
@@ -72,7 +73,9 @@ class PureAdaptor(object):
             :dataset: PureDataset
             """
         for file_path in dataset.local_files:
-            self.upload_manager.upload_file(dataset.doi_upload_key, file_path)
+            s3_url = self.upload_manager.upload_file(dataset.doi_upload_key,
+                                                     file_path)
+            dataset.file_s3_urls[os.path.basename(file_path)] = s3_url
 
         self.upload_manager.upload_json_obj(
             dataset.doi_upload_key,

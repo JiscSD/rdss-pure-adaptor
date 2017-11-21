@@ -2,6 +2,7 @@ import boto3
 import os
 import json
 import io
+import urllib
 import logging
 from botocore.exceptions import ClientError
 
@@ -46,6 +47,13 @@ class BucketUploader(object):
                 os.path.basename(file_name)
             )
 
+    def _s3_url(self, key):
+        """ Builds and returns an s3 url for the provided key in this
+            bucket, using the "s3://" scheme.
+            """
+        url_tuple = ('s3', self._bucket_name, key, '', '')
+        return urllib.parse.urlunsplit(url_tuple)
+
     def upload_file(self, prefix, source_file):
         """ Attempts to upload the provided file to the s3 bucket.
             """
@@ -53,6 +61,7 @@ class BucketUploader(object):
         logger.info('Uploading %s to %s.', source_file, key)
         with open(source_file, 'rb') as data:
             self.bucket.upload_fileobj(data, key)
+        return self._s3_url(key)
 
     def upload_json_obj(self, prefix, file_name, json_obj):
         """ Attempts to upload a json object to the s3 bucket.
@@ -61,3 +70,4 @@ class BucketUploader(object):
         logger.info('Uploading json object to %s.', key)
         json_data = io.BytesIO(json.dumps(json_obj, indent=2).encode('utf-8'))
         self.bucket.upload_fileobj(json_data, key)
+        return self._s3_url(key)
