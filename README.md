@@ -134,6 +134,14 @@ To run the test suite for the RDSS Pure Adaptor, run the following command:
 make test
 ```
 
+### Linting
+
+To run the automated linting tool, run the following command:
+
+```
+make lint
+```
+
 ## Frequently Asked Questions
 
 ### Is the adaptor multi tenanted?
