@@ -56,9 +56,11 @@ The adaptor will make the following calls to the Pure endpoint:
 
 At present, the service supports the following:
 
-**READ** - to determine if a dataset has already been harvested.
-**CREATE** - if a new dataset is added to pure.
-**UPDATE** - if a dataset has been modified.
+| Action | Reason |
+| ------ | ------ |
+| **READ** | Determine if a dataset has already been harvested. |
+| **CREATE** | Create a new dataset that has been added to pure. |
+| **UPDATE** | Update a dataset that has been modified in pure. |
 
 ### Sub-Services
 
