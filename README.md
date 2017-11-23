@@ -13,6 +13,7 @@
 - [Configuration](#configuration)
 - [Developer Setup](#developer-setup)
 	- [Testing](#testing)
+	- [Linting](#linting)
 - [Frequently Asked Questions](#frequently-asked-questions)
 	- [Is the adaptor multi tenanted?](#is-the-adaptor-multi-tenanted)
 	- [What is the impact of polling?](#what-is-the-impact-of-polling)
