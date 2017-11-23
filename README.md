@@ -19,13 +19,21 @@ At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, 
 
 The adaptor runs as a docker container which can be configured to poll the URL of institutions Pure instance API.
 
-A checksum is created for each dataset and stored in DynamoDB to determine if a dataset has been changed since the last poll.
+A checksum is created for each dataset and stored in DynamoDB to determine if a dataset has been added or modified since the last poll.
 
-When a new dataset is detected, the data is downloaded to S3 and a Create Message is published on the configured Kinesis Stream.
+If a change is detected, the data is downloaded to S3 and the appropriate `Create` or `Update` Message is published on the configured Kinesis Stream.
 
 The below diagram illustrates how the adaptor functions:
 
 ![RDSS Pure Adaptor Diagram](docs/images/rdss-pure-adaptor.png)
+
+## API Calls
+
+The adaptor will make the following calls to the Pure endpoint:
+
+ - `HTTP HEAD <PURE_API_URL>/datasets` to ensure endpoint is online.
+ - `HTTP GET <PURE_API_URL>/datasets` to retrieve a list of datasets.
+ - `HTTP GET <PURE_API_URL>/datasets/<UUID>` to retrieve the dataset file.
 
 ### Sub-Services
 
@@ -76,11 +84,14 @@ In addition to the aforementioned variables, the following environment variables
 ## Developer Setup
 
 To run the adaptor locally, first all the required environment variables must be set, e.g.:
+
 ```
 export PURE_API_VERSION=v59
 ...
 ```
+
 Then to create a local virtual environment, install dependencies and manually run the adaptor:
+
 ```
 make env
 source ./env/bin/activate
