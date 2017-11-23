@@ -14,7 +14,7 @@
 - [Developer Setup](#developer-setup)
 	- [Testing](#testing)
 - [Frequently Asked Questions](#frequently-asked-questions)
-	- [Is the Pure Adaptor multi tenanted?](#is-the-pure-adaptor-multi-tenanted)
+	- [Is the adaptor multi tenanted?](#is-the-adaptor-multi-tenanted)
 	- [What is the impact of polling?](#what-is-the-impact-of-polling)
 
 ## Introduction
@@ -134,7 +134,7 @@ make test
 
 ## Frequently Asked Questions
 
-### Is the Pure Adaptor multi tenanted?
+### Is the adaptor multi tenanted?
 
 No, the pure adaptor is designed to be run once for each specific institution.
 
