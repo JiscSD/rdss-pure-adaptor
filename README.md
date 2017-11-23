@@ -6,7 +6,7 @@
 
 The RDSS Pure Adaptor is a per-institution adaptor for installations of the [Pure research information system](https://www.elsevier.com/solutions/pure).
 
-The adaptor periodically polls the `datasets` endpoint of a Pure installation, fetching new and modified datasets, and relaying these datasets on to the Jisc Research Data Shared Service (RDSS).
+The adaptor periodically polls the `datasets/` endpoint of a Pure installation, fetching new and modified datasets, and relaying these datasets on to the Jisc Research Data Shared Service (RDSS).
 
 At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, but is designed to easily accommodate interaction with other versions of the API in future.  
 
@@ -17,7 +17,11 @@ At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, 
 
 ## Service Infrastructure
 
-The adaptor consists of a docker image which is configured with the URL of institutions Pure instance, the DynamoDB cache and the Kinesis stream to publish create messages on.
+The adaptor runs as a docker container which can be configured to poll the URL of institutions Pure instance API.
+
+A checksum is created for each dataset and stored in DynamoDB to determine if a dataset has been changed since the last poll.
+
+When a new dataset is detected, the data is downloaded to S3 and a Create Message is published on the configured Kinesis Stream.
 
 The below diagram illustrates how the adaptor functions:
 
