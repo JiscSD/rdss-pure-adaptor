@@ -1,22 +1,29 @@
 # RDSS Pure Adaptor
 
-A per-institution adaptor for installations of the [Pure research information system](https://www.elsevier.com/solutions/pure). This adaptor periodically polls the `datasets` endpoint of a Pure installation, fetching new and modified datasets, and relaying these datasets on to the Jisc Research Data Shared Service (RDSS). At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, but is designed to easily accommodate interaction with other versions of the API in future.  
+[![Build Status](https://travis-ci.com/JiscRDSS/rdss-pure-adaptor.svg?branch=master)](https://travis-ci.com/JiscRDSS/rdss-pure-adaptor)
 
-### Language / Framework
+## Introduction
+
+The RDSS Pure Adaptor is a per-institution adaptor for installations of the [Pure research information system](https://www.elsevier.com/solutions/pure).
+
+The adaptor periodically polls the `datasets` endpoint of a Pure installation, fetching new and modified datasets, and relaying these datasets on to the Jisc Research Data Shared Service (RDSS).
+
+At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, but is designed to easily accommodate interaction with other versions of the API in future.  
+
+## Language / Framework
 
 - Python 3.6+
+- Docker
 
-### Service Infrastructure
+## Service Infrastructure
 
-#### Supported Environments
+The adaptor consists of a docker image which is configured with the URL of institutions Pure instance, the DynamoDB cache and the Kinesis stream to publish create messages on.
 
-The following environments are supported on an institution by institution basis:
+The below diagram illustrates how the adaptor functions:
 
-- dev
-- uat
-- prod
+![RDSS Pure Adaptor Diagram](docs/images/rdss-pure-adaptor.png)
 
-#### Sub-Services
+### Sub-Services
 
 The RDSS Pure Adaptor depends on the following infrastructure:
 
@@ -62,21 +69,6 @@ In addition to the aforementioned variables, the following environment variables
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_DEFAULT_REGION`
 
-
-## Deployment
-
-The RDSS Pure Adaptor is intended to be deployed as a service on a per-institution and per-environment basis as part of the RDSS institutional ECS clusters infrastructure. This repository is targeted by a build task defined in the [RDSS Institutional ECS Clusters](https://github.com/JiscRDSS/rdss-institutional-ecs-clusters) repository. This task will build the Docker image defined by the [Dockerfile](/Dockerfile) in this repository. The RDSS Pure Adaptor is provided as a generic docker image which is configured by the environmental variables outlined in the [Configuration](#configuration) section.
-
-
-## Test
-
-To run the test suite for the RDSS Pure Adaptor, run the following command:
-
-```
-make test
-```
-
-
 ## Developer Setup
 
 To run the adaptor locally, first all the required environment variables must be set, e.g.:
@@ -90,4 +82,12 @@ make env
 source ./env/bin/activate
 make deps
 python ./pure_adaptor/pure_adaptor.py
+```
+
+### Testing
+
+To run the test suite for the RDSS Pure Adaptor, run the following command:
+
+```
+make test
 ```
