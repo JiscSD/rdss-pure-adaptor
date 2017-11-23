@@ -138,7 +138,7 @@ make test
 
 No, the pure adaptor is designed to be run once for each specific institution.
 
-The reason behind this decision is to allow flexibility to tailor metadata mappings to each institutions individual requirements.
+The reason behind this decision is to allow flexibility to tailor metadata mappings for each institutions individual requirements.
 
 ### What is the impact of polling?
 
