@@ -95,3 +95,17 @@ To run the test suite for the RDSS Pure Adaptor, run the following command:
 ```
 make test
 ```
+
+## Frequently Asked Questions
+
+### Is the Pure Adaptor multi tenanted?
+
+No, the pure adaptor is designed to be run once for each specific institution.
+
+The main reason behind this decision is that a per institution setup allows more flexibility to tailor metadata mappings to each institutions requirements.
+
+### What is the impact of polling?
+
+The pure adaptor is setup to poll the configured Pure endpoint once every 30 miniutes.
+
+This means there may be up to a 30 miniute delay before new dataset create messages are published.
