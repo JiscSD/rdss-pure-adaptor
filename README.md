@@ -3,23 +3,29 @@
 A per-institution adaptor for installations of the [Pure research information system](https://www.elsevier.com/solutions/pure). This adaptor periodically polls the `datasets` endpoint of a Pure installation, fetching new and modified datasets, and relaying these datasets on to the Jisc Research Data Shared Service (RDSS). At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, but is designed to easily accommodate interaction with other versions of the API in future.  
 
 ### Language / Framework
+
 - Python 3.6+
 
 ### Service Infrastructure
 
 #### Supported Environments
+
 The following environments are supported on an institution by institution basis:
+
 - dev
 - uat
 - prod
 
 #### Sub-Services
+
 The RDSS Pure Adaptor depends on the following infrastructure:
+
 - AWS Kinesis Streams
 - AWS DynamoDB
 - AWS S3 Buckets
 
 ## Configuration
+
 The RDSS Pure Adaptor requires that the following environment variables are set:
 
 - `PURE_API_VERSION`
@@ -63,6 +69,7 @@ The RDSS Pure Adaptor is intended to be deployed as a service on a per-instituti
 
 
 ## Test
+
 To run the test suite for the RDSS Pure Adaptor, run the following command:
 
 ```
@@ -71,6 +78,7 @@ make test
 
 
 ## Developer Setup
+
 To run the adaptor locally, first all the required environment variables must be set, e.g.:
 ```
 export PURE_API_VERSION=v59
