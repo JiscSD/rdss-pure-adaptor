@@ -15,7 +15,7 @@ At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, 
 - Python 3.6+
 - Docker
 
-## Service Infrastructure
+## Service Details
 
 The adaptor runs as a docker container which can be configured to poll the URL of institutions Pure instance API.
 
@@ -27,13 +27,23 @@ The below diagram illustrates how the adaptor functions:
 
 ![RDSS Pure Adaptor Diagram](docs/images/rdss-pure-adaptor.png)
 
-## API Calls
+### API Calls
 
 The adaptor will make the following calls to the Pure endpoint:
 
  - `HTTP HEAD <PURE_API_URL>/datasets` to ensure endpoint is online.
  - `HTTP GET <PURE_API_URL>/datasets` to retrieve a list of datasets.
  - `HTTP GET <PURE_API_URL>/datasets/<UUID>` to retrieve the dataset file.
+
+### CRUD Capabilities
+
+At present, the service supports the following:
+
+**READ** to determine if a dataset has already been harvested.
+
+**CREATE** if a new dataset is added to pure.
+
+**UPDATE** if a dataset has been modified.
 
 ### Sub-Services
 
