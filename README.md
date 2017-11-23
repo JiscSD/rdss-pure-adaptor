@@ -21,7 +21,7 @@ The adaptor runs as a docker container which can be configured to poll the URL o
 
 A checksum is created for each dataset and stored in DynamoDB to determine if a dataset has been added or modified since the last poll.
 
-If a change is detected, the data is downloaded to S3 and the appropriate `Create` or `Update` Message is published on the configured Kinesis Stream.
+If a change is detected, the dataset is downloaded to S3 and the appropriate `Create` or `Update` message is published on the configured Kinesis Stream.
 
 The below diagram illustrates how the adaptor functions:
 
@@ -31,19 +31,21 @@ The below diagram illustrates how the adaptor functions:
 
 The adaptor will make the following calls to the Pure endpoint:
 
- - `HTTP HEAD <PURE_API_URL>/datasets` to ensure endpoint is online.
- - `HTTP GET <PURE_API_URL>/datasets` to retrieve a list of datasets.
- - `HTTP GET <PURE_API_URL>/datasets/<UUID>` to retrieve the dataset file.
+| Action | Reason |
+| ------ | ------ |
+| `HTTP HEAD <PURE_API_URL>/datasets` | Ensure the endpoint is available. |
+| `HTTP GET <PURE_API_URL>/datasets` | Retrieve a list of datasets. |
+| `HTTP GET <PURE_API_URL>/datasets/<UUID>` | Retrieve a specific dataset |
 
 ### CRUD Capabilities
 
 At present, the service supports the following:
 
-**READ** to determine if a dataset has already been harvested.
+**READ** - to determine if a dataset has already been harvested.
 
-**CREATE** if a new dataset is added to pure.
+**CREATE** - if a new dataset is added to pure.
 
-**UPDATE** if a dataset has been modified.
+**UPDATE** - if a dataset has been modified.
 
 ### Sub-Services
 
