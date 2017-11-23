@@ -2,6 +2,21 @@
 
 [![Build Status](https://travis-ci.com/JiscRDSS/rdss-pure-adaptor.svg?branch=master)](https://travis-ci.com/JiscRDSS/rdss-pure-adaptor)
 
+## Contents
+
+- [Introduction](#introduction)
+- [Language / Framework](#language-framework)
+- [Service Architecture](#service-architecture)
+	- [API Calls](#api-calls)
+	- [CRUD Capabilities](#crud-capabilities)
+	- [Sub-Services](#sub-services)
+- [Configuration](#configuration)
+- [Developer Setup](#developer-setup)
+	- [Testing](#testing)
+- [Frequently Asked Questions](#frequently-asked-questions)
+	- [Is the Pure Adaptor multi tenanted?](#is-the-pure-adaptor-multi-tenanted)
+	- [What is the impact of polling?](#what-is-the-impact-of-polling)
+
 ## Introduction
 
 The RDSS Pure Adaptor is a per-institution adaptor for installations of the [Pure research information system](https://www.elsevier.com/solutions/pure).
@@ -15,7 +30,7 @@ At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, 
 - Python 3.6+
 - Docker
 
-## Service Details
+## Service Architecture
 
 The adaptor runs as a docker container which can be configured to poll the URL of institutions Pure instance API.
 
@@ -42,9 +57,7 @@ The adaptor will make the following calls to the Pure endpoint:
 At present, the service supports the following:
 
 **READ** - to determine if a dataset has already been harvested.
-
 **CREATE** - if a new dataset is added to pure.
-
 **UPDATE** - if a dataset has been modified.
 
 ### Sub-Services
@@ -131,4 +144,4 @@ The main reason behind this decision is that a per institution setup allows more
 
 The pure adaptor is setup to poll the configured Pure endpoint once every 30 miniutes.
 
-This means there may be up to a 30 miniute delay before new dataset create messages are published.
+As such, there may be up to a 30 miniute delay before new dataset create/update messages are published.
