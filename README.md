@@ -55,13 +55,23 @@ The adaptor will make the following calls to the Pure endpoint:
 
 ### CRUD Capabilities
 
-At present, the service supports the following:
+#### RDSS CRUD Actions
+
+At present, the service supports the following actions with RDSS:
 
 | Action | Reason |
 | ------ | ------ |
 | **READ** | Determine if a dataset has already been harvested. |
 | **CREATE** | Create a new dataset that has been added to pure. |
 | **UPDATE** | Update a dataset that has been modified in pure. |
+
+#### PURE CRUD Actions
+
+At present, the service supports with following actions with PURE:
+
+| Action | Reason |
+| ------ | ------ |
+| **READ** | Retrieve datasets to be harvested. |
 
 ### Sub-Services
 
