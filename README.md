@@ -153,4 +153,4 @@ The reason behind this decision is to allow flexibility to tailor metadata mappi
 
 ### What is the impact of polling?
 
-The pure adaptor is setup to poll the configured Pure endpoint once every 30 miniutes. As such, there may be up to a 30 miniute delay before new dataset create/update messages are published.
+The pure adaptor is setup to poll the configured Pure endpoint once every 60 miniutes. As such, there may be up to a 60 miniute delay before new dataset create/update messages are published.
