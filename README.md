@@ -57,7 +57,7 @@ The adaptor will make the following calls to the Pure endpoint:
 
 #### RDSS CRUD Actions
 
-At present, the service supports the following actions with RDSS:
+The adaptor currently supports the following actions with RDSS:
 
 | Action | Reason |
 | ------ | ------ |
@@ -67,7 +67,7 @@ At present, the service supports the following actions with RDSS:
 
 #### PURE CRUD Actions
 
-At present, the service supports with following actions with PURE:
+The adaptor currently supports with following actions with PURE:
 
 | Action | Reason |
 | ------ | ------ |
