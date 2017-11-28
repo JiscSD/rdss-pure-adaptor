@@ -1,0 +1,10 @@
+{
+  "id": "https://www.jisc.ac.uk/rdss/schema/types.json/#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

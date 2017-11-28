@@ -1,0 +1,18 @@
+sudo: required
+language: python
+
+notifications:
+  email: false
+
+python:
+  - "3.6"
+
+env:
+   - AWS_DEFAULT_REGION=eu-west-2 AWS_ACCESS_KEY_ID=dummy AWS_SECRET_ACCESS_KEY=dummy2 TO_CONFIG=/tmp/nowhere
+
+install:
+  - make deps
+
+script:
+  - make lint
+  - make test
