@@ -1,25 +1,88 @@
 # RDSS Pure Adaptor
 
-A per-institution adaptor for installations of the [Pure research information system](https://www.elsevier.com/solutions/pure). This adaptor periodically polls the `datasets` endpoint of a Pure installation, fetching new and modified datasets, and relaying these datasets on to the Jisc Research Data Shared Service (RDSS). At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, but is designed to easily accommodate interaction with other versions of the API in future.  
+[![Build Status](https://travis-ci.com/JiscRDSS/rdss-pure-adaptor.svg?branch=master)](https://travis-ci.com/JiscRDSS/rdss-pure-adaptor)
 
-### Language / Framework
+## Contents
+
+- [Introduction](#introduction)
+- [Language / Framework](#language-framework)
+- [Service Architecture](#service-architecture)
+	- [API Calls](#api-calls)
+	- [CRUD Capabilities](#crud-capabilities)
+	- [Sub-Services](#sub-services)
+- [Configuration](#configuration)
+- [Developer Setup](#developer-setup)
+	- [Testing](#testing)
+	- [Linting](#linting)
+- [Frequently Asked Questions](#frequently-asked-questions)
+	- [Is the adaptor multi tenanted?](#is-the-adaptor-multi-tenanted)
+	- [What is the impact of polling?](#what-is-the-impact-of-polling)
+
+## Introduction
+
+The RDSS Pure Adaptor is a per-institution adaptor for installations of the [Pure research information system](https://www.elsevier.com/solutions/pure).
+
+The adaptor periodically polls the `datasets/` endpoint of a Pure installation, fetching new and modified datasets, and relaying these datasets on to the Jisc Research Data Shared Service (RDSS).
+
+At present the RDSS Pure Adaptor can interact with version 5.9 of the Pure API, but is designed to easily accommodate interaction with other versions of the API in future.  
+
+## Language / Framework
+
 - Python 3.6+
+- Docker
 
-### Service Infrastructure
+## Service Architecture
 
-#### Supported Environments
-The following environments are supported on an institution by institution basis:
-- dev
-- uat
-- prod
+The adaptor runs as a docker container which can be configured to poll the URL of institutions Pure instance API.
 
-#### Sub-Services
+A checksum is created for each dataset and stored in DynamoDB to determine if a dataset has been added or modified since the last poll.
+
+If a change is detected, the dataset is downloaded to S3 and the appropriate `Create` or `Update` message is published on the configured Kinesis Stream.
+
+The below diagram illustrates how the adaptor functions:
+
+![RDSS Pure Adaptor Diagram](docs/images/rdss-pure-adaptor.png)
+
+### API Calls
+
+The adaptor will make the following calls to the Pure endpoint:
+
+| Action | Reason |
+| ------ | ------ |
+| `HTTP HEAD <PURE_API_URL>/datasets` | Ensure the endpoint is available. |
+| `HTTP GET <PURE_API_URL>/datasets` | Retrieve a list of datasets. |
+| `HTTP GET <PURE_API_URL>/datasets/<UUID>` | Retrieve a specific dataset |
+
+### CRUD Capabilities
+
+#### RDSS CRUD Actions
+
+The adaptor currently supports the following actions with RDSS:
+
+| Action | Reason |
+| ------ | ------ |
+| **READ** | Determine if a dataset has already been harvested. |
+| **CREATE** | Create a new dataset that has been added to pure. |
+| **UPDATE** | Update a dataset that has been modified in pure. |
+
+#### PURE CRUD Actions
+
+The adaptor currently supports with following actions with PURE:
+
+| Action | Reason |
+| ------ | ------ |
+| **READ** | Retrieve datasets to be harvested. |
+
+### Sub-Services
+
 The RDSS Pure Adaptor depends on the following infrastructure:
+
 - AWS Kinesis Streams
 - AWS DynamoDB
 - AWS S3 Buckets
 
 ## Configuration
+
 The RDSS Pure Adaptor requires that the following environment variables are set:
 
 - `PURE_API_VERSION`
@@ -56,30 +119,48 @@ In addition to the aforementioned variables, the following environment variables
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_DEFAULT_REGION`
 
-
-## Deployment
-
-The RDSS Pure Adaptor is intended to be deployed as a service on a per-institution and per-environment basis as part of the RDSS institutional ECS clusters infrastructure. This repository is targeted by a build task defined in the [RDSS Institutional ECS Clusters](https://github.com/JiscRDSS/rdss-institutional-ecs-clusters) repository. This task will build the Docker image defined by the [Dockerfile](/Dockerfile) in this repository. The RDSS Pure Adaptor is provided as a generic docker image which is configured by the environmental variables outlined in the [Configuration](#configuration) section.
-
-
-## Test
-To run the test suite for the RDSS Pure Adaptor, run the following command:
-
-```
-make test
-```
-
-
 ## Developer Setup
+
 To run the adaptor locally, first all the required environment variables must be set, e.g.:
+
 ```
 export PURE_API_VERSION=v59
 ...
 ```
+
 Then to create a local virtual environment, install dependencies and manually run the adaptor:
+
 ```
 make env
 source ./env/bin/activate
 make deps
 python ./pure_adaptor/pure_adaptor.py
 ```
+
+### Testing
+
+To run the test suite for the RDSS Pure Adaptor, run the following command:
+
+```
+make test
+```
+
+### Linting
+
+To run the automated linting tool, run the following command:
+
+```
+make lint
+```
+
+## Frequently Asked Questions
+
+### Is the adaptor multi tenanted?
+
+No, the pure adaptor is designed to be run once for each specific institution.
+
+The reason behind this decision is to allow flexibility to tailor metadata mappings for each institutions individual requirements.
+
+### What is the impact of polling?
+
+The pure adaptor is setup to poll the configured Pure endpoint once every 60 miniutes. As such, there may be up to a 60 miniute delay before new dataset create/update messages are published.
