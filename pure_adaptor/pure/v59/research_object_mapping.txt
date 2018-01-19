@@ -17,7 +17,7 @@
   objectCategory: `[]`,
   objectResourceType: '',
   objectValue: '',
-  objectIdentifier: `[]`,
+  objectIdentifier: [documents[*].id] || `[]`,
   objectRelatedIdentifier: `[]`,
   objectOrganisationRole: `[]`,
   objectPreservationEvent: `[]`,
