@@ -24,7 +24,7 @@
   objectFile: documents[*].{
     fileUUID: '',
     fileIdentifier: url,
-    fileName: '',
+    fileName: title,
     fileSize: '',
     fileLabel: '',
     fileDateCreated: created,
