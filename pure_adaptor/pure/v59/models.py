@@ -106,17 +106,21 @@ class PureDataset(BasePureDataset):
         :return:
         """
         pure_objdate = canonical_metadata.get('objectDate')
-        new_dates = []
-        date_regex = re.compile('.*Date')
-        for key, value in pure_objdate.items():
-            if date_regex.match(key):
-                rdss_name = key.strip('Date')
-                mapping = self.taxonomy_client.get_by_name(
-                    DATE_TYPE, rdss_name)
-                rdss_dateobj = {'dateType': mapping,
-                                'dateValue': value}
-                new_dates.append(rdss_dateobj)
-        canonical_metadata['objectDate'] = new_dates
+        if not pure_objdate:
+            return canonical_metadata
+        else:
+            new_dates = []
+            date_regex = re.compile('.*Date')
+            for key, value in pure_objdate.items():
+                if date_regex.match(key):
+                    rdss_name = key.strip('Date')
+                    mapping = self.taxonomy_client.get_by_name(
+                        DATE_TYPE, rdss_name)
+                    rdss_dateobj = {'dateType': mapping,
+                                    'dateValue': value}
+                    new_dates.append(rdss_dateobj)
+            canonical_metadata['objectDate'] = new_dates
+            return canonical_metadata
 
     @property
     def doi_upload_key(self):
