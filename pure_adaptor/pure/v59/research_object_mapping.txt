@@ -3,6 +3,7 @@
   objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
+        personUuid : person.uuid || externalPerson.uuid,
         personIdentifier: id,
         personFirstName: name.firstName,
         personSecondName: name.lastName,

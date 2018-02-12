@@ -31,6 +31,11 @@ class TestPureMessageMappings(object):
         res_type = pure_dataset.rdss_canonical_metadata['objectResourceType']
         assert res_type == 7
 
+    def test_person_uuid(self, pure_dataset):
+        sample_uuid = 'ba8c1112-b6de-446b-ac2f-0b95c80a5cc2'
+        person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
+        assert person['person']['personUuid'] == sample_uuid
+
 
 class TestPureDataset(object):
 
