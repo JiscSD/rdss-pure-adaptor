@@ -1,9 +1,38 @@
 import datetime
+import json
+import os
+import pytest
 
 from ..models import PureDataset, ws_url_remap
 
 
-class TestPureDataset():
+class TestPureMessageMappings(object):
+
+    @pytest.fixture
+    def pure_json(self):
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname,
+                                'fixtures',
+                                '2bdd031e-f373-424f-9657-192431ea4a06.json')
+        with open(filename, 'r') as handle:
+            contents = handle.read()
+        return json.loads(contents)
+
+    @pytest.fixture
+    def pure_dataset(self, pure_json):
+        return PureDataset(pure_json)
+
+    def test_object_date(self, pure_dataset):
+        date_value = '2017-05-16T15:50:27.337+0000'
+        object_date = pure_dataset.rdss_canonical_metadata['objectDate'][0]
+        assert object_date['dateValue'] == date_value
+
+    def test_object_resourcetype(self, pure_dataset):
+        res_type = pure_dataset.rdss_canonical_metadata['objectResourceType']
+        assert res_type == 7
+
+
+class TestPureDataset(object):
 
     def setup(self):
         self.now = datetime.datetime.now(datetime.timezone.utc)
@@ -21,7 +50,8 @@ class TestPureDataset():
             'uuid': self.uuid,
             'doi': self.doi,
             'info': {
-                'modifiedDate': self.now.isoformat()
+                'modifiedDate': self.now.isoformat(),
+                'modifiedBy': 'testuser'
             },
             'documents': [{'title': n, 'url': u}
                           for u, n in self.url_name_pairs]

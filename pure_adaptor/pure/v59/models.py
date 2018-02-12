@@ -3,12 +3,9 @@ import dateutil.parser
 import urllib
 import jmespath
 import logging
-import re
-
-from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient, DATE_TYPE
 
 from ..base import BasePureDataset
-from ..base import JSONRemapper
+from ..base import JSONRemapper, JMESCustomFunctions
 
 from .download_manager import PureDownloadManager
 from .checksum import ChecksumGenerator
@@ -18,8 +15,6 @@ logger = logging.getLogger(__name__)
 pure_to_canonical_mapper = JSONRemapper(
     os.path.join(os.path.dirname(__file__), 'research_object_mapping.txt'))
 checksum_generator = ChecksumGenerator()
-
-TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
 
 
 def ws_url_remap(pure_data_url):
@@ -41,7 +36,6 @@ def file_name_from_url(url):
 class PureDataset(BasePureDataset):
     """Abstraction around the dataset responses from the Pure API.
         """
-    taxonomy_client = TaxonomyGitClient(TAXONOMY_SCHEMA_REPO)
 
     def __init__(self, dataset_json, pure_api_instance=None):
         """ Initialises the dataset with the dataset json object returned
@@ -98,30 +92,6 @@ class PureDataset(BasePureDataset):
             canonical_metadata['objectFile'] = new_object_files
             return canonical_metadata
 
-    def _update_with_taxonomy_date_data(self, canonical_metadata):
-        """
-        Updates fields in the canonical data model with data that
-        is only available through the Taxonomy API
-        :param canonical_metadata:
-        :return:
-        """
-        pure_objdate = canonical_metadata.get('objectDate')
-        if not pure_objdate:
-            return canonical_metadata
-        else:
-            new_dates = []
-            date_regex = re.compile('.*Date')
-            for key, value in pure_objdate.items():
-                if date_regex.match(key):
-                    rdss_name = key.strip('Date')
-                    mapping = self.taxonomy_client.get_by_name(
-                        DATE_TYPE, rdss_name)
-                    rdss_dateobj = {'dateType': mapping,
-                                    'dateValue': value}
-                    new_dates.append(rdss_dateobj)
-            canonical_metadata['objectDate'] = new_dates
-            return canonical_metadata
-
     @property
     def doi_upload_key(self):
         doi_key = self._dataset_json.get('doi')
@@ -138,8 +108,11 @@ class PureDataset(BasePureDataset):
     def rdss_canonical_metadata(self):
         logger.info('Remapping pure dataset %s to canonical metadata.',
                     self.uuid)
-        metadata = pure_to_canonical_mapper.remap(self._dataset_json)
-        return self._update_with_local_data(metadata)
+        custom_funcs = JMESCustomFunctions()
+        metadata = pure_to_canonical_mapper.remap(self._dataset_json,
+                                                  custom_funcs=custom_funcs)
+        final = self._update_with_local_data(metadata)
+        return final
 
     @property
     def files(self):
