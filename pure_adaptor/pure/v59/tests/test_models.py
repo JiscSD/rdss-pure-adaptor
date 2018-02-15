@@ -51,7 +51,7 @@ class TestPureMessageMappings(object):
         id_value = '250007106'
         id_type = 1
         person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
-        p_id = person['person']['personIdentifier']
+        p_id = person['person']['personIdentifier'][0]
         assert p_id['personIdentifierValue'] == id_value
         assert p_id['personIdentifierType'] == id_type
 

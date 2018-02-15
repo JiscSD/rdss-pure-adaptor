@@ -8,10 +8,10 @@
         personSecondName: name.lastName,
         personOrganisationalUnit: organisationalUnits[].name[].value
         personGivenName : person.name[0].value || externalPerson.name[0].value,
-        personIdentifier : {
+        personIdentifier : [{
             personIdentifierValue : to_string(id),
             personIdentifierType : '' | person_identifiertype(@)
-        }
+        }]
         },
       role: personRole[0].value
     },
