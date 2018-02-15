@@ -2,13 +2,18 @@ import datetime
 import json
 import os
 import pytest
+import shutil
 
 from ..models import PureDataset, ws_url_remap
 
 
 class TestPureMessageMappings(object):
 
-    @pytest.fixture
+    def cleanup_taxonomy_dir(self):
+        print('removing')
+        shutil.rmtree('temp_taxonomydata')
+
+    @pytest.fixture(scope='module')
     def pure_json(self):
         dirname = os.path.dirname(__file__)
         filename = os.path.join(dirname,
@@ -18,8 +23,9 @@ class TestPureMessageMappings(object):
             contents = handle.read()
         return json.loads(contents)
 
-    @pytest.fixture
-    def pure_dataset(self, pure_json):
+    @pytest.fixture(scope='module')
+    def pure_dataset(self, pure_json, request):
+        request.addfinalizer(self.cleanup_taxonomy_dir)
         return PureDataset(pure_json)
 
     def test_object_date(self, pure_dataset):
@@ -35,6 +41,19 @@ class TestPureMessageMappings(object):
         sample_uuid = 'ba8c1112-b6de-446b-ac2f-0b95c80a5cc2'
         person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
         assert person['person']['personUuid'] == sample_uuid
+
+    def test_person_given_name(self, pure_dataset):
+        name = 'Alejandro  S\u00e1nchez-Amaro'
+        person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
+        assert person['person']['personGivenName'] == name
+
+    def test_person_identifier(self, pure_dataset):
+        id_value = '250007106'
+        id_type = 1
+        person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
+        p_id = person['person']['personIdentifier']
+        assert p_id['personIdentifierValue'] == id_value
+        assert p_id['personIdentifierType'] == id_type
 
 
 class TestPureDataset(object):

@@ -56,3 +56,7 @@ class JMESCustomFunctions(functions.Functions):
             RESOURCE_TYPE, rdss_name
         )
         return mapping
+
+    @functions.signature({'types': ['string']})
+    def _func_person_identifiertype(self, identifier_type):
+        return 1

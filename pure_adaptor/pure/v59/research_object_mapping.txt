@@ -4,10 +4,14 @@
   objectPersonRole: personAssociations[*].{
       person: {
         personUuid : person.uuid || externalPerson.uuid,
-        personIdentifier: id,
         personFirstName: name.firstName,
         personSecondName: name.lastName,
         personOrganisationalUnit: organisationalUnits[].name[].value
+        personGivenName : person.name[0].value || externalPerson.name[0].value,
+        personIdentifier : {
+            personIdentifierValue : to_string(id),
+            personIdentifierType : '' | person_identifiertype(@)
+        }
         },
       role: personRole[0].value
     },
