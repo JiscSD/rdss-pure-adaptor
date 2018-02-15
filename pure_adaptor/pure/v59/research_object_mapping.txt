@@ -13,7 +13,7 @@
             personIdentifierType : '' | person_identifiertype(@)
         }]
         },
-      role: personRole[0].value
+      role: personRole[0].value | person_role(@)
     },
   objectDescription: description.value || '',
   objectRights: `[]`,

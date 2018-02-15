@@ -4,7 +4,7 @@ import logging
 import re
 
 from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient, DATE_TYPE,\
-    RESOURCE_TYPE
+    RESOURCE_TYPE, PERSON_ROLE
 
 logger = logging.getLogger(__name__)
 
@@ -60,3 +60,14 @@ class JMESCustomFunctions(functions.Functions):
     @functions.signature({'types': ['string']})
     def _func_person_identifiertype(self, identifier_type):
         return 1
+
+    @functions.signature({'types': ['string']})
+    def _func_person_role(self, person_role):
+        if person_role == 'Creator':
+            rdss_name = 'data' + person_role
+        else:
+            rdss_name = person_role
+        mapping = self.taxonomy_client.get_by_name(
+            PERSON_ROLE, rdss_name
+        )
+        return mapping

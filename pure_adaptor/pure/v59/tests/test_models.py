@@ -55,6 +55,11 @@ class TestPureMessageMappings(object):
         assert p_id['personIdentifierValue'] == id_value
         assert p_id['personIdentifierType'] == id_type
 
+    def test_person_role(self, pure_dataset):
+        role_mapping = 5
+        person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
+        assert person['role'] == role_mapping
+
 
 class TestPureDataset(object):
 
