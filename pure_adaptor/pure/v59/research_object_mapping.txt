@@ -8,6 +8,7 @@
         personGivenName : person.name[0].value || externalPerson.name[0].value,
         personCn : name.firstName,
         personSn : name.lastName,
+        personAffiliation : '' | person_affiliation(@),
         personIdentifier : [{
             personIdentifierValue : to_string(id),
             personIdentifierType : '' | person_identifiertype(@)

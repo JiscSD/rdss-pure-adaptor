@@ -59,6 +59,7 @@ class JMESCustomFunctions(functions.Functions):
 
     @functions.signature({'types': ['string']})
     def _func_person_identifiertype(self, identifier_type):
+        # dummy value
         return 1
 
     @functions.signature({'types': ['string']})
@@ -71,3 +72,8 @@ class JMESCustomFunctions(functions.Functions):
             PERSON_ROLE, rdss_name
         )
         return mapping
+
+    @functions.signature({'types': ['string']})
+    def _func_person_affiliation(self, affiliation):
+        # dummy value
+        return 1

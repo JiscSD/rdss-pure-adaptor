@@ -69,6 +69,12 @@ class TestPureMessageMappings(object):
         assert person['personCn'] == cn
         assert person['personSn'] == sn
 
+    def test_person_affiliation(self, pure_dataset):
+        personR = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
+        person = personR['person']
+        # test dummy value for now
+        assert person['personAffiliation'] == 1
+
 
 class TestPureDataset(object):
 
