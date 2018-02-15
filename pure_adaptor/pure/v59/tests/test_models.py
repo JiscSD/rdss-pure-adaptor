@@ -60,6 +60,15 @@ class TestPureMessageMappings(object):
         person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
         assert person['role'] == role_mapping
 
+    def test_person_cn_sn(self, pure_dataset):
+        cn = 'Alejandro '
+        sn = 'S\u00e1nchez-Amaro'
+        personR = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
+        person = personR['person']
+        print(person)
+        assert person['personCn'] == cn
+        assert person['personSn'] == sn
+
 
 class TestPureDataset(object):
 
