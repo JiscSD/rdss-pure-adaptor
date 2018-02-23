@@ -52,7 +52,7 @@ test: ## Run tests
 	@pytest --cov-branch --cov=.
 
 coverage:
-	@coverage xml -i
+	@coverage xml -i --omit=pure_adaptor/adaptor/tests/*,pure_adaptor/pure/v59/tests/*
 
 clean: ## Clean the build
 	@find . -name '__pycache__' | xargs rm -rf
