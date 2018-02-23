@@ -1,0 +1,3 @@
+{
+  "pure_adaptor/adaptor/tests/test_s3_bucket.py::TestBucketUploader::()::test_json_obj_upload": true
+}
