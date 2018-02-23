@@ -19,7 +19,7 @@ name: ## Base name for this repo
 
 dev-build: env ## Builds a local dev environment
 	source env/bin/activate;\
-	$(MAKE) deps;
+	$(MAKE) deps;\
 
 env: ## Install the python virtual environment
 	@virtualenv -p python3 env
