@@ -24,5 +24,4 @@ before_script:
 script:
   - make lint
   - make test
-  - make coverage
   - sonar-scanner -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONARQUBE_TOKEN
