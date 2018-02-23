@@ -1,6 +1,8 @@
 boto3
+coverage
 jmespath
 jsonschema
 moto
-pytest
+pylint
+pytest-cov
 requests

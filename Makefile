@@ -49,7 +49,10 @@ autopep8-stats: ## Display PEP8 stats
 	@pep8 --quiet --statistics .
 
 test: ## Run tests
-	@pytest
+	@pytest --cov-branch --cov=.
+
+coverage:
+	@coverage xml -i
 
 clean: ## Clean the build
 	@find . -name '__pycache__' | xargs rm -rf
