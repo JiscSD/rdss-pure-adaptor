@@ -37,6 +37,12 @@ class TestPureMessageMappings(object):
         res_type = pure_dataset.rdss_canonical_metadata['objectResourceType']
         assert res_type == 7
 
+    def test_object_identifier(self, pure_dataset):
+        obj_id = pure_dataset.rdss_canonical_metadata['objectIdentifier']
+        id_value = 'http://dx.doi.org/10.5061/dryad.8638h'
+        assert isinstance(obj_id, list)
+        assert obj_id[0]['identifierValue'] == id_value
+
     def test_person_uuid(self, pure_dataset):
         sample_uuid = 'ba8c1112-b6de-446b-ac2f-0b95c80a5cc2'
         person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
@@ -74,6 +80,15 @@ class TestPureMessageMappings(object):
         person = personR['person']
         # test dummy value for now
         assert person['personAffiliation'] == 1
+
+    def test_person_organisation_unit(self, pure_dataset):
+        personR = pure_dataset.rdss_canonical_metadata['objectPersonRole'][2]
+        ou_uuid = 'e1dc1e3f-980e-4a49-8e46-b0ce898eccbb'
+        ou_uname = 'School of Psychology and Neuroscience'
+        person = personR['person']
+        personOu = person['personOrganisationUnit']
+        assert personOu['organisationUnitUuid'] == ou_uuid
+        assert personOu['organisationUnitName'] == ou_uname
 
 
 class TestPureDataset(object):

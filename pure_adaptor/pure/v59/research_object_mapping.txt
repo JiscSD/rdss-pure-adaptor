@@ -32,7 +32,11 @@
   objectCategory: `[]`,
   objectResourceType: type[0].value | object_resourcetype(@),
   objectValue: '',
-  objectIdentifier: documents[*].id || `[]`,
+  objectIdentifier:[
+        {
+        identifierValue : doi || uuid,
+        identifierType : ''
+       }],
   objectRelatedIdentifier:  relatedProjects[*].uuid || `[]`,
   objectOrganisationRole: personAssociations[*].{
     organisation : {
