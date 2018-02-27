@@ -4,16 +4,25 @@
   objectPersonRole: personAssociations[*].{
       person: {
         personUuid : person.uuid || externalPerson.uuid,
-        personOrganisationalUnit: organisationalUnits[].name[].value
         personGivenName : person.name[0].value || externalPerson.name[0].value,
         personCn : name.firstName,
         personSn : name.lastName,
         personAffiliation : '' | person_affiliation(@),
+        personOrganisationUnit : {
+            organisationUnitUuid :organisationalUnits[0].uuid,
+            organisationUnitName : organisationalUnits[0].name[0].value,
+            organisation : {
+                organisationJiscId : '',
+                organisationName: publisher.name,
+                organisationType: '',
+                organisationAddress: ''
+            }
+        },
         personIdentifier : [{
             personIdentifierValue : to_string(id),
             personIdentifierType : '' | person_identifiertype(@)
         }]
-        }
+        },
       role: personRole[0].value | person_role(@)
     },
   objectDescription: description.value || '',
@@ -25,7 +34,17 @@
   objectValue: '',
   objectIdentifier: documents[*].id || `[]`,
   objectRelatedIdentifier:  relatedProjects[*].uuid || `[]`,
-  objectOrganisationRole: `[]`,
+  objectOrganisationRole: personAssociations[*].{
+    organisation : {
+        organisationJiscId : '',
+        organisationName: '',
+        organisationType: '',
+        organisationAddress: ''
+    },
+    role : ''
+  }
+
+  ,
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
     fileUUID: '',
