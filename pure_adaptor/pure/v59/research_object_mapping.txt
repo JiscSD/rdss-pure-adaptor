@@ -46,7 +46,7 @@
         organisationType: publisher.type[0].value | org_type(@),
         organisationAddress: ''
     },
-    role : ''
+    role : publisher.type[0].value | org_role(@)
   },
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{

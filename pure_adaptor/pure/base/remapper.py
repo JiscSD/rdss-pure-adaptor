@@ -5,7 +5,7 @@ import re
 
 from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient, DATE_TYPE,\
     RESOURCE_TYPE, PERSON_ROLE, ORGANISATION_TYPE, \
-    ValueNotFound
+    ValueNotFound, ORGANISATION_ROLE
 
 logger = logging.getLogger(__name__)
 
@@ -101,3 +101,10 @@ class JMESCustomFunctions(functions.Functions):
                 ORGANISATION_TYPE, 'other'
             )
             return org_type
+
+    @functions.signature({'types': ['string']})
+    def _func_org_role(self, org_role):
+        rdss_name = org_role.lower()
+        return self.taxonomy_client.get_by_name(
+            ORGANISATION_ROLE, rdss_name
+        )
