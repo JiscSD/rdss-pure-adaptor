@@ -7,13 +7,14 @@
         personGivenName : person.name[0].value || externalPerson.name[0].value,
         personCn : name.firstName,
         personSn : name.lastName,
+        personEntitlement : '',
         personAffiliation : '' | person_affiliation(@),
         personOrganisationUnit : {
             organisationUnitUuid :organisationalUnits[0].uuid,
             organisationUnitName : organisationalUnits[0].name[0].value,
             organisation : {
                 organisationJiscId : '',
-                organisationName: publisher.name,
+                organisationName: '',
                 organisationType: '',
                 organisationAddress: ''
             }
@@ -38,17 +39,15 @@
         identifierType : ''
        }],
   objectRelatedIdentifier:  relatedProjects[*].uuid || `[]`,
-  objectOrganisationRole: personAssociations[*].{
+  objectOrganisationRole: {
     organisation : {
-        organisationJiscId : '',
-        organisationName: '',
-        organisationType: '',
+        organisationJiscId : publisher.name[0].value | jisc_id(@),
+        organisationName: publisher.name[0].value,
+        organisationType: publisher.type[0].value | org_type(@),
         organisationAddress: ''
     },
     role : ''
-  }
-
-  ,
+  },
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
     fileUUID: '',

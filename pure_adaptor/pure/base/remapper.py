@@ -4,11 +4,17 @@ import logging
 import re
 
 from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient, DATE_TYPE,\
-    RESOURCE_TYPE, PERSON_ROLE
+    RESOURCE_TYPE, PERSON_ROLE, ORGANISATION_TYPE, \
+    ValueNotFound
 
 logger = logging.getLogger(__name__)
 
 TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
+
+
+JISC_ID = {
+    'University of St Andrews': 799,
+}
 
 
 class JSONRemapper(object):
@@ -77,3 +83,21 @@ class JMESCustomFunctions(functions.Functions):
     def _func_person_affiliation(self, affiliation):
         # dummy value
         return 1
+
+    @functions.signature({'types': ['string']})
+    def _func_jisc_id(self, publisher_name):
+        return JISC_ID.get(publisher_name) or 0
+
+    @functions.signature({'types': ['string']})
+    def _func_org_type(self, org_type):
+        rdss_name = org_type.lower()
+        try:
+            org_type = self.taxonomy_client.get_by_name(
+                ORGANISATION_TYPE, rdss_name
+            )
+            return org_type
+        except ValueNotFound:
+            org_type = self.taxonomy_client.get_by_name(
+                ORGANISATION_TYPE, 'other'
+            )
+            return org_type

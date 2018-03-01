@@ -90,6 +90,14 @@ class TestPureMessageMappings(object):
         assert personOu['organisationUnitUuid'] == ou_uuid
         assert personOu['organisationUnitName'] == ou_uname
 
+    def test_organisation_role(self, pure_dataset):
+        org_role = pure_dataset.rdss_canonical_metadata['object'
+                                                        'OrganisationRole']
+        organisation = org_role['organisation']
+        assert org_role['organisation']['organisationJiscId'] == 0
+        assert organisation['organisationName'] == 'Dryad'
+        assert organisation['organisationType'] == 9
+
 
 class TestPureDataset(object):
 
