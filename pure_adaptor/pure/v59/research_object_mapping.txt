@@ -27,7 +27,18 @@
       role: personRole[0].value | person_role(@)
     },
   objectDescription: description[0].value || '',
-  objectRights: `[]`,
+  objectRights: documents[*].{
+    rightsStatement : '',
+    rightsHolder : '',
+    licence : [{
+                licenceName: documentLicense[0].value,
+                licenceIdentifier : documentLicense[0].uri
+                }],
+    access : [{
+                accessType: '',
+                accessStatement: ''
+                }]
+  },
   objectDate: info | object_date(@),
   objectKeywords: keywordGroups[].keywords[].value || `[]`,
   objectCategory: `[]`,
