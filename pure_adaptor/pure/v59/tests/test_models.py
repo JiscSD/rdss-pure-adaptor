@@ -10,7 +10,6 @@ from ..models import PureDataset, ws_url_remap
 class TestPureMessageMappings(object):
 
     def cleanup_taxonomy_dir(self):
-        print('removing')
         shutil.rmtree('temp_taxonomydata')
 
     @pytest.fixture(scope='module')
@@ -28,6 +27,10 @@ class TestPureMessageMappings(object):
         request.addfinalizer(self.cleanup_taxonomy_dir)
         return PureDataset(pure_json)
 
+    @pytest.fixture(scope='module')
+    def person_role(self, pure_dataset):
+        return pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
+
     def test_object_date(self, pure_dataset):
         date_value = '2017-05-16T15:50:27.337+0000'
         object_date = pure_dataset.rdss_canonical_metadata['objectDate'][0]
@@ -43,52 +46,41 @@ class TestPureMessageMappings(object):
         assert isinstance(obj_id, list)
         assert obj_id[0]['identifierValue'] == id_value
 
-    def test_person_uuid(self, pure_dataset):
+    def test_person_uuid(self, person_role):
         sample_uuid = 'ba8c1112-b6de-446b-ac2f-0b95c80a5cc2'
-        person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
-        assert person['person']['personUuid'] == sample_uuid
+        assert person_role['person']['personUuid'] == sample_uuid
 
-    def test_person_given_name(self, pure_dataset):
+    def test_person_given_name(self, person_role):
         name = 'Alejandro  S\u00e1nchez-Amaro'
-        person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
-        assert person['person']['personGivenName'] == name
+        assert person_role['person']['personGivenName'] == name
 
-    def test_person_identifier(self, pure_dataset):
-        id_value = '250007106'
-        id_type = 1
-        person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
-        p_id = person['person']['personIdentifier'][0]
-        assert p_id['personIdentifierValue'] == id_value
-        assert p_id['personIdentifierType'] == id_type
+    def test_person_identifier(self, person_role):
+        p_id = person_role['person']['personIdentifier'][0]
+        assert p_id['personIdentifierValue'] == '250007106'
+        assert p_id['personIdentifierType'] == 1
 
-    def test_person_role(self, pure_dataset):
+    def test_person_role(self, person_role):
         role_mapping = 5
-        person = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
-        assert person['role'] == role_mapping
+        assert person_role['role'] == role_mapping
 
-    def test_person_cn_sn(self, pure_dataset):
+    def test_person_cn_sn(self, person_role):
         cn = 'Alejandro '
         sn = 'S\u00e1nchez-Amaro'
-        personR = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
-        person = personR['person']
-        print(person)
-        assert person['personCn'] == cn
-        assert person['personSn'] == sn
+        assert person_role['person']['personCn'] == cn
+        assert person_role['person']['personSn'] == sn
 
-    def test_person_affiliation(self, pure_dataset):
-        personR = pure_dataset.rdss_canonical_metadata['objectPersonRole'][0]
-        person = personR['person']
+    def test_person_affiliation(self, person_role):
         # test dummy value for now
-        assert person['personAffiliation'] == 1
+        assert person_role['person']['personAffiliation'] == 1
 
     def test_person_organisation_unit(self, pure_dataset):
-        personR = pure_dataset.rdss_canonical_metadata['objectPersonRole'][2]
+        person_role = pure_dataset.rdss_canonical_metadata['object'
+                                                           'PersonRole'][2]
         ou_uuid = 'e1dc1e3f-980e-4a49-8e46-b0ce898eccbb'
         ou_uname = 'School of Psychology and Neuroscience'
-        person = personR['person']
-        personOu = person['personOrganisationUnit']
-        assert personOu['organisationUnitUuid'] == ou_uuid
-        assert personOu['organisationUnitName'] == ou_uname
+        person_ou = person_role['person']['personOrganisationUnit']
+        assert person_ou['organisationUnitUuid'] == ou_uuid
+        assert person_ou['organisationUnitName'] == ou_uname
 
     def test_obj_organisation_role(self, pure_dataset):
         org_role = pure_dataset.rdss_canonical_metadata['object'
@@ -101,10 +93,10 @@ class TestPureMessageMappings(object):
 
     def test_obj_rights(self, pure_dataset):
         obj_rights = pure_dataset.rdss_canonical_metadata['objectRights'][0]
-        assert obj_rights['rightsStatement'] == ''
-        assert obj_rights['rightsHolder'] == ''
         licence = obj_rights['licence'][0]
         access = obj_rights['access'][0]
+        assert obj_rights['rightsStatement'] == ''
+        assert obj_rights['rightsHolder'] == ''
         assert licence['licenceName'] == 'CC BY'
         assert licence['licenceIdentifier'] == '/dk/atira/pure/dataset/'\
                                                'documentlicenses/cc-by'
