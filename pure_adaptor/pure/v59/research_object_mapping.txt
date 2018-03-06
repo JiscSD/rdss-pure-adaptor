@@ -21,7 +21,7 @@
         },
         personIdentifier: [{
             personIdentifierValue: to_string(id),
-            personIdentifierType: '' | person_identifiertype(@)
+            personIdentifierType: `1`
         }]
         },
       role: personRole[0].value | person_role(@)
