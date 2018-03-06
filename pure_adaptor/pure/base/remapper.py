@@ -10,6 +10,7 @@ from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient, DATE_TYPE,\
 logger = logging.getLogger(__name__)
 
 TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
+GIT_TAG = 'v0.1.0'
 
 
 JISC_ID = {
@@ -39,7 +40,7 @@ class JMESCustomFunctions(functions.Functions):
     """
     Custom JMESPath mapping functions
     """
-    taxonomy_client = TaxonomyGitClient(TAXONOMY_SCHEMA_REPO)
+    taxonomy_client = TaxonomyGitClient(TAXONOMY_SCHEMA_REPO, GIT_TAG)
 
     @functions.signature({'types': ['object']})
     def _func_object_date(self, date_dict):
