@@ -3,38 +3,38 @@
   objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
-        personUuid : person.uuid || externalPerson.uuid,
-        personGivenName : person.name[0].value || externalPerson.name[0].value,
-        personCn : name.firstName,
-        personSn : name.lastName,
-        personEntitlement : '',
-        personAffiliation : '' | person_affiliation(@),
-        personOrganisationUnit : {
-            organisationUnitUuid :organisationalUnits[0].uuid,
-            organisationUnitName : organisationalUnits[0].name[0].value,
-            organisation : {
+        personUuid: person.uuid || externalPerson.uuid,
+        personGivenName: person.name[0].value || externalPerson.name[0].value,
+        personCn: name.firstName,
+        personSn: name.lastName,
+        personEntitlement: '',
+        personAffiliation: `1`,
+        personOrganisationUnit: {
+            organisationUnitUuid: organisationalUnits[0].uuid,
+            organisationUnitName: organisationalUnits[0].name[0].value,
+            organisation: {
                 organisationJiscId : '',
                 organisationName: '',
                 organisationType: '',
                 organisationAddress: ''
             }
         },
-        personIdentifier : [{
-            personIdentifierValue : to_string(id),
-            personIdentifierType : '' | person_identifiertype(@)
+        personIdentifier: [{
+            personIdentifierValue: to_string(id),
+            personIdentifierType: '' | person_identifiertype(@)
         }]
         },
       role: personRole[0].value | person_role(@)
     },
   objectDescription: description[0].value || '',
   objectRights: documents[*].{
-    rightsStatement : '',
-    rightsHolder : '',
-    licence : [{
+    rightsStatement: '',
+    rightsHolder: '',
+    licence: [{
                 licenceName: documentLicense[0].value,
                 licenceIdentifier : documentLicense[0].uri
                 }],
-    access : [{
+    access: [{
                 accessType: '',
                 accessStatement: ''
                 }]
@@ -51,13 +51,13 @@
        }],
   objectRelatedIdentifier:  relatedProjects[*].uuid || `[]`,
   objectOrganisationRole: {
-    organisation : {
-        organisationJiscId : publisher.name[0].value | jisc_id(@),
+    organisation: {
+        organisationJiscId: publisher.name[0].value | jisc_id(@),
         organisationName: publisher.name[0].value,
         organisationType: publisher.type[0].value | org_type(@),
         organisationAddress: ''
     },
-    role : publisher.type[0].value | org_role(@)
+    role: publisher.type[0].value | org_role(@)
   },
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
