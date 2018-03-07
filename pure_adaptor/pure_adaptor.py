@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+import atexit
 import logging
 import os
+import shutil
 import sys
 
 from processor import PureAdaptor
@@ -13,6 +15,14 @@ std_out_handler = logging.StreamHandler(sys.stdout)
 std_out_handler.setFormatter(log_formatter)
 std_out_handler.setLevel(logging.INFO)
 logger.addHandler(std_out_handler)
+
+
+def _handle_rmdir_errors(func, path, excinfo):
+    logger.warning('Failed to cleanup directory {}'.format(path))
+
+
+def cleanup_taxonomy_directories(path_name, error_handler):
+    shutil.rmtree(path_name, onerror=error_handler)
 
 
 def all_env_vars_exist(var_names):
@@ -53,7 +63,8 @@ def main():
     except Exception:
         logging.exception('Cannot run the Pure Adaptor.')
         sys.exit(1)
-
+    atexit.register(cleanup_taxonomy_directories, 'temp_taxonomydata',
+                    onerror=_handle_rmdir_errors)
     adaptor.run()
 
 

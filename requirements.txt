@@ -2,8 +2,8 @@ asn1crypto==0.23.0
 aspy.yaml==1.0.0
 aws-xray-sdk==0.93
 boto==2.48.0
-boto3==1.4.7
-botocore==1.7.36
+boto3==1.6.3
+botocore==1.9.3
 cached-property==1.3.1
 certifi==2017.7.27.1
 cffi==1.11.2
@@ -13,6 +13,8 @@ cryptography==2.1.2
 docker==2.5.1
 docker-pycreds==0.2.1
 docutils==0.14
+gitdb2==2.0.3
+GitPython==2.1.8
 google-compute-engine==2.7.1
 identify==1.0.6
 idna==2.6
@@ -33,9 +35,11 @@ pytest==3.2.3
 python-dateutil==2.6.1
 pytz==2017.2
 PyYAML==3.12
+-e git://github.com/JiscRDSS/rdss-shared-libraries.git@879b3402cc65e3602eb9c832e6aabf6ec59a8e5c#egg=rdsslib
 requests==2.18.4
-s3transfer==0.1.11
+s3transfer==0.1.13
 six==1.11.0
+smmap2==2.0.3
 urllib3==1.22
 virtualenv==15.1.0
 websocket-client==0.44.0

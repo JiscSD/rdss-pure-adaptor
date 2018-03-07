@@ -3,8 +3,9 @@ import dateutil.parser
 import urllib
 import jmespath
 import logging
+
 from ..base import BasePureDataset
-from ..base import JSONRemapper
+from ..base import JSONRemapper, JMESCustomFunctions
 
 from .download_manager import PureDownloadManager
 from .checksum import ChecksumGenerator
@@ -107,8 +108,11 @@ class PureDataset(BasePureDataset):
     def rdss_canonical_metadata(self):
         logger.info('Remapping pure dataset %s to canonical metadata.',
                     self.uuid)
-        metadata = pure_to_canonical_mapper.remap(self._dataset_json)
-        return self._update_with_local_data(metadata)
+        custom_funcs = JMESCustomFunctions()
+        metadata = pure_to_canonical_mapper.remap(self._dataset_json,
+                                                  custom_funcs=custom_funcs)
+        final = self._update_with_local_data(metadata)
+        return final
 
     @property
     def files(self):
