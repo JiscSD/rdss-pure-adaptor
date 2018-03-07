@@ -64,7 +64,7 @@ def main():
         logging.exception('Cannot run the Pure Adaptor.')
         sys.exit(1)
     atexit.register(cleanup_taxonomy_directories, 'temp_taxonomydata',
-                    onerror=_handle_rmdir_errors)
+                    _handle_rmdir_errors)
     adaptor.run()
 
 
