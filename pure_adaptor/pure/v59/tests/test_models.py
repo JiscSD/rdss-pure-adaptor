@@ -88,7 +88,7 @@ class TestPureMessageMappings(object):
         assert org_role['organisation']['organisationJiscId'] == 0
         assert organisation['organisationName'] == 'Dryad'
         assert organisation['organisationType'] == 8
-        assert org_role['role'] == 5
+        assert org_role['role'] == 9
 
     def test_obj_rights(self, pure_dataset):
         obj_rights = pure_dataset.rdss_canonical_metadata['objectRights'][0]

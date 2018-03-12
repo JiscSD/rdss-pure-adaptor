@@ -75,7 +75,7 @@
         licenceIdentifier: uri
       },
       access: visibility[*].{
-        accessType: value,
+        accessType: `1`,
         accessStatement: ''
       }
     },
