@@ -1,6 +1,7 @@
 import os
 import dateutil.parser
 import urllib
+import uuid
 import jmespath
 import logging
 
@@ -46,6 +47,7 @@ class PureDataset(BasePureDataset):
         self._dataset_json = dataset_json
         self.local_files = []
         self.local_file_checksums = {}
+        self.local_file_sizes = {}
         self.file_s3_urls = {}
 
     def __str__(self):
@@ -64,7 +66,8 @@ class PureDataset(BasePureDataset):
     def _format_checksum(self, file_name):
         return [{
             'checksumType': 2,  # sha256
-            'checksumValue': self.local_file_checksums.get(file_name)
+            'checksumValue': self.local_file_checksums.get(file_name),
+            'checksumUuid': str(uuid.uuid4())
         }]
 
     def _format_local_data(self, obj_file):
