@@ -83,9 +83,9 @@ class TestPureMessageMappings(object):
 
     def test_obj_organisation_role(self, pure_dataset):
         org_role = pure_dataset.rdss_canonical_metadata['object'
-                                                        'OrganisationRole']
+                                                        'OrganisationRole'][0]
         organisation = org_role['organisation']
-        assert org_role['organisation']['organisationJiscId'] == 0
+        assert org_role['organisation']['organisationJiscId'] == 799
         assert organisation['organisationName'] == 'Dryad'
         assert organisation['organisationType'] == 8
         assert org_role['role'] == 9
@@ -94,13 +94,13 @@ class TestPureMessageMappings(object):
         obj_rights = pure_dataset.rdss_canonical_metadata['objectRights'][0]
         licence = obj_rights['licence'][0]
         access = obj_rights['access'][0]
-        assert obj_rights['rightsStatement'] == ''
-        assert obj_rights['rightsHolder'] == ''
+        assert obj_rights['rightsStatement'] == ['not present']
+        assert obj_rights['rightsHolder'] == ['not present']
         assert licence['licenceName'] == 'CC BY'
         assert licence['licenceIdentifier'] == '/dk/atira/pure/dataset/'\
                                                'documentlicenses/cc-by'
-        assert access['accessType'] == ''
-        assert access['accessStatement'] == ''
+        assert access['accessType'] == 1
+        assert access['accessStatement'] == 'not present'
 
 
 class TestPureDataset(object):

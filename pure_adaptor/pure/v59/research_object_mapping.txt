@@ -9,14 +9,16 @@
         personSn: name.lastName,
         personEntitlement: personRole[0].value | [person_role(@)],
         personAffiliation: `[2]`,
+        personMail: 'notpresent@jisc.ac.uk',
+        personTelephoneNumber: 'not present',
         personOrganisationUnit: {
-            organisationUnitUuid: organisationalUnits[0].uuid || ``,
-            organisationUnitName: organisationalUnits[0].name[0].value || ``,
+            organisationUnitUuid: organisationalUnits[0].uuid || dummy_uuid(@),
+            organisationUnitName: organisationalUnits[0].name[0].value || dummy_uuid(@),
             organisation: {
-                organisationJiscId : '',
-                organisationName: '',
-                organisationType: '',
-                organisationAddress: ''
+                organisationJiscId : jisc_id(@),
+                organisationName: 'not present',
+                organisationType: `8`,
+                organisationAddress: org_addr(@)
             }
         },
         personIdentifier: [{
@@ -28,15 +30,15 @@
     },
   objectDescription: description[0].value || '',
   objectRights: documents[*].{
-    rightsStatement: '',
-    rightsHolder: '',
+    rightsStatement: ['not present'],
+    rightsHolder: ['not present'],
     licence: [{
                 licenceName: documentLicense[0].value,
                 licenceIdentifier : documentLicense[0].uri
                 }],
     access: [{
-                accessType: '',
-                accessStatement: ''
+                accessType: `1`,
+                accessStatement: 'not present'
                 }]
   },
   objectDate: info | object_date(@),
@@ -47,51 +49,52 @@
   objectIdentifier:[
         {
         identifierValue : doi || uuid,
-        identifierType : ''
+        identifierType : `4`
        }],
   objectRelatedIdentifier:  relatedProjects[*].uuid || `[]`,
-  objectOrganisationRole: {
+  objectOrganisationRole: [{
     organisation: {
         organisationJiscId: publisher.name[0].value | jisc_id(@),
         organisationName: publisher.name[0].value,
         organisationType: `8`,
-        organisationAddress: ''
+        organisationAddress: org_addr(@)
     },
     role: publisher.type[0].value | org_type(@)
-  },
+  }],
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
-    fileUUID: '',
+    fileUUID: dummy_uuid(@),
     fileIdentifier: url,
     fileName: title,
     fileSize: '',
-    fileLabel: '',
+    fileLabel: 'not present',
     fileDateCreated: created,
     fileRights: @.{
-      rightsStatement: '',
-      rightsHolder: ''
+      rightsStatement: ['not present'],
+      rightsHolder: ['not present']
       licence: documentLicense[*].{
         licenceName: value,
         licenceIdentifier: uri
       },
       access: visibility[*].{
         accessType: `1`,
-        accessStatement: ''
+        accessStatement: 'not present'
       }
     },
     fileChecksum: '',
-    fileFormatType: '',
-    fileCompositionLevel: '',
+    fileFormatType: 'not present',
+    fileCompositionLevel: 'not present',
     filehasMimeType: documentType[0].value,
-    fileDate: '',
-    filePUID: '',
-    fileUse: '',
-    preservationEvent: '',
-    uploadStatus: '',
-    storageStatus: '',
+    fileDate: created,
+    filePUID: ['not present'],
+    fileUse: `1`,
+    filePreservationEvent: '',
+    uploadStatus: `1`,
+    storageStatus: `1`,
     fileSoftware: '',
     fileEquipment: '',
-    fileLastDownloaded: '',
-    fileTechnicalAttributes: ''
+    fileLastDownloaded: created,
+    fileStorageLocation: 'not present',
+    fileTechnicalAttributes: ['not present']
   } || `[]`
 }
