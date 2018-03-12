@@ -13,8 +13,8 @@ TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
 GIT_TAG = 'v0.1.0'
 
 
-JISC_ID = {
-    'University of St Andrews': 799,
+HEI_ADDRESS = {
+    799: 'University of St.Andrews, KY16 9AJ, Fife'
 }
 
 
@@ -57,6 +57,15 @@ class JMESCustomFunctions(functions.Functions):
         return new_dates
 
     @functions.signature({'types': ['string']})
+    def _func_file_date(self, date_str):
+        rdss_name = 'created'
+        mapping = self.taxonomy_client.get_by_name(
+            DATE_TYPE, rdss_name)
+        rdss_dateobj = {'dateType': mapping,
+                        'dateValue': date_str}
+        return rdss_dateobj
+
+    @functions.signature({'types': ['string']})
     def _func_object_resourcetype(self, object_resource):
         rdss_name = object_resource.lower()
         mapping = self.taxonomy_client.get_by_name(
@@ -75,9 +84,13 @@ class JMESCustomFunctions(functions.Functions):
         )
         return mapping
 
-    @functions.signature({'types': ['string']})
-    def _func_jisc_id(self, publisher_name):
-        return JISC_ID.get(publisher_name) or 0
+    @functions.signature({'types': []})
+    def _func_jisc_id(self, node):
+        return 799
+
+    @functions.signature({'types': []})
+    def _func_org_addr(self, node):
+        return HEI_ADDRESS[799]
 
     @functions.signature({'types': ['string']})
     def _func_org_type(self, org_type):

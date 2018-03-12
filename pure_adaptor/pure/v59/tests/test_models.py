@@ -70,8 +70,7 @@ class TestPureMessageMappings(object):
         assert person_role['person']['personSn'] == sn
 
     def test_person_affiliation(self, person_role):
-        # test dummy value for now
-        assert person_role['person']['personAffiliation'] == 1
+        assert person_role['person']['personAffiliation'][0] == 2
 
     def test_person_organisation_unit(self, pure_dataset):
         person_role = pure_dataset.rdss_canonical_metadata['object'
@@ -84,24 +83,24 @@ class TestPureMessageMappings(object):
 
     def test_obj_organisation_role(self, pure_dataset):
         org_role = pure_dataset.rdss_canonical_metadata['object'
-                                                        'OrganisationRole']
+                                                        'OrganisationRole'][0]
         organisation = org_role['organisation']
-        assert org_role['organisation']['organisationJiscId'] == 0
+        assert org_role['organisation']['organisationJiscId'] == 799
         assert organisation['organisationName'] == 'Dryad'
-        assert organisation['organisationType'] == 9
-        assert org_role['role'] == 5
+        assert organisation['organisationType'] == 8
+        assert org_role['role'] == 9
 
     def test_obj_rights(self, pure_dataset):
         obj_rights = pure_dataset.rdss_canonical_metadata['objectRights'][0]
         licence = obj_rights['licence'][0]
         access = obj_rights['access'][0]
-        assert obj_rights['rightsStatement'] == ''
-        assert obj_rights['rightsHolder'] == ''
+        assert obj_rights['rightsStatement'] == ['not present']
+        assert obj_rights['rightsHolder'] == ['not present']
         assert licence['licenceName'] == 'CC BY'
         assert licence['licenceIdentifier'] == '/dk/atira/pure/dataset/'\
                                                'documentlicenses/cc-by'
-        assert access['accessType'] == ''
-        assert access['accessStatement'] == ''
+        assert access['accessType'] == 1
+        assert access['accessStatement'] == 'not present'
 
 
 class TestPureDataset(object):

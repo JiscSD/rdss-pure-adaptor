@@ -1,6 +1,7 @@
 import os
 import dateutil.parser
 import urllib
+import uuid
 import jmespath
 import logging
 
@@ -46,6 +47,7 @@ class PureDataset(BasePureDataset):
         self._dataset_json = dataset_json
         self.local_files = []
         self.local_file_checksums = {}
+        self.local_file_sizes = {}
         self.file_s3_urls = {}
 
     def __str__(self):
@@ -64,16 +66,17 @@ class PureDataset(BasePureDataset):
     def _format_checksum(self, file_name):
         return [{
             'checksumType': 2,  # sha256
-            'checksumValue': self.local_file_checksums.get(file_name)
+            'checksumValue': self.local_file_checksums.get(file_name),
+            'checksumUuid': str(uuid.uuid4())
         }]
 
     def _format_local_data(self, obj_file):
         file_name = file_name_from_url(obj_file['fileIdentifier'])
         obj_file['fileChecksum'] = self._format_checksum(file_name)
         obj_file['fileStorageLocation'] = self.file_s3_urls.get(file_name)
-        obj_file['fileStorageType'] = 1  # s3
         obj_file['fileStorageStatus'] = 1  # online
         obj_file['fileUploadStatus'] = 2  # uploadComplete
+        obj_file['fileSize'] = self.local_file_sizes.get(file_name)
         return obj_file
 
     def _update_with_local_data(self, canonical_metadata):
@@ -91,6 +94,14 @@ class PureDataset(BasePureDataset):
                 new_object_files.append(new_obj_file)
             canonical_metadata['objectFile'] = new_object_files
             return canonical_metadata
+
+    def _calculate_file_sizes(self):
+        filesize_dict = {}
+        logger.info('Calculating filesizes')
+        for f_path in self.local_files:
+            f_name = os.path.basename(f_path)
+            filesize_dict[f_name] = os.stat(f_path).st_size
+        return filesize_dict
 
     @property
     def doi_upload_key(self):
@@ -134,3 +145,4 @@ class PureDataset(BasePureDataset):
                 self._download_manager.download_file(url, file_name)
             )
         self.local_file_checksums = checksum_generator.file_checksums(self)
+        self.local_file_sizes = self._calculate_file_sizes()
