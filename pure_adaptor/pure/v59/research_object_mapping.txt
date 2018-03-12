@@ -65,7 +65,7 @@
   }],
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
-    fileUUID: dummy_uuid(@),
+    fileUuid: dummy_uuid(@),
     fileIdentifier: url,
     fileName: title,
     fileSize: '',
@@ -86,15 +86,12 @@
     fileChecksum: '',
     fileFormatType: 'not present',
     fileCompositionLevel: 'not present',
-    fileDate: created,
-    filePUID: ['not present'],
     fileUse: `1`,
-    filePreservationEvent: `[]`,
-    uploadStatus: `1`,
-    storageStatus: `1`,
-    fileEquipment: '',
+    filePreservationEvent: [{
+        preservationEventValue: 'not present',
+        preservationEventType: `3`}],
     fileLastDownloaded: created,
-    fileStorageLocation: 'not present',
+    fileStorageLocation: 'na',
     fileTechnicalAttributes: ['not present']
   } || `[]`
 }
