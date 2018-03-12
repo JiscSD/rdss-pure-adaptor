@@ -2,7 +2,6 @@ import jmespath
 from jmespath import functions
 import logging
 import re
-import uuid
 
 from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient, DATE_TYPE,\
     RESOURCE_TYPE, PERSON_ROLE, ORGANISATION_TYPE, \
@@ -92,10 +91,6 @@ class JMESCustomFunctions(functions.Functions):
     @functions.signature({'types': []})
     def _func_org_addr(self, node):
         return HEI_ADDRESS[799]
-
-    @functions.signature({'types': []})
-    def _func_dummy_uuid(self, node):
-        return str(uuid.uuid4())
 
     @functions.signature({'types': ['string']})
     def _func_org_type(self, org_type):

@@ -74,7 +74,6 @@ class PureDataset(BasePureDataset):
         file_name = file_name_from_url(obj_file['fileIdentifier'])
         obj_file['fileChecksum'] = self._format_checksum(file_name)
         obj_file['fileStorageLocation'] = self.file_s3_urls.get(file_name)
-        # obj_file['fileStorageType'] = 1  # s3
         obj_file['fileStorageStatus'] = 1  # online
         obj_file['fileUploadStatus'] = 2  # uploadComplete
         obj_file['fileSize'] = self.local_file_sizes.get(file_name)
@@ -98,15 +97,11 @@ class PureDataset(BasePureDataset):
 
     def _calculate_file_sizes(self):
         filesize_dict = {}
-        if self.local_files:
-            logger.info('Calculating filesizes')
-            for f_path in self.local_files:
-                f_name = os.path.basename(f_path)
-                filesize_dict[f_name] = os.stat(f_path).st_size
-            return filesize_dict
-        else:
-            logger.debug('Files have not been downloaded yet.')
-            return filesize_dict
+        logger.info('Calculating filesizes')
+        for f_path in self.local_files:
+            f_name = os.path.basename(f_path)
+            filesize_dict[f_name] = os.stat(f_path).st_size
+        return filesize_dict
 
     @property
     def doi_upload_key(self):

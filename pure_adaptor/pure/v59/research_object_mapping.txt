@@ -3,7 +3,7 @@
   objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
-        personUuid: person.uuid || externalPerson.uuid || dummy_uuid(@),
+        personUuid: person.uuid || externalPerson.uuid || '00000000-0000-1000-a000-000000000000',
         personGivenName: person.name[0].value || externalPerson.name[0].value || 'not present',
         personCn: name.firstName,
         personSn: name.lastName,
@@ -12,8 +12,8 @@
         personMail: 'notpresent@jisc.ac.uk',
         personTelephoneNumber: 'not present',
         personOrganisationUnit: {
-            organisationUnitUuid: organisationalUnits[0].uuid || dummy_uuid(@),
-            organisationUnitName: organisationalUnits[0].name[0].value || dummy_uuid(@),
+            organisationUnitUuid: organisationalUnits[0].uuid || '00000000-0000-1000-a000-000000000000',
+            organisationUnitName: organisationalUnits[0].name[0].value || '00000000-0000-1000-a000-000000000000',
             organisation: {
                 organisationJiscId : jisc_id(@),
                 organisationName: 'not present',
@@ -65,7 +65,7 @@
   }],
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
-    fileUuid: dummy_uuid(@),
+    fileUuid: '00000000-0000-1000-a000-000000000000',
     fileIdentifier: url,
     fileName: title,
     fileSize: '',
@@ -91,7 +91,7 @@
         preservationEventValue: 'not present',
         preservationEventType: `3`}],
     fileStoragePlatform: {
-        storagePlatformUuid: dummy_uuid(@),
+        storagePlatformUuid: '00000000-0000-1000-a000-000000000000',
         storagePlatformName: 'not present',
         storagePlatformType: `1`,
         storagePlatformCost: 'not present'
