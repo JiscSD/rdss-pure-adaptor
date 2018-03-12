@@ -58,6 +58,15 @@ class JMESCustomFunctions(functions.Functions):
         return new_dates
 
     @functions.signature({'types': ['string']})
+    def _func_file_date(self, date_str):
+        rdss_name = 'created'
+        mapping = self.taxonomy_client.get_by_name(
+            DATE_TYPE, rdss_name)
+        rdss_dateobj = {'dateType': mapping,
+                        'dateValue': date_str}
+        return rdss_dateobj
+
+    @functions.signature({'types': ['string']})
     def _func_object_resourcetype(self, object_resource):
         rdss_name = object_resource.lower()
         mapping = self.taxonomy_client.get_by_name(

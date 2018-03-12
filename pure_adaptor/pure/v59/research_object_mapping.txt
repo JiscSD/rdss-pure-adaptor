@@ -70,7 +70,7 @@
     fileName: title,
     fileSize: '',
     fileLabel: 'not present',
-    fileDateCreated: created,
+    fileDateCreated: created | file_date(@),
     fileRights: @.{
       rightsStatement: ['not present'],
       rightsHolder: ['not present']
@@ -96,7 +96,8 @@
         storagePlatformType: `1`,
         storagePlatformCost: 'not present'
         }
-    fileLastDownloaded: created,
+    fileLastDownloaded: created | file_date(@),
+    fileDateModified : created | [file_date(@)],
     fileStorageLocation: 'na',
     fileTechnicalAttributes: ['not present']
   } || `[]`
