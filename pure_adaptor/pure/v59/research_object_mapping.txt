@@ -90,6 +90,12 @@
     filePreservationEvent: [{
         preservationEventValue: 'not present',
         preservationEventType: `3`}],
+    fileStoragePlatform: {
+        storagePlatformUuid: dummy_uuid(@),
+        storagePlatformName: 'not present',
+        storagePlatformType: `1`,
+        storagePlatformCost: 'not present'
+        }
     fileLastDownloaded: created,
     fileStorageLocation: 'na',
     fileTechnicalAttributes: ['not present']
