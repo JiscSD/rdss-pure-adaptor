@@ -3,8 +3,8 @@
   objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
-        personUuid: person.uuid || externalPerson.uuid,
-        personGivenName: person.name[0].value || externalPerson.name[0].value,
+        personUuid: person.uuid || externalPerson.uuid || dummy_uuid(@),
+        personGivenName: person.name[0].value || externalPerson.name[0].value || 'not present',
         personCn: name.firstName,
         personSn: name.lastName,
         personEntitlement: personRole[0].value | [person_role(@)],
@@ -28,7 +28,7 @@
         },
       role: personRole[0].value | person_role(@)
     },
-  objectDescription: description[0].value || '',
+  objectDescription: description[0].value || 'not present',
   objectRights: documents[*].{
     rightsStatement: ['not present'],
     rightsHolder: ['not present'],
@@ -45,13 +45,15 @@
   objectKeywords: keywordGroups[].keywords[].value || `[]`,
   objectCategory: `[]`,
   objectResourceType: type[0].value | object_resourcetype(@),
-  objectValue: '',
+  objectValue: `1`,
   objectIdentifier:[
         {
         identifierValue : doi || uuid,
         identifierType : `4`
        }],
-  objectRelatedIdentifier:  relatedProjects[*].uuid || `[]`,
+  objectRelatedIdentifier:relatedProjects[*].
+                        { identifierValue: uuid,
+                           identifierType: `4`},
   objectOrganisationRole: [{
     organisation: {
         organisationJiscId: publisher.name[0].value | jisc_id(@),
@@ -84,14 +86,12 @@
     fileChecksum: '',
     fileFormatType: 'not present',
     fileCompositionLevel: 'not present',
-    filehasMimeType: documentType[0].value,
     fileDate: created,
     filePUID: ['not present'],
     fileUse: `1`,
-    filePreservationEvent: '',
+    filePreservationEvent: `[]`,
     uploadStatus: `1`,
     storageStatus: `1`,
-    fileSoftware: '',
     fileEquipment: '',
     fileLastDownloaded: created,
     fileStorageLocation: 'not present',
