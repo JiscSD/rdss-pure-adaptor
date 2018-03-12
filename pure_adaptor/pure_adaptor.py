@@ -49,6 +49,8 @@ def main():
         'RDSS_MESSAGE_ERROR_STREAM',
     )
     env_vars = all_env_vars_exist(required_env_variables)
+    if os.path.exists('temp_taxonomydata'):
+        shutil.rmtree('temp_taxonomydata')
 
     try:
         adaptor = PureAdaptor(
