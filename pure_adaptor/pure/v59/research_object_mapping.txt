@@ -7,11 +7,11 @@
         personGivenName: person.name[0].value || externalPerson.name[0].value,
         personCn: name.firstName,
         personSn: name.lastName,
-        personEntitlement: '',
-        personAffiliation: `1`,
+        personEntitlement: personRole[0].value | [person_role(@)],
+        personAffiliation: `[2]`,
         personOrganisationUnit: {
-            organisationUnitUuid: organisationalUnits[0].uuid,
-            organisationUnitName: organisationalUnits[0].name[0].value,
+            organisationUnitUuid: organisationalUnits[0].uuid || ``,
+            organisationUnitName: organisationalUnits[0].name[0].value || ``,
             organisation: {
                 organisationJiscId : '',
                 organisationName: '',

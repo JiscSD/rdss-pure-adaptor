@@ -70,8 +70,7 @@ class TestPureMessageMappings(object):
         assert person_role['person']['personSn'] == sn
 
     def test_person_affiliation(self, person_role):
-        # test dummy value for now
-        assert person_role['person']['personAffiliation'] == 1
+        assert person_role['person']['personAffiliation'][0] == 2
 
     def test_person_organisation_unit(self, pure_dataset):
         person_role = pure_dataset.rdss_canonical_metadata['object'
