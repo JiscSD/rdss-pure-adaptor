@@ -54,10 +54,10 @@
     organisation: {
         organisationJiscId: publisher.name[0].value | jisc_id(@),
         organisationName: publisher.name[0].value,
-        organisationType: publisher.type[0].value | org_type(@),
+        organisationType: `8`,
         organisationAddress: ''
     },
-    role: publisher.type[0].value | org_role(@)
+    role: publisher.type[0].value | org_type(@)
   },
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{

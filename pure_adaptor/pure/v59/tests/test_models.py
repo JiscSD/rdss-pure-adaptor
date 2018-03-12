@@ -87,7 +87,7 @@ class TestPureMessageMappings(object):
         organisation = org_role['organisation']
         assert org_role['organisation']['organisationJiscId'] == 0
         assert organisation['organisationName'] == 'Dryad'
-        assert organisation['organisationType'] == 9
+        assert organisation['organisationType'] == 8
         assert org_role['role'] == 5
 
     def test_obj_rights(self, pure_dataset):
