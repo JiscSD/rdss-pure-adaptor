@@ -13,12 +13,13 @@ log_formatter = logging.Formatter('%(asctime)s %(name)s:'
 
 std_out_handler = logging.StreamHandler(sys.stdout)
 std_out_handler.setFormatter(log_formatter)
-std_out_handler.setLevel(logging.INFO)
+std_out_handler.setLevel(logging.DEBUG)
 logger.addHandler(std_out_handler)
 
 
 def _handle_rmdir_errors(func, path, excinfo):
-    logger.warning('Failed to cleanup directory {}'.format(path))
+    logger.warning('Failed to cleanup directory {} with '
+                   'exception {}'.format(path, excinfo))
 
 
 def cleanup_taxonomy_directories(path_name, error_handler):
