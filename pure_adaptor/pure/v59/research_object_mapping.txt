@@ -3,56 +3,102 @@
   objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
-        personIdentifier: id,
-        personFirstName: name.firstName,
-        personSecondName: name.lastName,
-        personOrganisationalUnit: organisationalUnits[].name[].value
+        personUuid: person.uuid || externalPerson.uuid || '00000000-0000-1000-a000-000000000000',
+        personGivenName: person.name[0].value || externalPerson.name[0].value || 'not present',
+        personCn: name.firstName,
+        personSn: name.lastName,
+        personEntitlement: personRole[0].value | [person_role(@)],
+        personAffiliation: `[2]`,
+        personMail: 'notpresent@jisc.ac.uk',
+        personTelephoneNumber: 'not present',
+        personOrganisationUnit: {
+            organisationUnitUuid: organisationalUnits[0].uuid || '00000000-0000-1000-a000-000000000000',
+            organisationUnitName: organisationalUnits[0].name[0].value || '00000000-0000-1000-a000-000000000000',
+            organisation: {
+                organisationJiscId : jisc_id(@),
+                organisationName: 'not present',
+                organisationType: `8`,
+                organisationAddress: org_addr(@)
+            }
         },
-      role: personRole[0].value
+        personIdentifier: [{
+            personIdentifierValue: to_string(id),
+            personIdentifierType: `1`
+        }]
+        },
+      role: personRole[0].value | person_role(@)
     },
-  objectDescription: description.value || '',
-  objectRights: `[]`,
-  objectDate: `[]`,
+  objectDescription: description[0].value || 'not present',
+  objectRights: documents[*].{
+    rightsStatement: ['not present'],
+    rightsHolder: ['not present'],
+    licence: [{
+                licenceName: documentLicense[0].value,
+                licenceIdentifier : documentLicense[0].uri
+                }],
+    access: [{
+                accessType: `1`,
+                accessStatement: 'not present'
+                }]
+  },
+  objectDate: info | object_date(@),
   objectKeywords: keywordGroups[].keywords[].value || `[]`,
   objectCategory: `[]`,
-  objectResourceType: '',
-  objectValue: '',
-  objectIdentifier: `[]`,
-  objectRelatedIdentifier: `[]`,
-  objectOrganisationRole: `[]`,
+  objectResourceType: type[0].value | object_resourcetype(@),
+  objectValue: `1`,
+  objectIdentifier:[
+        {
+        identifierValue : doi || uuid,
+        identifierType : `4`
+       }],
+  objectRelatedIdentifier:relatedProjects[*].
+                        { identifierValue: uuid,
+                           identifierType: `4`},
+  objectOrganisationRole: [{
+    organisation: {
+        organisationJiscId: publisher.name[0].value | jisc_id(@),
+        organisationName: publisher.name[0].value,
+        organisationType: `8`,
+        organisationAddress: org_addr(@)
+    },
+    role: publisher.type[0].value | org_type(@)
+  }],
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
-    fileUUID: '',
+    fileUuid: '00000000-0000-1000-a000-000000000000',
     fileIdentifier: url,
-    fileName: '',
+    fileName: title,
     fileSize: '',
-    fileLabel: '',
-    fileDateCreated: created,
+    fileLabel: 'not present',
+    fileDateCreated: created | file_date(@),
     fileRights: @.{
-      rightsStatement: '',
-      rightsHolder: ''
+      rightsStatement: ['not present'],
+      rightsHolder: ['not present']
       licence: documentLicense[*].{
         licenceName: value,
         licenceIdentifier: uri
       },
       access: visibility[*].{
-        accessType: value,
-        accessStatement: ''
+        accessType: `1`,
+        accessStatement: 'not present'
       }
     },
     fileChecksum: '',
-    fileFormatType: '',
-    fileCompositionLevel: '',
-    filehasMimeType: documentType[0].value,
-    fileDate: '',
-    filePUID: '',
-    fileUse: '',
-    preservationEvent: '',
-    uploadStatus: '',
-    storageStatus: '',
-    fileSoftware: '',
-    fileEquipment: '',
-    fileLastDownloaded: '',
-    fileTechnicalAttributes: ''
+    fileFormatType: 'not present',
+    fileCompositionLevel: 'not present',
+    fileUse: `1`,
+    filePreservationEvent: [{
+        preservationEventValue: 'not present',
+        preservationEventType: `3`}],
+    fileStoragePlatform: {
+        storagePlatformUuid: '00000000-0000-1000-a000-000000000000',
+        storagePlatformName: 'not present',
+        storagePlatformType: `1`,
+        storagePlatformCost: 'not present'
+        }
+    fileLastDownloaded: created | file_date(@),
+    fileDateModified : created | [file_date(@)],
+    fileStorageLocation: 'na',
+    fileTechnicalAttributes: ['not present']
   } || `[]`
 }

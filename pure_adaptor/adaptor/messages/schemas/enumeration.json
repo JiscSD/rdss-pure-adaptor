@@ -71,9 +71,27 @@
         "PMID",
         "PUID",
         "PURL",
+        "SourceID",
         "UPC",
         "URL",
         "URN"
+      ]
+    },
+    "messageClass": {
+      "enum": [
+        "Command",
+        "Event",
+        "Document"
+      ]
+    },
+    "messageType": {
+      "enum": [
+        "MetadataCreate",
+        "MetadataUpdate",
+        "MetadataDelete",
+        "MetadataRead",
+        "VocabularyRead",
+        "VocabularyPatch"
       ]
     },
     "objectValue": {

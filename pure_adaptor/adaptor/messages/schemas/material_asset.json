@@ -32,10 +32,11 @@
       "type": "object",
       "properties": {
         "personUuid": {
-          "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/nonEmptyString"
+          "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/uuid"
         },
         "personIdentifier": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "$ref": "#/definitions/personIdentifier"
           },
@@ -43,30 +44,23 @@
         },
         "personEntitlement": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "type": "integer",
             "minimum": 1,
             "maximum": 22
           },
-          "minItems": 1,
-          "uniqueItems": true
-        },
-        "personOrganisation": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/organisation"
-          },
           "minItems": 1
         },
         "personAffiliation": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "type": "integer",
             "minimum": 1,
             "maximum": 8
           },
-          "minItems": 1,
-          "uniqueItems": true
+          "minItems": 1
         },
         "personGivenName": {
           "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/nonEmptyString"
@@ -84,22 +78,41 @@
           "type": "string",
           "format": "email"
         },
-        "personOu": {
-          "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/nonEmptyString"
+        "personOrganisationUnit": {
+          "$ref": "#/definitions/organisationUnit"
         }
       },
       "required": [
         "personUuid",
         "personIdentifier",
         "personEntitlement",
-        "personOrganisation",
         "personAffiliation",
         "personGivenName",
         "personCn",
         "personSn",
         "personTelephoneNumber",
         "personMail",
-        "personOu"
+        "personOrganisationUnit"
+      ],
+      "additionalProperties": false
+    },
+    "organisationUnit": {
+      "type": "object",
+      "properties": {
+        "organisationUnitUuid": {
+          "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/uuid"
+        },
+        "organisationUnitName": {
+          "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/nonEmptyString"
+        },
+        "organisation": {
+          "$ref": "#/definitions/organisation"
+        }
+      },
+      "required": [
+        "organisationUnitUuid",
+        "organisationUnitName",
+        "organisation"
       ],
       "additionalProperties": false
     },

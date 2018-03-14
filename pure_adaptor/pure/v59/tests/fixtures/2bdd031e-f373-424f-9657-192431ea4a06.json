@@ -423,5 +423,32 @@
         }
       ]
     }
-  ]
+  ],
+  "documents": [
+        {
+          "id": 241900740,
+          "title": "Supporting_Data.zip",
+          "url": "https://riswebtest.st-andrews.ac.uk/ws/files/241900740/Supporting_Data.zip",
+          "creator": "ff23",
+          "created": "2016-04-12T08:15:07.631+0000",
+          "documentType": [
+            {
+              "value": "Dataset",
+              "uri": "/dk/atira/pure/dataset/documents/dataset"
+            }
+          ],
+          "documentLicense": [
+            {
+              "value": "CC BY",
+              "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by"
+            }
+          ],
+          "visibility": [
+            {
+              "value": "Public - No restriction",
+              "key": "FREE"
+            }
+          ]
+        }
+      ]
 }

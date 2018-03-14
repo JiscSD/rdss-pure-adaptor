@@ -17,6 +17,8 @@ distro==1.2.0
 docker==3.1.0
 docker-pycreds==0.2.2
 docutils==0.14
+gitdb2==2.0.3
+GitPython==2.1.8
 google-compute-engine==2.7.6
 identify==1.0.7
 idna==2.6
@@ -44,9 +46,11 @@ pytest-cov==2.5.1
 python-dateutil==2.6.1
 pytz==2018.3
 PyYAML==3.12
+-e git://github.com/JiscRDSS/rdss-shared-libraries.git@b07c328bcb8a812be5ba76efeb3ac7439411e15e#egg=rdsslib
 requests==2.18.4
 s3transfer==0.1.13
 six==1.11.0
+smmap2==2.0.3
 urllib3==1.22
 virtualenv==15.1.0
 websocket-client==0.47.0
