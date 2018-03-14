@@ -55,7 +55,7 @@ def main():
     except Exception:
         logging.exception('Cannot run the Pure Adaptor.')
         sys.exit(1)
-    with tempfile.NamedTemporaryFile() as temp_dir_path:
+    with tempfile.TemporaryDirectory() as temp_dir_path:
         adaptor.run(temp_dir_path)
 
 
