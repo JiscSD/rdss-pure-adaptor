@@ -1,6 +1,7 @@
 import os
 import logging
-from pure import versioned_pure_interface, JMESCustomFunctions
+from pure import versioned_pure_interface
+from pure.base import JMESCustomFunctions
 from adaptor.s3_bucket import BucketUploader
 from adaptor.kinesis_client import KinesisClient
 from adaptor.state_storage import AdaptorStateStore, DatasetState
