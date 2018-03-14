@@ -3,7 +3,7 @@ from jmespath import functions
 import logging
 import re
 
-from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient, DATE_TYPE,\
+from rdsslib.taxonomy.taxonomy_client import DATE_TYPE,\
     RESOURCE_TYPE, PERSON_ROLE, ORGANISATION_TYPE, \
     ValueNotFound, ORGANISATION_ROLE
 
@@ -40,7 +40,9 @@ class JMESCustomFunctions(functions.Functions):
     """
     Custom JMESPath mapping functions
     """
-    taxonomy_client = TaxonomyGitClient(TAXONOMY_SCHEMA_REPO, GIT_TAG)
+
+    def __init__(self, taxonomy_client):
+        self.taxonomy_client = taxonomy_client
 
     @functions.signature({'types': ['object']})
     def _func_object_date(self, date_dict):

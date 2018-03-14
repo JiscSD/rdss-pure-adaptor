@@ -3,14 +3,20 @@ import json
 import os
 import pytest
 import shutil
+import tempfile
 
 from ..models import PureDataset, ws_url_remap
+from pure_adaptor.pure.base import JMESCustomFunctions
+
+from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient
+TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
+GIT_TAG = 'v0.1.0'
 
 
 class TestPureMessageMappings(object):
 
-    def cleanup_taxonomy_dir(self):
-        shutil.rmtree('temp_taxonomydata')
+    def cleanup_taxonomy_dir(self, dirpath):
+        shutil.rmtree(dirpath)
 
     @pytest.fixture(scope='module')
     def pure_json(self):
@@ -23,9 +29,17 @@ class TestPureMessageMappings(object):
         return json.loads(contents)
 
     @pytest.fixture(scope='module')
-    def pure_dataset(self, pure_json, request):
-        request.addfinalizer(self.cleanup_taxonomy_dir)
-        return PureDataset(pure_json)
+    def taxonomy_client(self):
+        tempdir = tempfile.mkdtemp()
+        yield TaxonomyGitClient(TAXONOMY_SCHEMA_REPO, GIT_TAG, tempdir)
+        self.cleanup_taxonomy_dir(tempdir)
+
+    @pytest.fixture(scope='module')
+    def pure_dataset(self, pure_json, taxonomy_client):
+        funcs = JMESCustomFunctions(taxonomy_client)
+        dataset = PureDataset(pure_json)
+        dataset.custom_funcs = funcs
+        return dataset
 
     @pytest.fixture(scope='module')
     def person_role(self, pure_dataset):

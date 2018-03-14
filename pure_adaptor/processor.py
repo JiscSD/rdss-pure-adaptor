@@ -1,11 +1,16 @@
 import os
 import logging
-from pure import versioned_pure_interface
+from pure import versioned_pure_interface, JMESCustomFunctions
 from adaptor.s3_bucket import BucketUploader
 from adaptor.kinesis_client import KinesisClient
 from adaptor.state_storage import AdaptorStateStore, DatasetState
 from adaptor.messages import MetadataCreate, MetadataUpdate
 
+from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient
+
+
+TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
+GIT_TAG = 'v0.1.0'
 logger = logging.getLogger(__name__)
 
 
@@ -96,10 +101,12 @@ class PureAdaptor(object):
         self.state_store.put_dataset_state(latest_dataset_state)
         self.state_store.update_latest_modified(latest_dataset_state)
 
-    def run(self):
+    def run(self, temp_dir_path):
         """ Runs the adaptor.
             """
-
+        taxonomy_client = TaxonomyGitClient(TAXONOMY_SCHEMA_REPO, GIT_TAG,
+                                            temp_dir_path)
+        custom_mapping_funcs = JMESCustomFunctions(taxonomy_client)
         changed_datasets = self._poll_for_changed_datasets()
 
         if not changed_datasets:
@@ -108,4 +115,5 @@ class PureAdaptor(object):
 
         else:
             for dataset in changed_datasets:
+                dataset.custom_funcs = custom_mapping_funcs
                 self._process_dataset(dataset)

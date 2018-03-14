@@ -6,7 +6,7 @@ import jmespath
 import logging
 
 from ..base import BasePureDataset
-from ..base import JSONRemapper, JMESCustomFunctions
+from ..base import JSONRemapper
 
 from .download_manager import PureDownloadManager
 from .checksum import ChecksumGenerator
@@ -116,13 +116,20 @@ class PureDataset(BasePureDataset):
         return self._dataset_json
 
     @property
+    def custom_funcs(self):
+        return self._custom_funcs
+
+    @custom_funcs.setter
+    def custom_funcs(self, value):
+        self._custom_funcs = value
+
+    @property
     def rdss_canonical_metadata(self):
         logger.info('Remapping pure dataset %s to canonical metadata.',
                     self.uuid)
-        custom_funcs = JMESCustomFunctions()
-        metadata = pure_to_canonical_mapper.remap(self._dataset_json,
-                                                  custom_funcs=custom_funcs)
-        final = self._update_with_local_data(metadata)
+        m_data = pure_to_canonical_mapper.remap(self._dataset_json,
+                                                custom_funcs=self.custom_funcs)
+        final = self._update_with_local_data(m_data)
         return final
 
     @property
