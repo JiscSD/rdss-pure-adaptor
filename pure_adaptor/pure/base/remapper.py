@@ -81,10 +81,16 @@ class JMESCustomFunctions(functions.Functions):
             rdss_name = 'data' + person_role
         else:
             rdss_name = person_role
-        mapping = self.taxonomy_client.get_by_name(
-            PERSON_ROLE, rdss_name
-        )
-        return mapping
+            try:
+                mapping = self.taxonomy_client.get_by_name(
+                    PERSON_ROLE, rdss_name
+                )
+                return mapping
+            except ValueNotFound:
+                mapping = self.taxonomy_client.get_by_name(
+                    PERSON_ROLE, 'other'
+                )
+                return mapping
 
     @functions.signature({'types': []})
     def _func_jisc_id(self, node):
