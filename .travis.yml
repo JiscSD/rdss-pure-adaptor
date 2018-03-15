@@ -8,11 +8,20 @@ python:
   - "3.6"
 
 env:
-   - AWS_DEFAULT_REGION=eu-west-2 AWS_ACCESS_KEY_ID=dummy AWS_SECRET_ACCESS_KEY=dummy2 TO_CONFIG=/tmp/nowhere
+  - AWS_DEFAULT_REGION=eu-west-2 AWS_ACCESS_KEY_ID=dummy AWS_SECRET_ACCESS_KEY=dummy2 TO_CONFIG=/tmp/nowhere
+
+before_install:
+  - sudo apt-get update -yqq
 
 install:
+  - wget -q https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip -O /tmp/sonar-scanner-cli-3.0.3.778-linux.zip
+  - unzip -qq /tmp/sonar-scanner-cli-3.0.3.778-linux.zip
+  - export PATH=$PATH:$PWD/sonar-scanner-3.0.3.778-linux/bin/
+
+before_script:
   - make deps
 
 script:
   - make lint
   - make test
+  - sonar-scanner -Dsonar.host.url=$SONARQUBE_URL -Dsonar.login=$SONARQUBE_TOKEN -Dsonar.projectName=$TRAVIS_REPO_SLUG -Dsonar.projectKey=$(echo "$TRAVIS_REPO_SLUG" | cut -d "/" -f 2) -Dsonar.projectVersion=$TRAVIS_COMMIT
