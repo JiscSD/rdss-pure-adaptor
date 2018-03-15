@@ -40,7 +40,7 @@
                 accessType: `1`,
                 accessStatement: 'not present'
                 }]
-  },
+  } || `[]`,
   objectDate: info | object_date(@),
   objectKeywords: keywordGroups[].keywords[].value || `[]`,
   objectCategory: `[]`,
@@ -53,7 +53,7 @@
        }],
   objectRelatedIdentifier:relatedProjects[*].
                         { identifierValue: uuid,
-                           identifierType: `4`},
+                           identifierType: `4`} || `[]`,
   objectOrganisationRole: [{
     organisation: {
         organisationJiscId: publisher.name[0].value | jisc_id(@),
