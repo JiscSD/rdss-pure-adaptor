@@ -50,7 +50,7 @@ class PureAdaptor(object):
         changed_datasets.sort(key=lambda ds: ds.modified_date)
         return changed_datasets
 
-    def _process_dataset(self, dataset):
+    def _process_dataset(self, dataset, temp_dir_path):
         """ Undertakes the processing of a single dataset, managing all data
             download and upload, as well as sending messages to the appropriate
             stream.
@@ -58,7 +58,7 @@ class PureAdaptor(object):
             :returns: DatasetState
             """
 
-        dataset.download_files()
+        dataset.download_files(temp_dir_path)
         self._upload_dataset(dataset)
         dataset_state = DatasetState.create_from_dataset(dataset)
         prev_dataset_state = self.state_store.get_dataset_state(dataset.uuid)
@@ -117,4 +117,4 @@ class PureAdaptor(object):
         else:
             for dataset in changed_datasets:
                 dataset.custom_funcs = custom_mapping_funcs
-                self._process_dataset(dataset)
+                self._process_dataset(dataset, temp_dir_path)

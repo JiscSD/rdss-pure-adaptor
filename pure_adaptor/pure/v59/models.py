@@ -146,10 +146,10 @@ class PureDataset(BasePureDataset):
     def uuid(self):
         return self._dataset_json.get('uuid')
 
-    def download_files(self):
+    def download_files(self, temp_dir):
         for url, file_name in self.files:
             self.local_files.append(
-                self._download_manager.download_file(url, file_name)
+                self._download_manager.download_file(url, file_name, temp_dir)
             )
         self.local_file_checksums = checksum_generator.file_checksums(self)
         self.local_file_sizes = self._calculate_file_sizes()
