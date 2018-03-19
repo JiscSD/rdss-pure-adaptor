@@ -1,0 +1,37 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+
+[report]
+include =
+  pure_adaptor/__init__.py
+  pure_adaptor/adaptor/__init__.py
+  pure_adaptor/adaptor/kinesis_client.py
+  pure_adaptor/adaptor/messages/__init__.py
+  pure_adaptor/adaptor/messages/message.py
+  pure_adaptor/adaptor/messages/message_header.py
+  pure_adaptor/adaptor/messages/validator.py
+  pure_adaptor/adaptor/s3_bucket.py
+  pure_adaptor/adaptor/state_storage.py
+  pure_adaptor/processor.py
+  pure_adaptor/pure/__init__.py
+  pure_adaptor/pure/base/__init__.py
+  pure_adaptor/pure/base/api.py
+  pure_adaptor/pure/base/download_manager.py
+  pure_adaptor/pure/base/models.py
+  pure_adaptor/pure/base/remapper.py
+  pure_adaptor/pure/v59/__init__.py
+  pure_adaptor/pure/v59/api.py
+  pure_adaptor/pure/v59/checksum.py
+  pure_adaptor/pure/v59/download_manager.py
+  pure_adaptor/pure/v59/models.py
+  pure_adaptor/pure_adaptor.py
+omit =
+  pure_adaptor/adaptor/tests/__init__.py
+  pure_adaptor/adaptor/tests/test_s3_bucket.py
+  pure_adaptor/adaptor/tests/test_state_store.py
+  pure_adaptor/pure/v59/tests/__init__.py
+  pure_adaptor/pure/v59/tests/test_api.py
+  pure_adaptor/pure/v59/tests/test_checksum.py
+  pure_adaptor/pure/v59/tests/test_download_manager.py
+  pure_adaptor/pure/v59/tests/test_models.py

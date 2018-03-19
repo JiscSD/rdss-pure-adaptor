@@ -1,6 +1,9 @@
 boto3
+coverage
+google-compute-engine
 jmespath
 jsonschema
 moto
-pytest
+pylint
+pytest-cov
 requests
