@@ -33,8 +33,8 @@
     rightsStatement: ['not present'],
     rightsHolder: ['not present'],
     licence: [{
-                licenceName: documentLicense[0].value,
-                licenceIdentifier : documentLicense[0].uri
+                licenceName: documentLicense[0].value || 'not present',
+                licenceIdentifier : documentLicense[0].uri || 'not present'
                 }],
     access: [{
                 accessType: `1`,
@@ -88,9 +88,20 @@
       rightsStatement: ['not present'],
       rightsHolder: ['not present']
       licence: documentLicense[*].{
-        licenceName: value,
-        licenceIdentifier: uri
-      },
+        licenceName: value || 'not present',
+        licenceIdentifier: uri || 'not present'
+      } || [{
+            rightsStatement: ['not present'],
+            rightsHolder: ['not present'],
+            licence: [{
+                licenceName: 'not present',
+                licenceIdentifier : 'not present'
+                }],
+            access: [{
+                accessType: `1`,
+                accessStatement: 'not present'
+                }]
+        }],
       access: visibility[*].{
         accessType: `1`,
         accessStatement: 'not present'
