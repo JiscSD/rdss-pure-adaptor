@@ -1,6 +1,7 @@
 import jmespath
 from jmespath import functions
 import logging
+import os
 import re
 
 from rdsslib.taxonomy.taxonomy_client import DATE_TYPE,\
@@ -14,7 +15,7 @@ GIT_TAG = 'v0.1.0'
 
 
 HEI_ADDRESS = {
-    799: 'University of St.Andrews, KY16 9AJ, Fife'
+    '799': 'University of St.Andrews, KY16 9AJ, Fife'
 }
 
 
@@ -94,11 +95,11 @@ class JMESCustomFunctions(functions.Functions):
 
     @functions.signature({'types': []})
     def _func_jisc_id(self, node):
-        return 799
+        return os.environ['JISC_ID']
 
     @functions.signature({'types': []})
     def _func_org_addr(self, node):
-        return HEI_ADDRESS[799]
+        return HEI_ADDRESS[os.environ['JISC_ID']]
 
     @functions.signature({'types': ['string']})
     def _func_org_type(self, org_type):

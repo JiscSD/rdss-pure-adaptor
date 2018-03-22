@@ -39,6 +39,7 @@ def main():
         'RDSS_INTERNAL_INPUT_STREAM',
         'RDSS_MESSAGE_INVALID_STREAM',
         'RDSS_MESSAGE_ERROR_STREAM',
+        'JISC_ID'
     )
     env_vars = all_env_vars_exist(required_env_variables)
 
