@@ -104,7 +104,7 @@ class TestPureMessageMappings(object):
         org_role = canonical_metadata['object'
                                       'OrganisationRole'][0]
         organisation = org_role['organisation']
-        assert org_role['organisation']['organisationJiscId'] == '799'
+        assert org_role['organisation']['organisationJiscId'] == 799
         assert organisation['organisationName'] == 'Dryad'
         assert organisation['organisationType'] == 8
         assert org_role['role'] == 9

@@ -95,7 +95,7 @@ class JMESCustomFunctions(functions.Functions):
 
     @functions.signature({'types': []})
     def _func_jisc_id(self, node):
-        return os.environ['JISC_ID']
+        return int(os.environ['JISC_ID'])
 
     @functions.signature({'types': []})
     def _func_org_addr(self, node):
