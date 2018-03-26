@@ -5,7 +5,7 @@ import os
 import sys
 import tempfile
 
-from processor import PureAdaptor
+from .processor import PureAdaptor
 
 logger = logging.getLogger(__name__)
 log_formatter = logging.Formatter('%(asctime)s %(name)s:'
