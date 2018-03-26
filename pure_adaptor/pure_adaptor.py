@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import boto3
 import logging
 import os
 import sys
@@ -34,7 +35,7 @@ def main():
     required_env_variables = (
         'PURE_API_VERSION',
         'PURE_API_URL',
-        'PURE_API_KEY',
+        'PURE_API_KEY_SSM_PARAMETER_NAME',
         'INSTANCE_ID',
         'RDSS_INTERNAL_INPUT_STREAM',
         'RDSS_MESSAGE_INVALID_STREAM',
@@ -43,11 +44,17 @@ def main():
     )
     env_vars = all_env_vars_exist(required_env_variables)
 
+    logging.info('Fetching API KEY...')
+    pure_api_key = boto3.client('ssm').get_parameter(
+        Name=env_vars['PURE_API_KEY_SSM_PARAMETER_NAME'],
+        WithDecryption=True,
+    )['Parameter']['Value']
+
     try:
         adaptor = PureAdaptor(
             api_version=env_vars['PURE_API_VERSION'],
             api_url=env_vars['PURE_API_URL'],
-            api_key=env_vars['PURE_API_KEY'],
+            api_key=pure_api_key,
             instance_id=env_vars['INSTANCE_ID'],
             input_stream=env_vars['RDSS_INTERNAL_INPUT_STREAM'],
             invalid_stream=env_vars['RDSS_MESSAGE_INVALID_STREAM'],

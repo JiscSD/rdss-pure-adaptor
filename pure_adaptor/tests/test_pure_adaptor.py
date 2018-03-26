@@ -7,6 +7,8 @@ import boto3
 from moto import (
     mock_s3,
     mock_dynamodb2,
+    mock_kms,
+    mock_ssm,
 )
 import requests_mock
 
@@ -17,7 +19,19 @@ from ..pure_adaptor import (
 
 @mock_s3
 @mock_dynamodb2
+@mock_kms
+@mock_ssm
 def test_main_attempts_fetch_dataset_with_api_key():
+    kms_client = boto3.client('kms', region_name='eu-west-2')
+    kms_key_id = kms_client.create_key()['KeyMetadata']['KeyId']
+    ssm_client = boto3.client('ssm', region_name='eu-west-2')
+    ssm_client.put_parameter(
+        Name='x-marks-the-spot',
+        Value='secret-pure-key',
+        Type='SecureString',
+        KeyId=kms_key_id,
+    )
+
     dynamodb_client = boto3.client('dynamodb')
     dynamodb_client.create_table(
         TableName='mock-instance-id',
@@ -36,7 +50,7 @@ def test_main_attempts_fetch_dataset_with_api_key():
         'JISC_ID': '1234',
         'PURE_API_VERSION': 'v59',
         'PURE_API_URL': 'http://somewhere.over/the/rainbow',
-        'PURE_API_KEY': 'secret-pure-key',
+        'PURE_API_KEY_SSM_PARAMETER_NAME': 'x-marks-the-spot',
         'INSTANCE_ID': 'mock-instance-id',
         'RDSS_INTERNAL_INPUT_STREAM': 'mock-input-stream',
         'RDSS_MESSAGE_INVALID_STREAM': 'mock-invalid-stream',
