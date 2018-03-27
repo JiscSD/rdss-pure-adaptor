@@ -44,6 +44,8 @@ class TestPureMessageMappings(object):
     @pytest.fixture
     def canonical_metadata(self, pure_dataset, monkeypatch):
         monkeypatch.setitem(os.environ, 'JISC_ID', '799')
+        monkeypatch.setitem(os.environ, 'HEI_ADDRESS',
+                            'University of St.Andrews, KY16 9AJ, Fife')
         return pure_dataset.rdss_canonical_metadata
 
     @pytest.fixture

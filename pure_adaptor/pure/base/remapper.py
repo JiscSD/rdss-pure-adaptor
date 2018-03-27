@@ -14,11 +14,6 @@ TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
 GIT_TAG = 'v0.1.0'
 
 
-HEI_ADDRESS = {
-    '799': 'University of St.Andrews, KY16 9AJ, Fife'
-}
-
-
 class JSONRemapper(object):
 
     """ To effect the remapping of data in one JSON format to another using a
@@ -99,7 +94,7 @@ class JMESCustomFunctions(functions.Functions):
 
     @functions.signature({'types': []})
     def _func_org_addr(self, node):
-        return HEI_ADDRESS[os.environ['JISC_ID']]
+        return os.environ['HEI_ADDRESS']
 
     @functions.signature({'types': ['string']})
     def _func_org_type(self, org_type):
