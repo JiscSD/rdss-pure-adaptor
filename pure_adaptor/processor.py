@@ -1,11 +1,17 @@
 import os
 import logging
 from pure import versioned_pure_interface
+from pure.base import JMESCustomFunctions
 from adaptor.s3_bucket import BucketUploader
 from adaptor.kinesis_client import KinesisClient
 from adaptor.state_storage import AdaptorStateStore, DatasetState
 from adaptor.messages import MetadataCreate, MetadataUpdate
 
+from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient
+
+
+TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
+GIT_TAG = 'v0.1.0'
 logger = logging.getLogger(__name__)
 
 
@@ -44,7 +50,7 @@ class PureAdaptor(object):
         changed_datasets.sort(key=lambda ds: ds.modified_date)
         return changed_datasets
 
-    def _process_dataset(self, dataset):
+    def _process_dataset(self, dataset, temp_dir_path):
         """ Undertakes the processing of a single dataset, managing all data
             download and upload, as well as sending messages to the appropriate
             stream.
@@ -52,7 +58,7 @@ class PureAdaptor(object):
             :returns: DatasetState
             """
 
-        dataset.download_files()
+        dataset.download_files(temp_dir_path)
         self._upload_dataset(dataset)
         dataset_state = DatasetState.create_from_dataset(dataset)
         prev_dataset_state = self.state_store.get_dataset_state(dataset.uuid)
@@ -96,10 +102,12 @@ class PureAdaptor(object):
         self.state_store.put_dataset_state(latest_dataset_state)
         self.state_store.update_latest_modified(latest_dataset_state)
 
-    def run(self):
+    def run(self, temp_dir_path):
         """ Runs the adaptor.
             """
-
+        taxonomy_client = TaxonomyGitClient(TAXONOMY_SCHEMA_REPO, GIT_TAG,
+                                            temp_dir_path)
+        custom_mapping_funcs = JMESCustomFunctions(taxonomy_client)
         changed_datasets = self._poll_for_changed_datasets()
 
         if not changed_datasets:
@@ -108,4 +116,5 @@ class PureAdaptor(object):
 
         else:
             for dataset in changed_datasets:
-                self._process_dataset(dataset)
+                dataset.custom_funcs = custom_mapping_funcs
+                self._process_dataset(dataset, temp_dir_path)

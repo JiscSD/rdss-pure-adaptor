@@ -13,7 +13,7 @@
         personTelephoneNumber: 'not present',
         personOrganisationUnit: {
             organisationUnitUuid: organisationalUnits[0].uuid || '00000000-0000-1000-a000-000000000000',
-            organisationUnitName: organisationalUnits[0].name[0].value || '00000000-0000-1000-a000-000000000000',
+            organisationUnitName: organisationalUnits[0].name[0].value || 'not present',
             organisation: {
                 organisationJiscId : jisc_id(@),
                 organisationName: 'not present',
@@ -33,14 +33,25 @@
     rightsStatement: ['not present'],
     rightsHolder: ['not present'],
     licence: [{
-                licenceName: documentLicense[0].value,
-                licenceIdentifier : documentLicense[0].uri
+                licenceName: documentLicense[0].value || 'not present',
+                licenceIdentifier : documentLicense[0].uri || 'not present'
                 }],
     access: [{
                 accessType: `1`,
                 accessStatement: 'not present'
                 }]
-  },
+  } || [{
+    rightsStatement: ['not present'],
+    rightsHolder: ['not present'],
+    licence: [{
+                licenceName: 'not present',
+                licenceIdentifier : 'not present'
+                }],
+    access: [{
+                accessType: `1`,
+                accessStatement: 'not present'
+                }]
+  }],
   objectDate: info | object_date(@),
   objectKeywords: keywordGroups[].keywords[].value || `[]`,
   objectCategory: `[]`,
@@ -53,7 +64,9 @@
        }],
   objectRelatedIdentifier:relatedProjects[*].
                         { identifierValue: uuid,
-                           identifierType: `4`},
+                           identifierType: `4`}
+                    || [{identifierValue: '00000000-0000-1000-a000-000000000000',
+                                                      identifierType: `4`}],
   objectOrganisationRole: [{
     organisation: {
         organisationJiscId: publisher.name[0].value | jisc_id(@),
@@ -75,9 +88,20 @@
       rightsStatement: ['not present'],
       rightsHolder: ['not present']
       licence: documentLicense[*].{
-        licenceName: value,
-        licenceIdentifier: uri
-      },
+        licenceName: value || 'not present',
+        licenceIdentifier: uri || 'not present'
+      } || [{
+            rightsStatement: ['not present'],
+            rightsHolder: ['not present'],
+            licence: [{
+                licenceName: 'not present',
+                licenceIdentifier : 'not present'
+                }],
+            access: [{
+                accessType: `1`,
+                accessStatement: 'not present'
+                }]
+        }],
       access: visibility[*].{
         accessType: `1`,
         accessStatement: 'not present'

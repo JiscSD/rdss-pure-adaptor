@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import atexit
+
 import logging
 import os
-import shutil
 import sys
+import tempfile
 
 from processor import PureAdaptor
 
@@ -15,15 +15,6 @@ std_out_handler = logging.StreamHandler(sys.stdout)
 std_out_handler.setFormatter(log_formatter)
 std_out_handler.setLevel(logging.DEBUG)
 logger.addHandler(std_out_handler)
-
-
-def _handle_rmdir_errors(func, path, excinfo):
-    logger.warning('Failed to cleanup directory {} with '
-                   'exception {}'.format(path, excinfo))
-
-
-def cleanup_taxonomy_directories(path_name, error_handler):
-    shutil.rmtree(path_name, onerror=error_handler)
 
 
 def all_env_vars_exist(var_names):
@@ -48,10 +39,9 @@ def main():
         'RDSS_INTERNAL_INPUT_STREAM',
         'RDSS_MESSAGE_INVALID_STREAM',
         'RDSS_MESSAGE_ERROR_STREAM',
+        'JISC_ID'
     )
     env_vars = all_env_vars_exist(required_env_variables)
-    if os.path.exists('temp_taxonomydata'):
-        shutil.rmtree('temp_taxonomydata')
 
     try:
         adaptor = PureAdaptor(
@@ -66,9 +56,8 @@ def main():
     except Exception:
         logging.exception('Cannot run the Pure Adaptor.')
         sys.exit(1)
-    atexit.register(cleanup_taxonomy_directories, 'temp_taxonomydata',
-                    _handle_rmdir_errors)
-    adaptor.run()
+    with tempfile.TemporaryDirectory() as temp_dir_path:
+        adaptor.run(temp_dir_path)
 
 
 if __name__ == '__main__':

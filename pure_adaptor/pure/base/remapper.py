@@ -1,9 +1,10 @@
 import jmespath
 from jmespath import functions
 import logging
+import os
 import re
 
-from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient, DATE_TYPE,\
+from rdsslib.taxonomy.taxonomy_client import DATE_TYPE,\
     RESOURCE_TYPE, PERSON_ROLE, ORGANISATION_TYPE, \
     ValueNotFound, ORGANISATION_ROLE
 
@@ -11,11 +12,6 @@ logger = logging.getLogger(__name__)
 
 TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
 GIT_TAG = 'v0.1.0'
-
-
-HEI_ADDRESS = {
-    799: 'University of St.Andrews, KY16 9AJ, Fife'
-}
 
 
 class JSONRemapper(object):
@@ -40,7 +36,9 @@ class JMESCustomFunctions(functions.Functions):
     """
     Custom JMESPath mapping functions
     """
-    taxonomy_client = TaxonomyGitClient(TAXONOMY_SCHEMA_REPO, GIT_TAG)
+
+    def __init__(self, taxonomy_client):
+        self.taxonomy_client = taxonomy_client
 
     @functions.signature({'types': ['object']})
     def _func_object_date(self, date_dict):
@@ -79,18 +77,24 @@ class JMESCustomFunctions(functions.Functions):
             rdss_name = 'data' + person_role
         else:
             rdss_name = person_role
-        mapping = self.taxonomy_client.get_by_name(
-            PERSON_ROLE, rdss_name
-        )
-        return mapping
+        try:
+            mapping = self.taxonomy_client.get_by_name(
+                PERSON_ROLE, rdss_name
+            )
+            return mapping
+        except ValueNotFound:
+            mapping = self.taxonomy_client.get_by_name(
+                PERSON_ROLE, 'other'
+            )
+            return mapping
 
     @functions.signature({'types': []})
     def _func_jisc_id(self, node):
-        return 799
+        return int(os.environ['JISC_ID'])
 
     @functions.signature({'types': []})
     def _func_org_addr(self, node):
-        return HEI_ADDRESS[799]
+        return os.environ['HEI_ADDRESS']
 
     @functions.signature({'types': ['string']})
     def _func_org_type(self, org_type):
