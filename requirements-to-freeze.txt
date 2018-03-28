@@ -7,3 +7,4 @@ moto
 pylint
 pytest-cov
 requests
+requests-mock

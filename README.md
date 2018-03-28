@@ -134,7 +134,7 @@ Then to create a local virtual environment, install dependencies and manually ru
 make env
 source ./env/bin/activate
 make deps
-python ./pure_adaptor/pure_adaptor.py
+python -m pure_adaptor.pure_adaptor
 ```
 
 ### Testing
