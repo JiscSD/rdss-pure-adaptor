@@ -3,6 +3,7 @@ from jmespath import functions
 import logging
 import os
 import re
+import uuid
 
 from rdsslib.taxonomy.taxonomy_client import DATE_TYPE,\
     RESOURCE_TYPE, PERSON_ROLE, ORGANISATION_TYPE, \
@@ -116,3 +117,7 @@ class JMESCustomFunctions(functions.Functions):
         return self.taxonomy_client.get_by_name(
             ORGANISATION_ROLE, rdss_name
         )
+
+    @functions.signature()
+    def _func_uuid4(self):
+        return str(uuid.uuid4())
