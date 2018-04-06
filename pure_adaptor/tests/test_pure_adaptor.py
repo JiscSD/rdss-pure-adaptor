@@ -17,11 +17,7 @@ from ..pure_adaptor import (
 )
 
 
-@mock_s3
-@mock_dynamodb2
-@mock_kms
-@mock_ssm
-def test_main_attempts_fetch_dataset_with_api_key():
+def _setup_mock_environment():
     kms_client = boto3.client('kms', region_name='eu-west-2')
     kms_key_id = kms_client.create_key()['KeyMetadata']['KeyId']
     ssm_client = boto3.client('ssm', region_name='eu-west-2')
@@ -46,7 +42,7 @@ def test_main_attempts_fetch_dataset_with_api_key():
         AttributeDefinitions=[],
     )
 
-    mock_env = {
+    return {
         'JISC_ID': '1234',
         'PURE_API_VERSION': 'v59',
         'PURE_API_URL': 'http://somewhere.over/the/rainbow',
@@ -57,7 +53,15 @@ def test_main_attempts_fetch_dataset_with_api_key():
         'RDSS_MESSAGE_ERROR_STREAM': 'mock-error-stream',
     }
 
-    with patch.dict(os.environ, **mock_env), requests_mock.mock() as m:
+
+@mock_s3
+@mock_dynamodb2
+@mock_kms
+@mock_ssm
+def test_main_attempts_fetch_dataset_with_api_key():
+    env = _setup_mock_environment()
+
+    with patch.dict(os.environ, **env), requests_mock.mock() as m:
         m.get('http://somewhere.over/the/rainbow/datasets', text='{}')
         m.head('http://somewhere.over/the/rainbow/datasets')
         main()
