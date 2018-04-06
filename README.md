@@ -119,6 +119,14 @@ In addition to the aforementioned variables, the following environment variables
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_DEFAULT_REGION`
 
+
+### Adaptor poll frequency
+
+By default, the Pure adaptor polls the HEI Pure API endpoint every 60 minutes. However for testing or other purposes,
+you may wish for the adaptor to poll the Pure endpoint more frequently. In this case, you need to set a value (in minutes) to the
+environment variable `PURE_POLL_FREQUENCY` in the HEI specific configuration in the `rdss-institutional-ecs-clusters` repository.
+
+
 ## Developer Setup
 
 To run the adaptor locally, first all the required environment variables must be set, e.g.:
