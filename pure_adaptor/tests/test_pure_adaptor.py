@@ -141,3 +141,5 @@ def test_uuids_added_to_data():
     assert uuid4hex.match(relatedUuid)
     assert uuid4hex.match(fileUuid)
     assert uuid4hex.match(storageUuid)
+    assert len(set([objectUuid, personUuid, orgUuid,
+                    relatedUuid, fileUuid, storageUuid])) == 6
