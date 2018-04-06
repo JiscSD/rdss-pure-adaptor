@@ -10,7 +10,9 @@
 	- [API Calls](#api-calls)
 	- [CRUD Capabilities](#crud-capabilities)
 	- [Sub-Services](#sub-services)
+	- [Metadata transformations](#metadata-transformations)
 - [Configuration](#configuration)
+    - [Adaptor poll frequency](#adaptor-poll-frequency)
 - [Developer Setup](#developer-setup)
 	- [Testing](#testing)
 	- [Linting](#linting)
@@ -81,6 +83,14 @@ The RDSS Pure Adaptor depends on the following infrastructure:
 - AWS DynamoDB
 - AWS S3 Buckets
 
+### Metadata transformations
+
+The Pure API sends messages that conform to a Pure schema. The adaptor converts these
+messages to the CDM schema using JMESPath query language. The conversion expressions
+are specified in `research_object_mapping.txt` file. Some conversions require mapping
+lookups on the `taxonomyschema` repository. These are specified in the `JMESCustomFunctions`
+class in `remapper.py`
+
 ## Configuration
 
 The RDSS Pure Adaptor requires that the following environment variables are set:
@@ -112,6 +122,19 @@ The RDSS Pure Adaptor requires that the following environment variables are set:
 - `RDSS_MESSAGE_ERROR_STREAM`
 
    The name of the RDSS error message stream to which the Pure Adaptor will write error messages.
+
+- `JISC_ID`
+
+   The JISC id of the HEI
+
+- `HEI_ADDRESS`
+
+   The address of the HEI
+
+- `PURE_API_KEY_SSM_PARAMETER_NAME`
+
+   The name of the AWS SSM parameter that contains the Pure API Key
+
 
 In addition to the aforementioned variables, the following environment variables are also required by the `boto3` library to access the AWS resources utilised by the RDSS Pure Adaptor:
 
