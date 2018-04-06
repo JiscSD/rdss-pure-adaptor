@@ -3,7 +3,7 @@
   objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
-        personUuid: person.uuid || externalPerson.uuid || '00000000-0000-1000-a000-000000000000',
+        personUuid: person.uuid || externalPerson.uuid || '00000000-0000-4000-a000-000000000000',
         personGivenName: person.name[0].value || externalPerson.name[0].value || 'not present',
         personCn: name.firstName,
         personSn: name.lastName,
@@ -12,7 +12,7 @@
         personMail: 'notpresent@jisc.ac.uk',
         personTelephoneNumber: 'not present',
         personOrganisationUnit: {
-            organisationUnitUuid: organisationalUnits[0].uuid || '00000000-0000-1000-a000-000000000000',
+            organisationUnitUuid: organisationalUnits[0].uuid || '00000000-0000-4000-a000-000000000000',
             organisationUnitName: organisationalUnits[0].name[0].value || 'not present',
             organisation: {
                 organisationJiscId : jisc_id(@),
@@ -65,7 +65,7 @@
   objectRelatedIdentifier:relatedProjects[*].
                         { identifierValue: uuid,
                            identifierType: `4`}
-                    || [{identifierValue: '00000000-0000-1000-a000-000000000000',
+                    || [{identifierValue: '00000000-0000-4000-a000-000000000000',
                                                       identifierType: `4`}],
   objectOrganisationRole: [{
     organisation: {
@@ -78,7 +78,7 @@
   }],
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
-    fileUuid: '00000000-0000-1000-a000-000000000000',
+    fileUuid: '00000000-0000-4000-a000-000000000000',
     fileIdentifier: url,
     fileName: title,
     fileSize: '',
@@ -115,7 +115,7 @@
         preservationEventValue: 'not present',
         preservationEventType: `3`}],
     fileStoragePlatform: {
-        storagePlatformUuid: '00000000-0000-1000-a000-000000000000',
+        storagePlatformUuid: '00000000-0000-4000-a000-000000000000',
         storagePlatformName: 'not present',
         storagePlatformType: `1`,
         storagePlatformCost: 'not present'
