@@ -64,7 +64,7 @@ def _setup_mock_environment():
         'RDSS_INTERNAL_INPUT_STREAM': 'mock-input-stream',
         'RDSS_MESSAGE_INVALID_STREAM': 'mock-invalid-stream',
         'RDSS_MESSAGE_ERROR_STREAM': 'mock-error-stream',
-        'PURE_FLOW_ADAPTER':  '60'
+        'PURE_FLOW_LIMIT':  '60'
     }
 
 
