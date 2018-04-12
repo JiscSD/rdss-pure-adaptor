@@ -42,25 +42,22 @@ def a_month_of_datasets(a_month_of_dates):
     return [mock_dataset(day) for day in a_month_of_dates]
 
 
-@pytest.fixture(autouse=True)
-def pure_get(monkeypatch, a_month_of_datasets):
-
+def pure_get(datasets):
     def mock_pure_get(url, *args, **kwargs):
         parsed_url = urllib.parse.urlsplit(url)
         qs = urllib.parse.parse_qs(parsed_url[3])
         if qs.get('offset'):
-            items = a_month_of_datasets[20:]
+            items = datasets[20:]
             return PureAPIDatasetResponse(format_dataset_json(items))
         else:
-            items = a_month_of_datasets[:20]
+            items = datasets[:20]
             qs['offset'] = 20
             next_url = urllib.parse.urlunsplit((
                 *parsed_url[:3],
                 urllib.parse.urlencode(qs, doseq=True),
                 ''))
             return PureAPIDatasetResponse(format_dataset_json(items, next_url))
-
-    monkeypatch.setattr('requests.get', mock_pure_get)
+    return mock_pure_get
 
 
 @pytest.fixture(autouse=True)
@@ -79,18 +76,23 @@ class TestPureAPI:
         self.api_key = 'a_uuid_api_key'
         self.api = PureAPI(self.endpoint_url, self.api_key)
 
-    def test_changed_datasets(self, a_month_of_datasets):
+    def test_changed_datasets(self, monkeypatch, a_month_of_datasets):
         """ Call the changed_datasets function without a since_datetime to
             list all datasets from the api.
             """
+        monkeypatch.setattr('requests.get', pure_get(a_month_of_datasets))
+
         datasets = self.api.changed_datasets()
         assert len(datasets) == len(a_month_of_datasets)
 
-    def test_changed_datasets_with_since_datetime(self, a_month_of_dates):
+    def test_changed_datasets_with_since_datetime(self, monkeypatch, a_month_of_datasets,
+                                                  a_month_of_dates):
         """ Call the changed_datasets function with a since_datetime to
             list only datasets modified since that datetime. API pagination
             defaults to 20 items.
             """
+        monkeypatch.setattr('requests.get', pure_get(a_month_of_datasets))
+
         ten_days = a_month_of_dates[:10]
         eleventh_day = a_month_of_dates[10]
         twenty_two_days = a_month_of_dates[:22]
