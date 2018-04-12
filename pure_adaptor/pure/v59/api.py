@@ -164,7 +164,7 @@ class PureAPI(BasePureAPI):
         return self._to_dataset(dataset_json)
 
     def changed_datasets(self, since_datetime=None):
-        """ List the metadata objects for all datasets that have been modified
+        """ List the metadata objects for all validated datasets that have been modified
             since the provided datetime. If no datetime object is provided then
             will default to listing all the datasets.
         :since_datetime: DateTime
@@ -176,7 +176,16 @@ class PureAPI(BasePureAPI):
         if since_datetime:
             logger.info('Getting all datasets updated since %s from %s.',
                         since_datetime, self._endpoint_url)
-            return self.list_all_datasets(cont_func=changed_since)
+            datasets = self.list_all_datasets(cont_func=changed_since)
         else:
             logger.info('Getting all datasets from %s.', self._endpoint_url)
-            return self.list_all_datasets()
+            datasets = self.list_all_datasets()
+
+        def validated(dataset):
+            dataset_json = dataset.original_metadata
+            workflows = dataset_json['workflow']
+            validated = [
+                workflow for workflow in workflows if workflow['workflowStep'] == 'validated']
+            return len(validated) == len(workflows) and len(workflows) > 0
+
+        return list(filter(validated, datasets))

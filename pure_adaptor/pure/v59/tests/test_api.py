@@ -23,11 +23,21 @@ def format_dataset_json(items, next_link=None):
     return lambda: response
 
 
-def mock_dataset(modified_datetime):
+def mock_dataset_validated(modified_datetime):
     return {
         'info': {
-            'modifiedDate': modified_datetime.isoformat()
-        }
+            'modifiedDate': modified_datetime.isoformat(),
+        },
+        'workflow': [{'workflowStep': 'validated'}],
+    }
+
+
+def mock_dataset_not_validated(modified_datetime):
+    return {
+        'info': {
+            'modifiedDate': modified_datetime.isoformat(),
+        },
+        'workflow': [{'workflowStep': 'somethingNotValidated'}],
     }
 
 
@@ -38,29 +48,34 @@ def a_month_of_dates():
 
 
 @pytest.fixture
-def a_month_of_datasets(a_month_of_dates):
-    return [mock_dataset(day) for day in a_month_of_dates]
+def a_month_of_datasets_validated(a_month_of_dates):
+    return [mock_dataset_validated(day) for day in a_month_of_dates]
 
 
-@pytest.fixture(autouse=True)
-def pure_get(monkeypatch, a_month_of_datasets):
+@pytest.fixture
+def a_month_of_datasets_10_validated(a_month_of_dates):
+    validated = [mock_dataset_validated(day) for day in a_month_of_dates]
+    not_validated = [mock_dataset_not_validated(
+        day) for day in a_month_of_dates]
+    return validated[:10] + not_validated[10:]
 
+
+def pure_get(datasets):
     def mock_pure_get(url, *args, **kwargs):
         parsed_url = urllib.parse.urlsplit(url)
         qs = urllib.parse.parse_qs(parsed_url[3])
         if qs.get('offset'):
-            items = a_month_of_datasets[20:]
+            items = datasets[20:]
             return PureAPIDatasetResponse(format_dataset_json(items))
         else:
-            items = a_month_of_datasets[:20]
+            items = datasets[:20]
             qs['offset'] = 20
             next_url = urllib.parse.urlunsplit((
                 *parsed_url[:3],
                 urllib.parse.urlencode(qs, doseq=True),
                 ''))
             return PureAPIDatasetResponse(format_dataset_json(items, next_url))
-
-    monkeypatch.setattr('requests.get', mock_pure_get)
+    return mock_pure_get
 
 
 @pytest.fixture(autouse=True)
@@ -79,18 +94,25 @@ class TestPureAPI:
         self.api_key = 'a_uuid_api_key'
         self.api = PureAPI(self.endpoint_url, self.api_key)
 
-    def test_changed_datasets(self, a_month_of_datasets):
+    def test_changed_datasets(self, monkeypatch, a_month_of_datasets_validated):
         """ Call the changed_datasets function without a since_datetime to
             list all datasets from the api.
             """
-        datasets = self.api.changed_datasets()
-        assert len(datasets) == len(a_month_of_datasets)
+        monkeypatch.setattr('requests.get', pure_get(
+            a_month_of_datasets_validated))
 
-    def test_changed_datasets_with_since_datetime(self, a_month_of_dates):
+        datasets = self.api.changed_datasets()
+        assert len(datasets) == len(a_month_of_datasets_validated)
+
+    def test_changed_datasets_with_since_datetime(self, monkeypatch, a_month_of_datasets_validated,
+                                                  a_month_of_dates):
         """ Call the changed_datasets function with a since_datetime to
             list only datasets modified since that datetime. API pagination
             defaults to 20 items.
             """
+        monkeypatch.setattr('requests.get', pure_get(
+            a_month_of_datasets_validated))
+
         ten_days = a_month_of_dates[:10]
         eleventh_day = a_month_of_dates[10]
         twenty_two_days = a_month_of_dates[:22]
@@ -99,6 +121,13 @@ class TestPureAPI:
         twenty_two_datasets = self.api.changed_datasets(twenty_third_day)
         assert len(ten_days) == len(ten_datasets)
         assert len(twenty_two_days) == len(twenty_two_datasets)
+
+    def test_changed_datasets_invalid(self, monkeypatch, a_month_of_datasets_10_validated):
+        monkeypatch.setattr('requests.get', pure_get(
+            a_month_of_datasets_10_validated))
+
+        datasets = self.api.changed_datasets()
+        assert len(datasets) == 10
 
     def teardown(self):
         pass
