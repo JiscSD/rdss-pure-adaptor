@@ -30,7 +30,14 @@ class PureAdaptor(object):
         self.instance_id = instance_id
         self.api_version = api_version
         self.pure = versioned_pure_interface(api_version)
-        self.pure_flow_limit = pure_flow_limit
+        flow_limit = 60
+        try:
+            flow_limit = int(pure_flow_limit)
+        except ValueError:
+            # Handle the exception
+            logging.exception('Flow Limit not an integer, defaulting to 60')
+
+        self.pure_flow_limit = flow_limit
 
         try:
             self.state_store = AdaptorStateStore(instance_id)
