@@ -40,7 +40,8 @@ def main():
         'RDSS_INTERNAL_INPUT_STREAM',
         'RDSS_MESSAGE_INVALID_STREAM',
         'RDSS_MESSAGE_ERROR_STREAM',
-        'JISC_ID'
+        'JISC_ID',
+        'PURE_FLOW_LIMIT'
     )
     env_vars = all_env_vars_exist(required_env_variables)
 
@@ -59,6 +60,7 @@ def main():
             input_stream=env_vars['RDSS_INTERNAL_INPUT_STREAM'],
             invalid_stream=env_vars['RDSS_MESSAGE_INVALID_STREAM'],
             error_stream=env_vars['RDSS_MESSAGE_ERROR_STREAM'],
+            pure_flow_limit=env_vars['PURE_FLOW_LIMIT']
         )
     except Exception:
         logging.exception('Cannot run the Pure Adaptor.')

@@ -10,8 +10,6 @@ from .adaptor.messages import MetadataCreate, MetadataUpdate
 from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient
 
 
-# Limit is 60 as the job runs once per hour so this is 1 record per minute
-LIMIT = 60
 TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
 GIT_TAG = 'v0.1.0'
 logger = logging.getLogger(__name__)
@@ -26,11 +24,13 @@ class PureAdaptor(object):
                  instance_id,
                  input_stream,
                  invalid_stream,
-                 error_stream):
+                 error_stream,
+                 pure_flow_limit):
 
         self.instance_id = instance_id
         self.api_version = api_version
         self.pure = versioned_pure_interface(api_version)
+        self.pure_flow_limit = pure_flow_limit
 
         try:
             self.state_store = AdaptorStateStore(instance_id)
@@ -117,6 +117,6 @@ class PureAdaptor(object):
                 'No new datasets available from %s, exiting.', self.pure_api)
 
         else:
-            for dataset in changed_datasets[:LIMIT_RUN]:
+            for dataset in changed_datasets[:self.pure_flow_limit]:
                 dataset.custom_funcs = custom_mapping_funcs
                 self._process_dataset(dataset, temp_dir_path)
