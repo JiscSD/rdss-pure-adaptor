@@ -1,5 +1,8 @@
 import os
 import logging
+
+import sys
+
 from .pure import versioned_pure_interface
 from .pure.base import JMESCustomFunctions
 from .adaptor.s3_bucket import BucketUploader
@@ -24,11 +27,20 @@ class PureAdaptor(object):
                  instance_id,
                  input_stream,
                  invalid_stream,
-                 error_stream):
+                 error_stream,
+                 pure_flow_limit):
 
         self.instance_id = instance_id
         self.api_version = api_version
         self.pure = versioned_pure_interface(api_version)
+        try:
+            flow_limit = int(pure_flow_limit)
+        except ValueError:
+            # Flow limit incorrectly set during build/deploy
+            logging.exception('Flow Limit not an integer')
+            sys.exit(2)
+
+        self.pure_flow_limit = flow_limit
 
         try:
             self.state_store = AdaptorStateStore(instance_id)
@@ -115,6 +127,6 @@ class PureAdaptor(object):
                 'No new datasets available from %s, exiting.', self.pure_api)
 
         else:
-            for dataset in changed_datasets:
+            for dataset in changed_datasets[:self.pure_flow_limit]:
                 dataset.custom_funcs = custom_mapping_funcs
                 self._process_dataset(dataset, temp_dir_path)
