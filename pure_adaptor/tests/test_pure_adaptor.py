@@ -53,6 +53,14 @@ def _setup_mock_environment():
         StreamName='mock-input-stream',
         ShardCount=1
     )
+    kinesis_client.create_stream(
+        StreamName='mock-invalid-stream',
+        ShardCount=1
+    )
+    kinesis_client.create_stream(
+        StreamName='mock-error-stream',
+        ShardCount=1
+    )
 
     return {
         'JISC_ID': '1234',
@@ -149,3 +157,36 @@ def test_uuids_added_to_data():
     assert uuid4hex.match(storageUuid)
     assert len(set([objectUuid, personUuid, orgUuid,
                     relatedUuid, fileUuid, storageUuid])) == 6
+
+
+@mock_s3
+@mock_dynamodb2
+@mock_kms
+@mock_kinesis
+@mock_ssm
+def test_if_no_document_license_not_sent_to_error_or_invalid():
+    env = _setup_mock_environment()
+
+    pure_item_filename = os.path.join(
+        os.path.dirname(__file__), '..', 'pure', 'v59', 'tests', 'fixtures',
+        'no-document-licenses.json')
+    with open(pure_item_filename, 'rb') as pure_item_file:
+        pure_item = json.loads(pure_item_file.read())
+
+    response = json.dumps({
+        'items': [pure_item]
+    })
+
+    with patch.dict(os.environ, **env), requests_mock.mock() as m:
+        m.get('http://riswebtest.st-andrews.ac.uk/portal/'
+              'files/241900740/Supporting_Data.zip', text='')
+        m.get('http://somewhere.over/the/rainbow/datasets', text=response)
+        m.head('http://somewhere.over/the/rainbow/datasets')
+        main()
+
+    kinesis_client = boto3.client('kinesis', region_name='eu-west-2')
+
+    error_records = _get_records(kinesis_client, 'mock-error-stream')
+    invalid_records = _get_records(kinesis_client, 'mock-error-stream')
+    assert len(error_records) == 0
+    assert len(invalid_records) == 0

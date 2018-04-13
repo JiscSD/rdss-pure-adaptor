@@ -91,17 +91,9 @@
         licenceName: value || 'not present',
         licenceIdentifier: uri || 'not present'
       } || [{
-            rightsStatement: ['not present'],
-            rightsHolder: ['not present'],
-            licence: [{
-                licenceName: 'not present',
-                licenceIdentifier : 'not present'
-                }],
-            access: [{
-                accessType: `1`,
-                accessStatement: 'not present'
-                }]
-        }],
+        licenceName: 'not present',
+        licenceIdentifier : 'not present'
+      }],
       access: visibility[*].{
         accessType: `1`,
         accessStatement: 'not present'

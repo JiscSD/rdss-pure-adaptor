@@ -1,0 +1,449 @@
+{
+  "uuid": "2bdd031e-f373-424f-9657-192431ea4a06",
+  "managingOrganisationalUnit": {
+    "uuid": "e1dc1e3f-980e-4a49-8e46-b0ce898eccbb",
+    "link": {
+      "ref": "content",
+      "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/organisational-units/e1dc1e3f-980e-4a49-8e46-b0ce898eccbb"
+    },
+    "name": [
+      {
+        "value": "School of Psychology and Neuroscience"
+      }
+    ],
+    "type": [
+      {
+        "value": "School",
+        "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/school"
+      }
+    ]
+  },
+  "publisher": {
+    "uuid": "9305d934-f816-4727-af16-2f258e0ec638",
+    "link": {
+      "ref": "content",
+      "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/publishers/9305d934-f816-4727-af16-2f258e0ec638"
+    },
+    "name": [
+      {
+        "value": "Dryad"
+      }
+    ],
+    "type": [
+      {
+        "value": "Publisher",
+        "uri": "/dk/atira/pure/publisher/publishertypes/publisher/publisher"
+      }
+    ]
+  },
+  "doi": "http://dx.doi.org/10.5061/dryad.8638h",
+  "publicationDate": {
+    "year": 2017,
+    "month": 5,
+    "day": 11
+  },
+  "confidential": false,
+  "info": {
+    "createdBy": "ff23",
+    "createdDate": "2017-05-16T15:50:27.337+0000",
+    "modifiedBy": "ff23",
+    "modifiedDate": "2017-05-16T15:50:27.337+0000"
+  },
+  "title": [
+    {
+      "value": "Data from: Chimpanzees, bonobos and children successfully coordinate in conflict situations"
+    }
+  ],
+  "type": [
+    {
+      "value": "Dataset",
+      "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset"
+    }
+  ],
+  "relatedProjects": [
+    {
+      "uuid": "6aeaad1c-413b-4434-8c5d-765b8e719114",
+      "link": {
+        "ref": "content",
+        "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/projects/6aeaad1c-413b-4434-8c5d-765b8e719114"
+      },
+      "name": [
+        {
+          "value": "Constructing Social Minds: Coordination, Communication and Cultural Transmission"
+        }
+      ],
+      "type": [
+        {
+          "value": "Standard",
+          "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/standard"
+        }
+      ]
+    }
+  ],
+  "workflow": [
+    {
+      "value": "Validated",
+      "workflowStep": "validated"
+    }
+  ],
+  "visibility": [
+    {
+      "value": "Public - No restriction",
+      "key": "FREE"
+    }
+  ],
+  "personAssociations": [
+    {
+      "id": 250007106,
+      "externalPerson": {
+        "uuid": "ba8c1112-b6de-446b-ac2f-0b95c80a5cc2",
+        "link": {
+          "ref": "content",
+          "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-persons/ba8c1112-b6de-446b-ac2f-0b95c80a5cc2"
+        },
+        "name": [
+          {
+            "value": "Alejandro  S\u00e1nchez-Amaro"
+          }
+        ],
+        "type": [
+          {
+            "value": "External person",
+            "uri": "/dk/atira/pure/externalperson/externalpersontypes/externalperson/externalperson"
+          }
+        ]
+      },
+      "name": {
+        "firstName": "Alejandro ",
+        "lastName": "S\u00e1nchez-Amaro"
+      },
+      "personRole": [
+        {
+          "value": "Creator",
+          "uri": "/dk/atira/pure/dataset/roles/dataset/creator"
+        }
+      ],
+      "externalOrganisations": [
+        {
+          "uuid": "0a7101f1-09e7-40bd-bf58-a74850540b95",
+          "link": {
+            "ref": "content",
+            "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-organisations/0a7101f1-09e7-40bd-bf58-a74850540b95"
+          },
+          "name": [
+            {
+              "value": "Max Planck Inst Evolutionary Anthropol, Max Planck Society, Dept Dev & Comparat Psychol"
+            }
+          ],
+          "type": [
+            {
+              "value": "Unknown",
+              "uri": "/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 250007107,
+      "externalPerson": {
+        "uuid": "3c7a0ff0-b25d-4aa1-8b06-2be06372c665",
+        "link": {
+          "ref": "content",
+          "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-persons/3c7a0ff0-b25d-4aa1-8b06-2be06372c665"
+        },
+        "name": [
+          {
+            "value": "Shona  Duguid"
+          }
+        ],
+        "type": [
+          {
+            "value": "External person",
+            "uri": "/dk/atira/pure/externalperson/externalpersontypes/externalperson/externalperson"
+          }
+        ]
+      },
+      "name": {
+        "firstName": "Shona ",
+        "lastName": "Duguid"
+      },
+      "personRole": [
+        {
+          "value": "Creator",
+          "uri": "/dk/atira/pure/dataset/roles/dataset/creator"
+        }
+      ],
+      "externalOrganisations": [
+        {
+          "uuid": "0a7101f1-09e7-40bd-bf58-a74850540b95",
+          "link": {
+            "ref": "content",
+            "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-organisations/0a7101f1-09e7-40bd-bf58-a74850540b95"
+          },
+          "name": [
+            {
+              "value": "Max Planck Inst Evolutionary Anthropol, Max Planck Society, Dept Dev & Comparat Psychol"
+            }
+          ],
+          "type": [
+            {
+              "value": "Unknown",
+              "uri": "/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 250007108,
+      "person": {
+        "uuid": "e16c323e-1faa-4dc8-8b9c-f6e9432766a2",
+        "link": {
+          "ref": "content",
+          "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/persons/e16c323e-1faa-4dc8-8b9c-f6e9432766a2"
+        },
+        "name": [
+          {
+            "value": "Josep Call"
+          }
+        ]
+      },
+      "name": {
+        "firstName": "Josep",
+        "lastName": "Call"
+      },
+      "personRole": [
+        {
+          "value": "Creator",
+          "uri": "/dk/atira/pure/dataset/roles/dataset/creator"
+        }
+      ],
+      "organisationalUnits": [
+        {
+          "uuid": "e1dc1e3f-980e-4a49-8e46-b0ce898eccbb",
+          "link": {
+            "ref": "content",
+            "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/organisational-units/e1dc1e3f-980e-4a49-8e46-b0ce898eccbb"
+          },
+          "name": [
+            {
+              "value": "School of Psychology and Neuroscience"
+            }
+          ],
+          "type": [
+            {
+              "value": "School",
+              "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/school"
+            }
+          ]
+        },
+        {
+          "uuid": "aca65ea5-18be-4425-8477-a13cdbd890c9",
+          "link": {
+            "ref": "content",
+            "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/organisational-units/aca65ea5-18be-4425-8477-a13cdbd890c9"
+          },
+          "name": [
+            {
+              "value": "Centre for Social Learning & Cognitive Evolution"
+            }
+          ],
+          "type": [
+            {
+              "value": "Centres and Institutes",
+              "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/institute"
+            }
+          ]
+        }
+      ],
+      "externalOrganisations": [
+        {
+          "uuid": "0a7101f1-09e7-40bd-bf58-a74850540b95",
+          "link": {
+            "ref": "content",
+            "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-organisations/0a7101f1-09e7-40bd-bf58-a74850540b95"
+          },
+          "name": [
+            {
+              "value": "Max Planck Inst Evolutionary Anthropol, Max Planck Society, Dept Dev & Comparat Psychol"
+            }
+          ],
+          "type": [
+            {
+              "value": "Unknown",
+              "uri": "/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 250007111,
+      "externalPerson": {
+        "uuid": "8eae6397-c3ab-4ad0-b86a-d8df23835416",
+        "link": {
+          "ref": "content",
+          "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-persons/8eae6397-c3ab-4ad0-b86a-d8df23835416"
+        },
+        "name": [
+          {
+            "value": "Michael  Tomasello"
+          }
+        ],
+        "type": [
+          {
+            "value": "External person",
+            "uri": "/dk/atira/pure/externalperson/externalpersontypes/externalperson/externalperson"
+          }
+        ]
+      },
+      "name": {
+        "firstName": "Michael ",
+        "lastName": "Tomasello"
+      },
+      "personRole": [
+        {
+          "value": "Creator",
+          "uri": "/dk/atira/pure/dataset/roles/dataset/creator"
+        }
+      ],
+      "externalOrganisations": [
+        {
+          "uuid": "0a7101f1-09e7-40bd-bf58-a74850540b95",
+          "link": {
+            "ref": "content",
+            "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-organisations/0a7101f1-09e7-40bd-bf58-a74850540b95"
+          },
+          "name": [
+            {
+              "value": "Max Planck Inst Evolutionary Anthropol, Max Planck Society, Dept Dev & Comparat Psychol"
+            }
+          ],
+          "type": [
+            {
+              "value": "Unknown",
+              "uri": "/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/unknown"
+            }
+          ]
+        },
+        {
+          "uuid": "df81044a-fa7c-4878-8add-68a858a3dbfb",
+          "link": {
+            "ref": "content",
+            "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-organisations/df81044a-fa7c-4878-8add-68a858a3dbfb"
+          },
+          "name": [
+            {
+              "value": "Duke Univ, Duke University, Dept Psych and Neurosci"
+            }
+          ],
+          "type": [
+            {
+              "value": "External Organisation",
+              "uri": "/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/externalorganisation"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "organisationalUnits": [
+    {
+      "uuid": "e1dc1e3f-980e-4a49-8e46-b0ce898eccbb",
+      "link": {
+        "ref": "content",
+        "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/organisational-units/e1dc1e3f-980e-4a49-8e46-b0ce898eccbb"
+      },
+      "name": [
+        {
+          "value": "School of Psychology and Neuroscience"
+        }
+      ],
+      "type": [
+        {
+          "value": "School",
+          "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/school"
+        }
+      ]
+    },
+    {
+      "uuid": "aca65ea5-18be-4425-8477-a13cdbd890c9",
+      "link": {
+        "ref": "content",
+        "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/organisational-units/aca65ea5-18be-4425-8477-a13cdbd890c9"
+      },
+      "name": [
+        {
+          "value": "Centre for Social Learning & Cognitive Evolution"
+        }
+      ],
+      "type": [
+        {
+          "value": "Centres and Institutes",
+          "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/institute"
+        }
+      ]
+    }
+  ],
+  "externalOrganisations": [
+    {
+      "uuid": "0a7101f1-09e7-40bd-bf58-a74850540b95",
+      "link": {
+        "ref": "content",
+        "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-organisations/0a7101f1-09e7-40bd-bf58-a74850540b95"
+      },
+      "name": [
+        {
+          "value": "Max Planck Inst Evolutionary Anthropol, Max Planck Society, Dept Dev & Comparat Psychol"
+        }
+      ],
+      "type": [
+        {
+          "value": "Unknown",
+          "uri": "/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/unknown"
+        }
+      ]
+    },
+    {
+      "uuid": "df81044a-fa7c-4878-8add-68a858a3dbfb",
+      "link": {
+        "ref": "content",
+        "href": "https://riswebtest.st-andrews.ac.uk/ws/api/59/external-organisations/df81044a-fa7c-4878-8add-68a858a3dbfb"
+      },
+      "name": [
+        {
+          "value": "Duke Univ, Duke University, Dept Psych and Neurosci"
+        }
+      ],
+      "type": [
+        {
+          "value": "External Organisation",
+          "uri": "/dk/atira/pure/ueoexternalorganisation/ueoexternalorganisationtypes/ueoexternalorganisation/externalorganisation"
+        }
+      ]
+    }
+  ],
+  "documents": [
+        {
+          "id": 241900740,
+          "title": "Supporting_Data.zip",
+          "url": "https://riswebtest.st-andrews.ac.uk/ws/files/241900740/Supporting_Data.zip",
+          "creator": "ff23",
+          "created": "2016-04-12T08:15:07.631+0000",
+          "documentType": [
+            {
+              "value": "Dataset",
+              "uri": "/dk/atira/pure/dataset/documents/dataset"
+            }
+          ],
+          "documentLicense": [],
+          "visibility": [
+            {
+              "value": "Public - No restriction",
+              "key": "FREE"
+            }
+          ]
+        }
+      ]
+}
