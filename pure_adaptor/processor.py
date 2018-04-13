@@ -1,5 +1,8 @@
 import os
 import logging
+
+import sys
+
 from .pure import versioned_pure_interface
 from .pure.base import JMESCustomFunctions
 from .adaptor.s3_bucket import BucketUploader
@@ -30,12 +33,12 @@ class PureAdaptor(object):
         self.instance_id = instance_id
         self.api_version = api_version
         self.pure = versioned_pure_interface(api_version)
-        flow_limit = 60
         try:
             flow_limit = int(pure_flow_limit)
         except ValueError:
-            # Handle the exception
-            logging.exception('Flow Limit not an integer, defaulting to 60')
+            # Flow limit incorrectly set during build/deploy
+            logging.exception('Flow Limit not an integer')
+            sys.exit(2)
 
         self.pure_flow_limit = flow_limit
 
