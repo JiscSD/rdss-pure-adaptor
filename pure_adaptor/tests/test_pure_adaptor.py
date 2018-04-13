@@ -68,6 +68,22 @@ def _setup_mock_environment():
     }
 
 
+def _get_records(client, stream_name):
+    shard_id = client.describe_stream(
+        StreamName=stream_name,
+    )['StreamDescription']['Shards'][0]['ShardId']
+    shard_iterator = client.get_shard_iterator(
+        StreamName=stream_name,
+        ShardId=shard_id,
+        ShardIteratorType='TRIM_HORIZON',
+    )['ShardIterator']
+    result = client.get_records(
+        ShardIterator=shard_iterator,
+        Limit=1000,
+    )
+    return result['Records']
+
+
 @mock_s3
 @mock_dynamodb2
 @mock_kms
@@ -111,18 +127,7 @@ def test_uuids_added_to_data():
 
     kinesis_client = boto3.client('kinesis', region_name='eu-west-2')
 
-    shard_id = kinesis_client.describe_stream(
-        StreamName='mock-input-stream'
-    )['StreamDescription']['Shards'][0]['ShardId']
-    shard_iterator = kinesis_client.get_shard_iterator(
-        StreamName='mock-input-stream',
-        ShardId=shard_id,
-        ShardIteratorType='TRIM_HORIZON'
-    )['ShardIterator']
-    record = kinesis_client.get_records(
-        ShardIterator=shard_iterator,
-        Limit=1000
-    )['Records'][0]
+    record = _get_records(kinesis_client, 'mock-input-stream')[0]
 
     uuid4hex = re.compile(
         '^[0-9a-f]{8}\-[0-9a-f]{4}\-4[0-9a-f]{3}\-[89ab][0-9a-f]{3}\-[0-9a-f]{12}$', re.I)
