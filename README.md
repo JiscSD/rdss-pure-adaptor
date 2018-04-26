@@ -176,6 +176,15 @@ To run the test suite for the RDSS Pure Adaptor, run the following command:
 make test
 ```
 
+In the dev environment, it is possible to have the adaptor process records it has already processed by removing them from the dynamodb table for the pure adaptor. In the AWS Console:
+ - Navigate to the DynamoDB service then select the Tables view. 
+ - Search for the table for the pure-adaptor that includes the Jisc ID for the HEI you are testing. 
+ - Select that table to gain access to the items tab.
+ - In the items tab, select some records that are recent.  These records will be still available in the Kinesis Stream.
+ - Choose the 'Delete' action from the list of actions on the item tab page.
+
+This should lead to the pure adaptor picking up records from the kinesis stream on its next scheduled run.
+
 ### Linting
 
 To run the automated linting tool, run the following command:
