@@ -180,8 +180,8 @@ In the dev environment, it is possible to have the adaptor process records it ha
  - Navigate to the DynamoDB service then select the Tables view. 
  - Search for the table for the pure-adaptor that includes the Jisc ID for the HEI you are testing. 
  - Select that table to gain access to the items tab.
- - In the items tab, select some records that are recent.  These records will be still available in the Kinesis Stream.
- - Choose the 'Delete' action from the list of actions on the item tab page.
+ - In the items tab, select the record with a uuid of 'LATEST'
+ - You can delete this record, to process all records.  Or update the date modified field to a time in the past that includes some other records.
 
 This should lead to the pure adaptor picking up records from the kinesis stream on its next scheduled run.
 
