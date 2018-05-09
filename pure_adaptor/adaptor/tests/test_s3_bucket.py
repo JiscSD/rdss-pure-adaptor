@@ -16,9 +16,10 @@ def test_file_path():
 
 @pytest.fixture
 def test_file_md5():
-    p = os.path.join(os.path.dirname(__file__), 'fixtures/test_file_md5.txt')
-    with open(p, 'r') as f_in:
-        return f_in.read().strip()
+    """ MD5 of fixture/test_file.txt generated with
+        `openssl md5 -binary ./test_file.txt | base64`
+        """
+    return 'xs+A2UIwvGrnurn86AHVZg=='
 
 
 @pytest.fixture

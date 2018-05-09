@@ -16,7 +16,8 @@ def test_dataset():
 
 @pytest.fixture
 def test_checksum_dict():
-    """ md5 checksums generated with op"""
+    """ md5 checksums generated with `openssl md5 -binary ./test_file.txt | base64`
+        """
     return {
         'test_dataset_file_one.txt':
             'Wtdb7pD6oksoGWCMMkxznQ==',
