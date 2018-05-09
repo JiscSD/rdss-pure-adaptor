@@ -11,7 +11,15 @@ from ..s3_bucket import BucketUploader
 
 @pytest.fixture
 def test_file_path():
-    return os.path.join(os.path.dirname(__file__), 'test_file.txt')
+    return os.path.join(os.path.dirname(__file__), 'fixtures/test_file.txt')
+
+
+@pytest.fixture
+def test_file_md5():
+    """ MD5 of fixture/test_file.txt generated with
+        `openssl md5 -binary ./test_file.txt | base64`
+        """
+    return 'xs+A2UIwvGrnurn86AHVZg=='
 
 
 @pytest.fixture
@@ -29,9 +37,9 @@ class TestBucketUploader(object):
         self.s3_client = boto3.client('s3')
         self.s3_client.create_bucket(Bucket=self.bucket_name)
 
-    def test_file_upload(self, test_file_path):
+    def test_file_upload(self, test_file_path, test_file_md5):
         uploader = BucketUploader(self.bucket_name)
-        uploader.upload_file(self.test_prefix, test_file_path)
+        uploader.upload_file(self.test_prefix, test_file_path, test_file_md5)
 
         _, file_name = os.path.split(test_file_path)
         tmp_dir = tempfile.TemporaryDirectory()
