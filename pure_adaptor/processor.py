@@ -91,8 +91,12 @@ class PureAdaptor(object):
             :dataset: PureDataset
             """
         for file_path in dataset.local_files:
+            _, file_name = os.path.split(file_path)
             s3_url = self.upload_manager.upload_file(dataset.doi_upload_key,
-                                                     file_path)
+                                                     file_path,
+                                                     dataset.local_file_checksums.get(
+                                                         file_name)
+                                                     )
             dataset.file_s3_urls[os.path.basename(file_path)] = s3_url
 
         self.upload_manager.upload_json_obj(
