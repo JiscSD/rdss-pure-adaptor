@@ -65,7 +65,7 @@ class PureDataset(BasePureDataset):
 
     def _format_checksum(self, file_name):
         return [{
-            'checksumType': 2,  # sha256
+            'checksumType': 1,  # md5
             'checksumValue': self.local_file_checksums.get(file_name),
             'checksumUuid': str(uuid.uuid4())
         }]

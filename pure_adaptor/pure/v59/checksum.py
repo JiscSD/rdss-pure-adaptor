@@ -1,4 +1,5 @@
 import hashlib
+import base64
 import os
 import logging
 
@@ -8,19 +9,19 @@ logger = logging.getLogger(__name__)
 class ChecksumGenerator(object):
 
     def __init__(self):
-        self.hasher = hashlib.sha256
+        self.checksum_type = hashlib.md5
 
-    def _hash_file(self, file_path, buf_size=4096):
-        """ Generates the hash of an individual file.
+    def _generate_file_checksum(self, file_path, buf_size=4096):
+        """ Generates the checksum for an individual file.
             :file_path: String
             :returns: String
             """
-        file_hasher = self.hasher()
+        checksum_generator = self.checksum_type()
         logger.debug('Generating checksum for %s', file_path)
         with open(file_path, 'rb') as f_in:
             for file_chunk in iter(lambda: f_in.read(buf_size), b''):
-                file_hasher.update(file_chunk)
-        return file_hasher.hexdigest()
+                checksum_generator.update(file_chunk)
+        return base64.b64encode(checksum_generator.digest()).decode('utf-8')
 
     def file_checksums(self, dataset):
         """ Generates checksums for every local file in a dataset,
@@ -42,8 +43,8 @@ class ChecksumGenerator(object):
 
         for f_path in dataset.local_files:
             logger.info('Generating %s checksum for %s',
-                        self.hasher().name, f_path)
-            path_hash = self._hash_file(f_path)
+                        self.checksum_type().name, f_path)
+            path_checksum = self._generate_file_checksum(f_path)
             file_name = os.path.basename(f_path)
-            checksum_dict[file_name] = path_hash
+            checksum_dict[file_name] = path_checksum
         return checksum_dict
