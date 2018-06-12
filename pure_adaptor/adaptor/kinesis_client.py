@@ -8,9 +8,9 @@ import json
 class KinesisClient(object):
     """Client for managing kinesis messages."""
 
-    def __init__(self, input_stream_name, invalid_stream_name,
+    def __init__(self, output_stream_name, invalid_stream_name,
                  error_stream_name):
-        self.input_stream_name = input_stream_name
+        self.output_stream_name = output_stream_name
         self.invalid_stream_name = invalid_stream_name
         self.error_stream_name = error_stream_name
         self.logger = logging.getLogger()
@@ -18,15 +18,15 @@ class KinesisClient(object):
         self.client = boto3.client('kinesis')
 
     def put_record(self, message):
-        """ Take a message and attempt to put in into the input stream.
-            Will place the message into the error or invalid streams
+        """ Take a message and attempt to put in onto the output stream.
+            Will place the message onto the error or invalid streams
             based on the messages class.
             :message: RDSSMessage
             """
         if not message.is_valid:
             self.__move_to_invalid_stream(message.as_json)
         else:
-            self.__put_record(self.input_stream_name, message.as_json)
+            self.__put_record(self.output_stream_name, message.as_json)
 
     def __put_record(self, stream_name, payload):
         """Attempt to put the payload in the provided stream name."""

@@ -37,7 +37,7 @@ def main():
         'PURE_API_URL',
         'PURE_API_KEY_SSM_PARAMETER_NAME',
         'INSTANCE_ID',
-        'RDSS_INTERNAL_INPUT_STREAM',
+        'RDSS_MESSAGE_OUTPUT_STREAM',
         'RDSS_MESSAGE_INVALID_STREAM',
         'RDSS_MESSAGE_ERROR_STREAM',
         'JISC_ID',
@@ -57,7 +57,7 @@ def main():
             api_url=env_vars['PURE_API_URL'],
             api_key=pure_api_key,
             instance_id=env_vars['INSTANCE_ID'],
-            input_stream=env_vars['RDSS_INTERNAL_INPUT_STREAM'],
+            output_stream=env_vars['RDSS_MESSAGE_OUTPUT_STREAM'],
             invalid_stream=env_vars['RDSS_MESSAGE_INVALID_STREAM'],
             error_stream=env_vars['RDSS_MESSAGE_ERROR_STREAM'],
             pure_flow_limit=env_vars['PURE_FLOW_LIMIT']

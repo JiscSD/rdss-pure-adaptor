@@ -111,9 +111,9 @@ The RDSS Pure Adaptor requires that the following environment variables are set:
 
    A string describing the institution and environment which this instance of the RDSS Pure Adaptor is targeting, e.g. `pure-adaptor-<jisc_id>-<env>`. This is the name of the DynamoDB table used to store the state of the adaptor, as well as the name of the s3 bucket which the adaptor will upload downloaded datasets.
 
-- `RDSS_INTERNAL_INPUT_STREAM`
+- `RDSS_MESSAGE_OUTPUT_STREAM`
 
-   The name of the RDSS internal input stream to which the Pure Adaptor will write messages.
+   The name of the RDSS institutional output stream to which the Pure Adaptor will write messages.
 
 - `RDSS_MESSAGE_INVALID_STREAM`
 

@@ -50,7 +50,7 @@ def _setup_mock_environment():
 
     kinesis_client = boto3.client('kinesis', region_name='eu-west-2')
     kinesis_client.create_stream(
-        StreamName='mock-input-stream',
+        StreamName='mock-output-stream',
         ShardCount=1
     )
 
@@ -61,7 +61,7 @@ def _setup_mock_environment():
         'PURE_API_URL': 'http://somewhere.over/the/rainbow',
         'PURE_API_KEY_SSM_PARAMETER_NAME': 'x-marks-the-spot',
         'INSTANCE_ID': 'mock-instance-id',
-        'RDSS_INTERNAL_INPUT_STREAM': 'mock-input-stream',
+        'RDSS_MESSAGE_OUTPUT_STREAM': 'mock-output-stream',
         'RDSS_MESSAGE_INVALID_STREAM': 'mock-invalid-stream',
         'RDSS_MESSAGE_ERROR_STREAM': 'mock-error-stream',
         'PURE_FLOW_LIMIT':  '60'
@@ -112,10 +112,10 @@ def test_uuids_added_to_data():
     kinesis_client = boto3.client('kinesis', region_name='eu-west-2')
 
     shard_id = kinesis_client.describe_stream(
-        StreamName='mock-input-stream'
+        StreamName='mock-output-stream'
     )['StreamDescription']['Shards'][0]['ShardId']
     shard_iterator = kinesis_client.get_shard_iterator(
-        StreamName='mock-input-stream',
+        StreamName='mock-output-stream',
         ShardId=shard_id,
         ShardIteratorType='TRIM_HORIZON'
     )['ShardIterator']
