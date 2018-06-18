@@ -25,7 +25,7 @@ class PureAdaptor(object):
                  api_url,
                  api_key,
                  instance_id,
-                 input_stream,
+                 output_stream,
                  invalid_stream,
                  error_stream,
                  pure_flow_limit):
@@ -45,7 +45,7 @@ class PureAdaptor(object):
         try:
             self.state_store = AdaptorStateStore(instance_id)
             self.upload_manager = BucketUploader(instance_id)
-            self.kinesis_client = KinesisClient(input_stream,
+            self.kinesis_client = KinesisClient(output_stream,
                                                 invalid_stream,
                                                 error_stream)
             self.pure_api = self.pure.API(api_url, api_key)
