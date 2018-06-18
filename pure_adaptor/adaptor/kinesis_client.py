@@ -18,7 +18,7 @@ class KinesisClient(object):
         self.client = boto3.client('kinesis')
 
     def put_record(self, message):
-        """ Take a message and attempt to put in onto the output stream.
+        """ Take a message and attempt to put it onto the output stream.
             Will place the message onto the error or invalid streams
             based on the messages class.
             :message: RDSSMessage
