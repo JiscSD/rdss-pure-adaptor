@@ -42,36 +42,16 @@
           },
           "minItems": 1
         },
-        "personEntitlement": {
-          "type": "array",
-          "uniqueItems": true,
-          "items": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 22
-          },
-          "minItems": 1
-        },
-        "personAffiliation": {
-          "type": "array",
-          "uniqueItems": true,
-          "items": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 8
-          },
-          "minItems": 1
-        },
-        "personGivenName": {
+        "personHonorificPrefix": {
           "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/nonEmptyString"
         },
-        "personCn": {
+        "personGivenNames": {
           "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/nonEmptyString"
         },
-        "personSn": {
+        "personFamilyNames": {
           "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/nonEmptyString"
         },
-        "personTelephoneNumber": {
+        "personHonorificSuffix": {
           "$ref": "https://www.jisc.ac.uk/rdss/schema/types.json/#/definitions/nonEmptyString"
         },
         "personMail": {
@@ -85,13 +65,8 @@
       "required": [
         "personUuid",
         "personIdentifier",
-        "personEntitlement",
-        "personAffiliation",
-        "personGivenName",
-        "personCn",
-        "personSn",
-        "personTelephoneNumber",
-        "personMail",
+        "personGivenNames",
+        "personFamilyNames",
         "personOrganisationUnit"
       ],
       "additionalProperties": false
@@ -125,7 +100,7 @@
         "personIdentifierType": {
           "type": "integer",
           "minimum": 1,
-          "maximum": 5
+          "maximum": 6
         }
       },
       "required": [

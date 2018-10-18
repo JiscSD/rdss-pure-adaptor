@@ -132,15 +132,13 @@ def test_uuids_added_to_data():
     person = body['objectPersonRole'][0]['person']
     personUuid = person['personUuid']
     orgUuid = person['personOrganisationUnit']['organisationUnitUuid']
-    relatedUuid = body['objectRelatedIdentifier'][0]['identifierValue']
     fileUuid = body['objectFile'][0]['fileUuid']
     storageUuid = body['objectFile'][0]['fileStoragePlatform']['storagePlatformUuid']
 
     assert uuid4hex.match(objectUuid)
     assert uuid4hex.match(personUuid)
     assert uuid4hex.match(orgUuid)
-    assert uuid4hex.match(relatedUuid)
     assert uuid4hex.match(fileUuid)
     assert uuid4hex.match(storageUuid)
-    assert len(set([objectUuid, personUuid, orgUuid,
-                    relatedUuid, fileUuid, storageUuid])) == 6
+    assert len(
+        set([objectUuid, personUuid, orgUuid, fileUuid, storageUuid])) == 5

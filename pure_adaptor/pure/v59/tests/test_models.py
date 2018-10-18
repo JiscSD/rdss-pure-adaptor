@@ -71,10 +71,6 @@ class TestPureMessageMappings(object):
         sample_uuid = 'ba8c1112-b6de-446b-ac2f-0b95c80a5cc2'
         assert person_role['person']['personUuid'] == sample_uuid
 
-    def test_person_given_name(self, person_role):
-        name = 'Alejandro  S\u00e1nchez-Amaro'
-        assert person_role['person']['personGivenName'] == name
-
     def test_person_identifier(self, person_role):
         p_id = person_role['person']['personIdentifier'][0]
         assert p_id['personIdentifierValue'] == '250007106'
@@ -84,14 +80,11 @@ class TestPureMessageMappings(object):
         role_mapping = 5
         assert person_role['role'] == role_mapping
 
-    def test_person_cn_sn(self, person_role):
-        cn = 'Alejandro '
-        sn = 'S\u00e1nchez-Amaro'
-        assert person_role['person']['personCn'] == cn
-        assert person_role['person']['personSn'] == sn
-
-    def test_person_affiliation(self, person_role):
-        assert person_role['person']['personAffiliation'][0] == 2
+    def test_person_name(self, person_role):
+        given_name = 'Alejandro '
+        family_name = 'S\u00e1nchez-Amaro'
+        assert person_role['person']['personGivenNames'] == given_name
+        assert person_role['person']['personFamilyNames'] == family_name
 
     def test_person_organisation_unit(self, canonical_metadata):
         person_role = canonical_metadata['object'
@@ -112,11 +105,9 @@ class TestPureMessageMappings(object):
         assert org_role['role'] == 9
 
     def test_obj_rights(self, canonical_metadata):
-        obj_rights = canonical_metadata['objectRights'][0]
+        obj_rights = canonical_metadata['objectRights']
         licence = obj_rights['licence'][0]
         access = obj_rights['access'][0]
-        assert obj_rights['rightsStatement'] == ['not present']
-        assert obj_rights['rightsHolder'] == ['not present']
         assert licence['licenceName'] == 'CC BY'
         assert licence['licenceIdentifier'] == '/dk/atira/pure/dataset/'\
                                                'documentlicenses/cc-by'
