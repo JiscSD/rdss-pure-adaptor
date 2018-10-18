@@ -3,7 +3,7 @@ coverage
 google-compute-engine
 jmespath
 jsonschema
-moto
+moto==1.2.0
 pre-commit
 pycodestyle
 pylint
