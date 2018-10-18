@@ -1,5 +1,5 @@
 asn1crypto==0.24.0
-aspy.yaml==1.0.0
+aspy.yaml==1.1.1
 astroid==2.0.4
 atomicwrites==1.2.1
 attrs==18.2.0
@@ -8,9 +8,10 @@ biscuits==0.1.1
 boto==2.49.0
 boto3==1.9.26
 botocore==1.12.26
-cached-property==1.3.1
+cached-property==1.5.1
 certifi==2018.10.15
 cffi==1.11.5
+cfgv==1.1.0
 chardet==3.0.4
 cookies==2.2.1
 coverage==4.5.1
@@ -24,7 +25,7 @@ future==0.16.0
 gitdb2==2.0.3
 GitPython==2.1.8
 google-compute-engine==2.8.3
-identify==1.0.7
+identify==1.1.7
 idna==2.7
 isort==4.3.4
 Jinja2==2.10
@@ -38,12 +39,13 @@ mccabe==0.6.1
 mock==2.0.0
 more-itertools==4.3.0
 moto==1.3.6
-nodeenv==1.2.0
+nodeenv==1.3.2
 pbr==5.0.0
 pluggy==0.8.0
-pre-commit==1.6.0
+pre-commit==1.11.2
 py==1.7.0
 pyaml==17.12.1
+pycodestyle==2.4.0
 pycparser==2.19
 pycryptodome==3.6.6
 pylint==2.1.1
@@ -60,9 +62,10 @@ responses==0.10.0
 s3transfer==0.1.13
 six==1.11.0
 smmap2==2.0.3
+toml==0.10.0
 typed-ast==1.1.0
 urllib3==1.23
-virtualenv==15.1.0
+virtualenv==16.0.0
 websocket-client==0.53.0
 Werkzeug==0.14.1
 wrapt==1.10.11

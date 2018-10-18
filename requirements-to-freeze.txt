@@ -4,6 +4,8 @@ google-compute-engine
 jmespath
 jsonschema
 moto
+pre-commit
+pycodestyle
 pylint
 pytest-cov
 requests
