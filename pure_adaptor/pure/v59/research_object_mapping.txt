@@ -22,7 +22,7 @@
         }]
         },
       role: personRole[0].value | person_role(@)
-    },
+    } || `[]`,
   objectDescription: description[0].value || 'not present',
   objectRights: {
     licence: [{
@@ -49,7 +49,7 @@
      identifierType: `16`
     },
     relationType: `1`
-  },
+  } || `[]`,
   objectOrganisationRole: [{
     organisation: {
         organisationJiscId: publisher.name[0].value | jisc_id(@),
