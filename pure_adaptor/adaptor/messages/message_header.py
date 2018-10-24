@@ -140,6 +140,7 @@ class RDSSMessageHeader(object):
             'messageTimings': self._message_timings(now),
             'messageHistory': self._message_history(now),
             'version': self.MESSAGE_API_VERSION,
+            'generator': 'pure-adaptor'
         }
 
         if correlation_id:
