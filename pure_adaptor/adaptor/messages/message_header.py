@@ -131,7 +131,7 @@ class RDSSMessageHeader(object):
                  error_code=None,
                  error_description=None):
 
-        now = datetime.datetime.now(datetime.timezone.utc).astimezone()
+        now = datetime.datetime.now(datetime.timezone.utc)
 
         fields = {
             'messageId': self._message_id(),
