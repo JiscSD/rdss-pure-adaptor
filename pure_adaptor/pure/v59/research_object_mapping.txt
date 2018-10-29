@@ -39,8 +39,8 @@
   objectCategory: `[]`,
   objectResourceType: type[0].value | object_resourcetype(@),
   objectValue: `1`,
-  objectIdentifier:[{
-        identifierValue: doi,
+  objectIdentifier: doi | [{
+        identifierValue: @,
         identifierType: `4`
   }],
   objectRelatedIdentifier:relatedProjects[*].{
@@ -73,18 +73,14 @@
       licence: documentLicense[*].{
         licenceName: value || 'not present',
         licenceIdentifier: uri || 'not present'
-      } || [{
+      } || {
             rightsStatement: ['not present'],
             rightsHolder: ['not present'],
             licence: [{
                 licenceName: 'not present',
                 licenceIdentifier : 'not present'
-                }],
-            access: [{
-                accessType: `1`,
-                accessStatement: 'not present'
-                }]
-        }],
+            }]
+        },
       access: visibility[*].{
         accessType: `1`,
         accessStatement: 'not present'
