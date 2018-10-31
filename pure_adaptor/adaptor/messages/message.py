@@ -55,8 +55,15 @@ class RDSSMessage:
             self._message['messageBody']
         )
         if body_errors:
-            self._set_error('GENERR001', ' | '.join(body_errors))
             self.validation_errors.extend(body_errors)
+            self._set_error(self.error_string)
+
+    @property
+    def error_string(self):
+        if self.is_valid:
+            return '-'
+        else:
+            return 'GENERR001', ' | '.join(self.validation_errors)
 
     @property
     def is_valid(self):

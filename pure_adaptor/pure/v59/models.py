@@ -143,7 +143,7 @@ class PureDataset(BasePureDataset):
         return dateutil.parser.parse(date_string)
 
     @property
-    def uuid(self):
+    def pure_uuid(self):
         return self._dataset_json.get('uuid')
 
     def download_files(self, temp_dir):

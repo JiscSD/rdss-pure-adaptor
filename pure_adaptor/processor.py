@@ -67,7 +67,6 @@ class PureAdaptor(object):
             download and upload, as well as sending messages to the appropriate
             stream.
             :dataset: PureDataset
-            :returns: DatasetState
             """
 
         dataset.download_files(temp_dir_path)
@@ -75,14 +74,20 @@ class PureAdaptor(object):
         dataset_state = DatasetState.create_from_dataset(dataset)
         prev_dataset_state = self.state_store.get_dataset_state(dataset.uuid)
 
-        if dataset_state == prev_dataset_state:
+        if not prev_dataset_state.message_body:
+            message_creator = MetadataCreate(self.instance_id)
+        elif dataset_state != prev_dataset_state:
             message_creator = MetadataUpdate(self.instance_id)
         else:
-            message_creator = MetadataCreate(self.instance_id)
+            # At present this won't occur due to the generation of UUID's for
+            # each new message.
+            logger.info(
+                'Skipping %s as no change in RDSS CDM manifestation of dataset.', dataset.uuid)
 
         message = message_creator.generate(dataset.rdss_canonical_metadata)
 
         self.kinesis_client.put_record(message)
+        dataset_state.update_message(message)
         self._update_adaptor_state(dataset_state)
 
     def _upload_dataset(self, dataset):
