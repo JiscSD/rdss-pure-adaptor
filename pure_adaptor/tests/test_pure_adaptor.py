@@ -129,7 +129,7 @@ def test_uuids_added_to_data():
     )['Records'][0]
 
     uuid4hex = re.compile(
-        '^[0-9a-f]{8}\-[0-9a-f]{4}\-4[0-9a-f]{3}\-[89ab][0-9a-f]{3}\-[0-9a-f]{12}$', re.I)
+        r'^[0-9a-f]{8}\-[0-9a-f]{4}\-4[0-9a-f]{3}\-[89ab][0-9a-f]{3}\-[0-9a-f]{12}$', re.I)
     body = json.loads(record['Data'])['messageBody']
 
     objectUuid = body['objectUuid']
