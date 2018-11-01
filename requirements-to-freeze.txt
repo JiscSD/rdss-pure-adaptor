@@ -3,6 +3,7 @@ GitPython
 jmespath
 jsonschema
 moto
+pre-commit
 pytest
 -e git://github.com/JiscRDSS/rdss-shared-libraries.git@cf07cad3f176ef8be1410fc29b240fb4791e607a#egg=rdsslib
 requests
