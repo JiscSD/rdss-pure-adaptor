@@ -40,7 +40,7 @@ class AdaptorStateStore(object):
             """
         try:
             logging.info('Putting DatasetState for %s into %s.',
-                         dataset_state.id, self.processed_table.name)
+                         dataset_state.pure_uuid, self.processed_table.name)
             self.processed_table.put_item(Item=dataset_state.json)
         except ClientError:
             logging.exception('Unable to put %s into %s.',
@@ -73,7 +73,7 @@ class AdaptorStateStore(object):
             logging.info(
                 'Retrieving high watermark from %s.', self.watermark_table.name)
             response = self.watermark_table.get_item(
-                Key={'key': self.HIGH_WATERMARK_KEY})
+                Key={'Key': self.HIGH_WATERMARK_KEY})
             date_string = response.get('Item', {}).get('Value')
             if date_string:
                 return dateutil.parser.parse(date_string)
@@ -84,14 +84,13 @@ class AdaptorStateStore(object):
                 'Unable to get a high watermark from %s.', self.watermark_table.name)
 
     def update_high_watermark(self, high_watermark_datetime):
-        """ Sets the provided DatasetState as the most recently modified dataset
-            in the state store.
-            :dataset_state: DatasetState
+        """ Sets the provided Date time string as the high watermark in the state store.
+            :high_watermark_datetime: String
             """
         try:
             logging.info('Setting high watermark as %s',
                          high_watermark_datetime)
-            self.processed_table.put_item(Item={
+            self.watermark_table.put_item(Item={
                 'Key': self.HIGH_WATERMARK_KEY,
                 'Value': high_watermark_datetime,
                 'LastUpdated': datetime.datetime.now().isoformat()
@@ -113,9 +112,14 @@ class DatasetState(object):
     def pure_uuid(self):
         return self.json['Identifier']
 
+    @property
+    def last_updated(self):
+        return self.json['LastUpdated']
+
     @classmethod
     def create_from_dataset(cls, dataset):
         """ Initialise a StoredDatasetData object with a PureDataset object.
+            Creates a dummy messageBody for comparison.
             """
         dataset_json = {
             'Identifier': dataset.pure_uuid,
@@ -126,7 +130,7 @@ class DatasetState(object):
         }
         return cls(dataset_json)
 
-    def update_state(self, message):
+    def update_with_message(self, message):
         self.json.update({
             'Message': message.as_json,
             'Status': 'Success' if message.is_valid else 'Invalid',

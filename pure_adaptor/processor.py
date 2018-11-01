@@ -27,6 +27,8 @@ class PureAdaptor(object):
                  instance_id,
                  output_stream,
                  invalid_stream,
+                 watermark_table_name,
+                 processed_table_name,
                  error_stream,
                  pure_flow_limit):
 
@@ -43,7 +45,9 @@ class PureAdaptor(object):
         self.pure_flow_limit = flow_limit
 
         try:
-            self.state_store = AdaptorStateStore(instance_id)
+            self.state_store = AdaptorStateStore(
+                watermark_table_name,
+                processed_table_name)
             self.upload_manager = BucketUploader(instance_id)
             self.kinesis_client = KinesisClient(output_stream,
                                                 invalid_stream,
@@ -57,7 +61,7 @@ class PureAdaptor(object):
             the adaptor was run.
             :returns: [PureDataset]
             """
-        latest_datetime = self.state_store.latest_modified_datetime()
+        latest_datetime = self.state_store.get_high_watermark()
         changed_datasets = self.pure_api.changed_datasets(latest_datetime)
         changed_datasets.sort(key=lambda ds: ds.modified_date)
         return changed_datasets
@@ -72,7 +76,8 @@ class PureAdaptor(object):
         dataset.download_files(temp_dir_path)
         self._upload_dataset(dataset)
         dataset_state = DatasetState.create_from_dataset(dataset)
-        prev_dataset_state = self.state_store.get_dataset_state(dataset.uuid)
+        prev_dataset_state = self.state_store.get_dataset_state(
+            dataset.pure_uuid)
 
         if not prev_dataset_state.message_body:
             message_creator = MetadataCreate(self.instance_id)
@@ -82,12 +87,12 @@ class PureAdaptor(object):
             # At present this won't occur due to the generation of UUID's for
             # each new message.
             logger.info(
-                'Skipping %s as no change in RDSS CDM manifestation of dataset.', dataset.uuid)
+                'Skipping %s as no change in RDSS CDM manifestation of dataset.', dataset.pure_uuid)
 
         message = message_creator.generate(dataset.rdss_canonical_metadata)
 
         self.kinesis_client.put_record(message)
-        dataset_state.update_message(message)
+        dataset_state.update_with_message(message)
         self._update_adaptor_state(dataset_state)
 
     def _upload_dataset(self, dataset):
@@ -121,7 +126,8 @@ class PureAdaptor(object):
             :latest_dataset_state: DatasetState
             """
         self.state_store.put_dataset_state(latest_dataset_state)
-        self.state_store.update_latest_modified(latest_dataset_state)
+        self.state_store.update_high_watermark(
+            latest_dataset_state.last_updated)
 
     def run(self, temp_dir_path):
         """ Runs the adaptor.

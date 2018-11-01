@@ -1,14 +1,9 @@
-boto3
-coverage
+boto3==1.7.84
 GitPython
-google-compute-engine
 jmespath
 jsonschema
-moto==1.2.0
-pre-commit
-pycodestyle
-pylint
-pytest-cov
+moto
+pytest
 -e git://github.com/JiscRDSS/rdss-shared-libraries.git@cf07cad3f176ef8be1410fc29b240fb4791e607a#egg=rdsslib
 requests
 requests-mock

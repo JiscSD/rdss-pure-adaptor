@@ -33,15 +33,17 @@ def _setup_mock_environment():
 
     dynamodb_client = boto3.client('dynamodb')
     dynamodb_client.create_table(
-        TableName='mock-instance-id',
+        TableName='watermark_table',
         ProvisionedThroughput={
-            'ReadCapacityUnits': 1,
-            'WriteCapacityUnits': 1,
-        },
-        KeySchema=[{
-            'AttributeName': 'uuid',
-            'KeyType': 'HASH',
-        }],
+            'ReadCapacityUnits': 1, 'WriteCapacityUnits': 1, },
+        KeySchema=[{'AttributeName': 'Key', 'KeyType': 'HASH', }],
+        AttributeDefinitions=[],
+    )
+    dynamodb_client.create_table(
+        TableName='processed_table',
+        ProvisionedThroughput={
+            'ReadCapacityUnits': 1, 'WriteCapacityUnits': 1, },
+        KeySchema=[{'AttributeName': 'Identifier', 'KeyType': 'HASH', }],
         AttributeDefinitions=[],
     )
 
@@ -61,6 +63,8 @@ def _setup_mock_environment():
         'PURE_API_URL': 'http://somewhere.over/the/rainbow',
         'PURE_API_KEY_SSM_PARAMETER_NAME': 'x-marks-the-spot',
         'INSTANCE_ID': 'mock-instance-id',
+        'WATERMARK_TABLE_NAME': 'watermark_table',
+        'PROCESSED_TABLE_NAME': 'processed_table',
         'RDSS_MESSAGE_OUTPUT_STREAM': 'mock-output-stream',
         'RDSS_MESSAGE_INVALID_STREAM': 'mock-invalid-stream',
         'RDSS_MESSAGE_ERROR_STREAM': 'mock-error-stream',

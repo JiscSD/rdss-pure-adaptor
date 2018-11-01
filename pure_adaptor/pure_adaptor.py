@@ -40,6 +40,8 @@ def main():
         'RDSS_MESSAGE_OUTPUT_STREAM',
         'RDSS_MESSAGE_INVALID_STREAM',
         'RDSS_MESSAGE_ERROR_STREAM',
+        'WATERMARK_TABLE_NAME',
+        'PROCESSED_TABLE_NAME',
         'JISC_ID',
         'PURE_FLOW_LIMIT'
     )
@@ -59,6 +61,8 @@ def main():
             instance_id=env_vars['INSTANCE_ID'],
             output_stream=env_vars['RDSS_MESSAGE_OUTPUT_STREAM'],
             invalid_stream=env_vars['RDSS_MESSAGE_INVALID_STREAM'],
+            watermark_table_name=env_vars['WATERMARK_TABLE_NAME'],
+            processed_table_name=env_vars['PROCESSED_TABLE_NAME'],
             error_stream=env_vars['RDSS_MESSAGE_ERROR_STREAM'],
             pure_flow_limit=env_vars['PURE_FLOW_LIMIT']
         )

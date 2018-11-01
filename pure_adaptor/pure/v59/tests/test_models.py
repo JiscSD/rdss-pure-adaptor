@@ -142,8 +142,8 @@ class TestPureDataset(object):
 
         self.pure_dataset = PureDataset(self.mock_dataset)
 
-    def test_uuid(self):
-        assert self.pure_dataset.uuid == self.uuid
+    def test_pure_uuid(self):
+        assert self.pure_dataset.pure_uuid == self.uuid
 
     def test_modified_date(self):
         assert self.pure_dataset.modified_date == self.now

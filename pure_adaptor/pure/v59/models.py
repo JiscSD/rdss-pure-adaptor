@@ -51,7 +51,7 @@ class PureDataset(BasePureDataset):
         self.file_s3_urls = {}
 
     def __str__(self):
-        return 'PureDataset: {}'.format(self.uuid)
+        return 'PureDataset: {}'.format(self.pure_uuid)
 
     def query_dataset_json(self, query):
         return jmespath.search(query, self._dataset_json)
@@ -126,7 +126,7 @@ class PureDataset(BasePureDataset):
     @property
     def rdss_canonical_metadata(self):
         logger.info('Remapping pure dataset %s to canonical metadata.',
-                    self.uuid)
+                    self.pure_uuid)
         m_data = pure_to_canonical_mapper.remap(self._dataset_json,
                                                 custom_funcs=self.custom_funcs)
         final = self._update_with_local_data(m_data)
