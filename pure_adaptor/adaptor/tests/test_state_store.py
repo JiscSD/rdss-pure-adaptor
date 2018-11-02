@@ -11,7 +11,7 @@ MockMessage = namedtuple(
     'Message', [
         'as_json',
         'is_valid',
-        'error_string'
+        'error_info'
     ]
 )
 
@@ -36,12 +36,12 @@ def mock_dataset(modified_date):
 
 @pytest.fixture
 def mock_valid_message():
-    return MockMessage({'messageBody': {'objectTitle': 'Test Title'}}, True, '-')
+    return MockMessage({'messageBody': {'objectTitle': 'Test Title'}}, True, ('', ''))
 
 
 @pytest.fixture
 def mock_invalid_message():
-    return MockMessage({'messageBody': {}}, False, 'An error message')
+    return MockMessage({'messageBody': {}}, False, ('ERRORCODE', 'An error message'))
 
 
 @pytest.fixture
@@ -99,10 +99,10 @@ def test_dataset_update_with_message(dataset_state, mock_valid_message):
 def test_dataset_state_success(dataset_state, mock_valid_message):
     dataset_state.update_with_message(mock_valid_message)
     assert dataset_state.json['Status'] == 'Success'
-    assert dataset_state.json['Reason'] == '-'
+    assert dataset_state.json['Reason'] == ' - '
 
 
 def test_dataset_state_invalid(dataset_state, mock_invalid_message):
     dataset_state.update_with_message(mock_invalid_message)
     assert dataset_state.json['Status'] == 'Invalid'
-    assert dataset_state.json['Reason'] == 'An error message'
+    assert dataset_state.json['Reason'] == 'ERRORCODE - An error message'

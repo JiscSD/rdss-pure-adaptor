@@ -56,12 +56,12 @@ class RDSSMessage:
         )
         if body_errors:
             self.validation_errors.extend(body_errors)
-            self._set_error(self.error_string)
+            self._set_error(*self.error_info)
 
     @property
-    def error_string(self):
+    def error_info(self):
         if self.is_valid:
-            return '-'
+            return '', ''
         else:
             return 'GENERR001', ' | '.join(self.validation_errors)
 

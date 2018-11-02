@@ -134,7 +134,7 @@ class DatasetState(object):
         self.json.update({
             'Message': message.as_json,
             'Status': 'Success' if message.is_valid else 'Invalid',
-            'Reason': message.error_string
+            'Reason': ' - '.join(message.error_info)
         })
 
     @property
