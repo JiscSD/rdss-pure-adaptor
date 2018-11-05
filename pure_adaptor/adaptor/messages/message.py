@@ -1,4 +1,3 @@
-import json
 import logging
 from .validator import RDSSMessageValidator
 from .message_header import RDSSMessageHeader
@@ -71,4 +70,4 @@ class RDSSMessage:
 
     @property
     def as_json(self):
-        return json.dumps(self._message)
+        return self._message

@@ -23,10 +23,11 @@ class KinesisClient(object):
             based on the messages class.
             :message: RDSSMessage
             """
+        message_as_string = json.dumps(message.as_json)
         if not message.is_valid:
-            self.__move_to_invalid_stream(message.as_json)
+            self.__move_to_invalid_stream(message_as_string)
         else:
-            self.__put_record(self.output_stream_name, message.as_json)
+            self.__put_record(self.output_stream_name, message_as_string)
 
     def __put_record(self, stream_name, payload):
         """Attempt to put the payload in the provided stream name."""
