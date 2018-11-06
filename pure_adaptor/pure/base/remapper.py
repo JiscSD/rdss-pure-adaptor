@@ -4,6 +4,7 @@ import logging
 import os
 import re
 import uuid
+import urllib
 
 from rdsslib.taxonomy.taxonomy_client import DATE_TYPE,\
     RESOURCE_TYPE, PERSON_ROLE, ORGANISATION_TYPE, \
@@ -112,3 +113,10 @@ class JMESCustomFunctions(functions.Functions):
     @functions.signature()
     def _func_uuid4(self):
         return str(uuid.uuid4())
+
+    @functions.signature({'types': ['string']})
+    def _func_pure_dataset_url(self, pure_uuid):
+        split_url = list(urllib.parse.urlsplit(os.environ['PURE_API_URL']))
+        path_parts = split_url[2].split('/') + ['datasets', pure_uuid]
+        split_url[2] = os.path.join(*path_parts)
+        return urllib.parse.urlunsplit(split_url)

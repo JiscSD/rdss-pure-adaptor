@@ -39,10 +39,16 @@
   objectCategory: `[]`,
   objectResourceType: type[0].value | object_resourcetype(@),
   objectValue: `1`,
-  objectIdentifier: doi | [{
+  objectIdentifier: [
+    uuid | {
+        identifierValue: pure_dataset_url(@),
+        identifierType: `18`
+    },
+    doi | {
         identifierValue: @,
         identifierType: `4`
-  }],
+    }
+  ],
   objectRelatedIdentifier:relatedProjects[*].{
     identifier: {
      identifierValue: uuid,

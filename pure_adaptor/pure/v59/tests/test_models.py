@@ -43,6 +43,8 @@ class TestPureMessageMappings(object):
 
     @pytest.fixture
     def canonical_metadata(self, pure_dataset, monkeypatch):
+        monkeypatch.setitem(os.environ, 'PURE_API_URL',
+                            'https://www.some_institution.ac.uk/ws/api/59/')
         monkeypatch.setitem(os.environ, 'JISC_ID', '799')
         monkeypatch.setitem(os.environ, 'HEI_ADDRESS',
                             'University of St.Andrews, KY16 9AJ, Fife')
@@ -63,9 +65,12 @@ class TestPureMessageMappings(object):
 
     def test_object_identifier(self, canonical_metadata):
         obj_id = canonical_metadata['objectIdentifier']
-        id_value = 'http://dx.doi.org/10.5061/dryad.8638h'
+        url_value = 'https://www.some_institution.ac.uk/ws/'\
+                    'api/59/datasets/2bdd031e-f373-424f-9657-192431ea4a06'
+        doi_value = 'http://dx.doi.org/10.5061/dryad.8638h'
         assert isinstance(obj_id, list)
-        assert obj_id[0]['identifierValue'] == id_value
+        assert obj_id[0]['identifierValue'] == url_value
+        assert obj_id[1]['identifierValue'] == doi_value
 
     def test_person_uuid(self, person_role):
         sample_uuid = 'ba8c1112-b6de-446b-ac2f-0b95c80a5cc2'
