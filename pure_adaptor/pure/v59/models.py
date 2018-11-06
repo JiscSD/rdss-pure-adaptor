@@ -153,3 +153,19 @@ class PureDataset(BasePureDataset):
             )
         self.local_file_checksums = checksum_generator.file_checksums(self)
         self.local_file_sizes = self._calculate_file_sizes()
+
+    def versioned_rdss_canonical_metadata(self, previous_version_uuid):
+        """ Takes an objectUuid of a previous version of this dataset and
+            returns an appropriately versioned RDSS CDM of the dataset.
+            """
+        metadata = self.rdss_canonical_metadata
+        related_ids = metadata.get('objectRelatedIdentifier', [])
+        related_ids.append({
+            'identifier': {
+                'identifierValue': previous_version_uuid,
+                'identifierType': 16
+            },
+            'relationType': 9
+        })
+        metadata['objectRelatedIdentifier'] = related_ids
+        return metadata

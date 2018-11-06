@@ -148,6 +148,12 @@ class DatasetState(object):
             """
         return self.json.get('Message', {}).get('messageBody')
 
+    @property
+    def object_uuid(self):
+        """ Extract and return the objectUUID from the stored message.
+            Used to effect object versioning as defined in the message api spec."""
+        return self.json.get('Message', {}).get('messageBody', {}).get('objectUuid')
+
     def __eq__(self, other):
         return (self.message_body == other.message_body)
 
