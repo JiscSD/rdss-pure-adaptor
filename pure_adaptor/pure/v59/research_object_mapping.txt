@@ -1,5 +1,5 @@
 {
-  objectUuid: uuid,
+  objectUuid: uuid4(),
   objectTitle: title.value || join(`, `, title[].value),
   objectPersonRole: personAssociations[*].{
       person: {
