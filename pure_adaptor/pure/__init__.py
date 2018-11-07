@@ -1,6 +1,6 @@
 import logging
 from collections import namedtuple
-from . import v59
+from . import v59, v512
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +18,11 @@ API_VERSION_MAPPINGS = {
         API=v59.PureAPI,
         Dataset=v59.PureDataset,
         DownloadManager=v59.PureDownloadManager,
+    ),
+    'v512': PureInterface(
+        API=v512.PureAPI,
+        Dataset=v512.PureDataset,
+        DownloadManager=v512.PureDownloadManager,
     )
 }
 
