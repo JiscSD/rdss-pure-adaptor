@@ -63,7 +63,8 @@ class BasePureAPI(AbstractBasePureAPI):
             response = requests.head(url, **kwargs)
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            logging.exception('Unable to access Pure API v59 due to: %s', e)
+            logging.exception(
+                'Unable to access Pure API %s due to: %s', self.API_VERSION, e)
 
     def _to_dataset(self, dataset_json):
         """ Initialise a PureDataset from dataset json, binding this instance
