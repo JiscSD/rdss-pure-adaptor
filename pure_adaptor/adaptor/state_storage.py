@@ -116,6 +116,14 @@ class DatasetState(object):
     def last_updated(self):
         return self.json['LastUpdated']
 
+    @property
+    def previously_successful(self):
+        status = self.json.get('Status')
+        if status and status == 'Success':
+            return True
+        else:
+            return False
+
     @classmethod
     def create_from_dataset(cls, dataset):
         """ Initialise a StoredDatasetData object with a PureDataset object.
