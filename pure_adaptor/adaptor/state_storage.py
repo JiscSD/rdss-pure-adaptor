@@ -117,9 +117,15 @@ class DatasetState(object):
         return self.json['LastUpdated']
 
     @property
-    def previously_successful(self):
+    def successful_create(self):
+        """ Used to determine if this dataset represents a valid MetadataCreate message,
+            if so, the next message will be a MetadataUpdate, otherwise MetadataCreate
+            should be re-attempted.
+            """
         status = self.json.get('Status')
-        if status and status == 'Success':
+        message_type = self.json.get('Message').get(
+            'messageHeader').get('messageType')
+        if status == 'Success' and message_type == 'MetadataCreate':
             return True
         else:
             return False

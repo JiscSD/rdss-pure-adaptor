@@ -79,7 +79,7 @@ class PureAdaptor(object):
         prev_dataset_state = self.state_store.get_dataset_state(
             dataset.pure_uuid)
 
-        if not prev_dataset_state.message_body or not prev_dataset_state.previously_successful:
+        if not prev_dataset_state.message_body or not prev_dataset_state.successful_create:
             message_creator = MetadataCreate(self.instance_id)
             message = message_creator.generate(
                 dataset.rdss_canonical_metadata
