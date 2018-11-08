@@ -48,7 +48,7 @@
         identifierValue: @,
         identifierType: `4`
     }
-  ],
+  ][],
   objectRelatedIdentifier:relatedProjects[*].{
     identifier: {
      identifierValue: uuid,
