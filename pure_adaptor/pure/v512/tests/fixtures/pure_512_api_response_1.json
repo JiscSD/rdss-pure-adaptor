@@ -18,7 +18,6 @@
         "uri" : "/dk/atira/pure/publisher/publishertypes/publisher/publisher"
       } ]
     },
-    "doi" : "10.7488/ds/1328",
     "publicationDate" : {
       "year" : 1980
     },
@@ -44,7 +43,7 @@
         "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/projects/44ca6661-b4d6-410d-b071-b91c79c352a9"
       },
       "name" : [ {
-        "value" : "Adsorption Materials and Processes for Carbon Capture from Gas-Fired Power\r\nPlants - AMPGas"
+        "value" : "Fall Heads Roll"
       } ],
       "type" : [ {
         "value" : "Standard",
@@ -174,7 +173,29 @@
         "pureId" : 1070,
         "uri" : "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article"
       } ]
-    } ]
+    } ],
+    "documents": [
+      {
+        "pureId": 241900740,
+        "title": "Grotesque_After_the_Gramme.zip",
+        "url": "https://an_institution.with_pure.ac.uk/ws/files/241900740/Supporting_Data.zip",
+        "creator": "ff23",
+        "created": "2016-04-12T08:15:07.631+0000",
+        "documentType": [ {
+            "value": "Dataset",
+            "pureId": 238972918,
+            "uri": "/dk/atira/pure/dataset/documents/dataset"
+        } ],
+        "documentLicense": [ {
+          "value": "CC BY",
+          "pureId": 238972942,
+          "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by"
+        } ],
+        "visibility": [ {
+          "value": "Public - No restriction",
+          "key": "FREE"
+        } ]
+      } ]
   } ],
   "navigationLink" : [ {
     "ref" : "prev",

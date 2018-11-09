@@ -134,27 +134,6 @@
             }
           ]
         }
-      ],
-      "relatedResearchOutputs": [
-        {
-          "uuid": "bb0deee5-6a75-4443-9359-c91b2fb86b3e",
-          "link": {
-            "ref": "content",
-            "href": "https://an_institution.with_pure.ac.uk/ws/api/512/research-outputs/bb0deee5-6a75-4443-9359-c91b2fb86b3e"
-          },
-          "name": [
-            {
-              "value": "Losing you"
-            }
-          ],
-          "type": [
-            {
-              "value": "Article",
-              "pureId": 1070,
-              "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article"
-            }
-          ]
-        }
       ]
     }
   ],

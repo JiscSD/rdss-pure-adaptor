@@ -49,21 +49,30 @@
         identifierType: `4`
     }
   ][],
-  objectRelatedIdentifier:relatedProjects[*].{
-    identifier: {
-     identifierValue: uuid,
-     identifierType: `16`
-    },
-    relationType: `1`
-  } || `[]`,
+  objectRelatedIdentifier: [
+    relatedProjects[*].{
+      identifier: {
+       identifierValue: link.href,
+       identifierType: `18`
+      },
+      relationType: `11`
+    } || `[]`,
+    relatedResearchOutputs[*].{
+      identifier: {
+       identifierValue: link.href,
+       identifierType: `18`
+      },
+      relationType: `14`
+    } || `[]`
+  ][],
   objectOrganisationRole: [{
     organisation: {
         organisationJiscId: publisher.name[0].value | jisc_id(@),
         organisationName: publisher.name[0].value,
-        organisationType: `8`,
+        organisationType: publisher.type[0].value | org_type(@),
         organisationAddress: org_addr(@)
     },
-    role: publisher.type[0].value | org_type(@)
+    role: `5`
   }],
   objectPreservationEvent: `[]`,
   objectFile: documents[*].{
