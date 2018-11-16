@@ -1,0 +1,22 @@
+{
+  "count" : 4,
+  "items" : [ {
+    "info" : {
+      "createdBy" : "a_user",
+      "createdDate" : "2016-05-23T12:09:28.640+0000",
+      "modifiedBy" : "a_user",
+      "modifiedDate" : "2017-04-05T13:49:26.790+0000"
+    },
+    "workflow" : [ {
+      "value" : "Validated",
+      "workflowStep" : "invalid"
+    } ]
+  } ],
+  "navigationLink" : [ {
+    "ref" : "prev",
+    "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/datasets?order=modified&size=1&offset=1"
+  }, {
+    "ref" : "next",
+    "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/datasets?order=modified&size=1&offset=3"
+  } ]
+}

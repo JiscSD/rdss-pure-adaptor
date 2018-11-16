@@ -1,4 +1,3 @@
-import json
 import logging
 from .validator import RDSSMessageValidator
 from .message_header import RDSSMessageHeader
@@ -55,8 +54,15 @@ class RDSSMessage:
             self._message['messageBody']
         )
         if body_errors:
-            self._set_error('GENERR001', ' | '.join(body_errors))
             self.validation_errors.extend(body_errors)
+            self._set_error(*self.error_info)
+
+    @property
+    def error_info(self):
+        if self.is_valid:
+            return '', ''
+        else:
+            return 'GENERR001', ' | '.join(self.validation_errors)
 
     @property
     def is_valid(self):
@@ -64,4 +70,4 @@ class RDSSMessage:
 
     @property
     def as_json(self):
-        return json.dumps(self._message)
+        return self._message

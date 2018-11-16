@@ -4,7 +4,7 @@ import tempfile
 import os
 from collections import namedtuple
 
-from ..download_manager import PureDownloadManager
+from ..download_manager import BasePureDownloadManager
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def mock_url_name_pairs():
 
 
 def test_download_manager(mock_pure_api, mock_url_name_pairs, temp_dir_path):
-    download_manager = PureDownloadManager(mock_pure_api)
+    download_manager = BasePureDownloadManager(mock_pure_api)
     local_files = [download_manager.download_file(*pair, temp_dir_path)
                    for pair in mock_url_name_pairs]
     for f_path in local_files:

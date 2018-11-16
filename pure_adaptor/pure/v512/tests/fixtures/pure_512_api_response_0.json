@@ -1,0 +1,146 @@
+{
+  "count": 4,
+  "items": [
+    {
+      "pureId": 240327039,
+      "uuid": "59e932cf-3a34-4b7b-bf08-f12a3a2c7273",
+      "publisher": {
+        "uuid": "b9bc4cfa-ea25-4d4e-a44f-bfa8604acee8",
+        "link": {
+          "ref": "content",
+          "href": "https://an_institution.with_pure.ac.uk/ws/api/512/publishers/b9bc4cfa-ea25-4d4e-a44f-bfa8604acee8"
+        },
+        "name": [
+          {
+            "value": "Terrible Records"
+          }
+        ],
+        "type": [
+          {
+            "value": "Publisher",
+            "pureId": 367,
+            "uri": "/dk/atira/pure/publisher/publishertypes/publisher/publisher"
+          }
+        ]
+      },
+      "doi": "10.001100/b5698935-7651-4333-b00e-2ed2e072eb6a",
+      "publicationDate": {
+        "year": 2013
+      },
+      "confidential": false,
+      "info": {
+        "createdBy": "a_user",
+        "createdDate": "2016-01-15T13:00:06.023+0000",
+        "modifiedBy": "a_user",
+        "modifiedDate": "2017-06-05T13:41:40.654+0000"
+      },
+      "title": [
+        {
+          "value": "True"
+        }
+      ],
+      "type": [
+        {
+          "value": "Dataset",
+          "pureId": 238690044,
+          "uri": "/dk/atira/pure/dataset/datasettypes/dataset/dataset"
+        }
+      ],
+      "relatedProjects": [
+        {
+          "uuid": "95d44235-ffab-4260-b9bb-65dd5d2d0fa2",
+          "link": {
+            "ref": "content",
+            "href": "https://an_institution.with_pure.ac.uk/ws/api/512/projects/95d44235-ffab-4260-b9bb-65dd5d2d0fa2"
+          },
+          "name": [
+            {
+              "value": "A Seat at the Table"
+            }
+          ],
+          "type": [
+            {
+              "value": "Standard",
+              "pureId": 239542414,
+              "uri": "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/standard"
+            }
+          ]
+        }
+      ],
+      "workflow": [
+        {
+          "value": "Validated",
+          "workflowStep": "validated"
+        }
+      ],
+      "visibility": [
+        {
+          "value": "Public - No restriction",
+          "key": "FREE"
+        }
+      ],
+      "personAssociations": [
+        {
+          "pureId": 240327046,
+          "externalPerson": {
+            "uuid": "fe0c8bb5-153c-49dd-924b-762e0ee3f0d8",
+            "link": {
+              "ref": "content",
+              "href": "https://an_institution.with_pure.ac.uk/ws/api/512/external-persons/fe0c8bb5-153c-49dd-924b-762e0ee3f0d8"
+            },
+            "name": [
+              {
+                "value": "Solange Knowles"
+              }
+            ],
+            "type": [
+              {
+                "value": "External person",
+                "pureId": 372,
+                "uri": "/dk/atira/pure/externalperson/externalpersontypes/externalperson/externalperson"
+              }
+            ]
+          },
+          "name": {
+            "firstName": "Solange",
+            "lastName": "Knowles"
+          },
+          "personRole": [
+            {
+              "value": "Creator",
+              "pureId": 238690057,
+              "uri": "/dk/atira/pure/dataset/roles/dataset/creator"
+            }
+          ]
+        }
+      ],
+      "organisationalUnits": [
+        {
+          "uuid": "7ced2051-626a-4266-a5c6-86a7d7efff89",
+          "link": {
+            "ref": "content",
+            "href": "https://an_institution.with_pure.ac.uk/ws/api/512/organisational-units/7ced2051-626a-4266-a5c6-86a7d7efff89"
+          },
+          "name": [
+            {
+              "value": "R&B"
+            }
+          ],
+          "type": [
+            {
+              "value": "Department",
+              "pureId": 331,
+              "uri": "/dk/atira/pure/organisation/organisationtypes/organisation/department"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "navigationLink": [
+    {
+      "ref": "next",
+      "href": "https://an_institution.with_pure.ac.uk/ws/api/512/datasets?order=modified&size=1&offset=1"
+    }
+  ]
+}

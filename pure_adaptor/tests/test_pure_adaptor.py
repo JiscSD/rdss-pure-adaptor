@@ -33,15 +33,17 @@ def _setup_mock_environment():
 
     dynamodb_client = boto3.client('dynamodb')
     dynamodb_client.create_table(
-        TableName='mock-instance-id',
+        TableName='watermark_table',
         ProvisionedThroughput={
-            'ReadCapacityUnits': 1,
-            'WriteCapacityUnits': 1,
-        },
-        KeySchema=[{
-            'AttributeName': 'uuid',
-            'KeyType': 'HASH',
-        }],
+            'ReadCapacityUnits': 1, 'WriteCapacityUnits': 1, },
+        KeySchema=[{'AttributeName': 'Key', 'KeyType': 'HASH', }],
+        AttributeDefinitions=[],
+    )
+    dynamodb_client.create_table(
+        TableName='processed_table',
+        ProvisionedThroughput={
+            'ReadCapacityUnits': 1, 'WriteCapacityUnits': 1, },
+        KeySchema=[{'AttributeName': 'Identifier', 'KeyType': 'HASH', }],
         AttributeDefinitions=[],
     )
 
@@ -61,6 +63,8 @@ def _setup_mock_environment():
         'PURE_API_URL': 'http://somewhere.over/the/rainbow',
         'PURE_API_KEY_SSM_PARAMETER_NAME': 'x-marks-the-spot',
         'INSTANCE_ID': 'mock-instance-id',
+        'WATERMARK_TABLE_NAME': 'watermark_table',
+        'PROCESSED_TABLE_NAME': 'processed_table',
         'RDSS_MESSAGE_OUTPUT_STREAM': 'mock-output-stream',
         'RDSS_MESSAGE_INVALID_STREAM': 'mock-invalid-stream',
         'RDSS_MESSAGE_ERROR_STREAM': 'mock-error-stream',
@@ -125,22 +129,20 @@ def test_uuids_added_to_data():
     )['Records'][0]
 
     uuid4hex = re.compile(
-        '^[0-9a-f]{8}\-[0-9a-f]{4}\-4[0-9a-f]{3}\-[89ab][0-9a-f]{3}\-[0-9a-f]{12}$', re.I)
+        r'^[0-9a-f]{8}\-[0-9a-f]{4}\-4[0-9a-f]{3}\-[89ab][0-9a-f]{3}\-[0-9a-f]{12}$', re.I)
     body = json.loads(record['Data'])['messageBody']
 
     objectUuid = body['objectUuid']
     person = body['objectPersonRole'][0]['person']
     personUuid = person['personUuid']
     orgUuid = person['personOrganisationUnit']['organisationUnitUuid']
-    relatedUuid = body['objectRelatedIdentifier'][0]['identifierValue']
     fileUuid = body['objectFile'][0]['fileUuid']
     storageUuid = body['objectFile'][0]['fileStoragePlatform']['storagePlatformUuid']
 
     assert uuid4hex.match(objectUuid)
     assert uuid4hex.match(personUuid)
     assert uuid4hex.match(orgUuid)
-    assert uuid4hex.match(relatedUuid)
     assert uuid4hex.match(fileUuid)
     assert uuid4hex.match(storageUuid)
-    assert len(set([objectUuid, personUuid, orgUuid,
-                    relatedUuid, fileUuid, storageUuid])) == 6
+    assert len(
+        set([objectUuid, personUuid, orgUuid, fileUuid, storageUuid])) == 5

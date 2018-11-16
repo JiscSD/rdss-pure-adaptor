@@ -1,0 +1,19 @@
+{
+  "count" : 4,
+  "items" : [ {
+    "info" : {
+      "createdBy" : "a_user",
+      "createdDate" : "2016-07-01T15:21:30.360+0000",
+      "modifiedBy" : "a_user",
+      "modifiedDate" : "2017-03-05T13:54:06.886+0000"
+    },
+    "workflow" : [ {
+      "value" : "Validated",
+      "workflowStep" : "validated"
+    } ]
+  } ],
+  "navigationLink" : [ {
+    "ref" : "prev",
+    "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/datasets?order=modified&size=1&offset=2"
+  } ]
+}

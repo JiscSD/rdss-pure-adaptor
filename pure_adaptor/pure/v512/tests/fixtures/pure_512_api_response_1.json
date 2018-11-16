@@ -1,0 +1,207 @@
+{
+  "count" : 4,
+  "items" : [ {
+    "pureId" : 241587348,
+    "uuid" : "ac2c0adf-163d-4a27-b975-f2fa9f46d974",
+    "publisher" : {
+      "uuid" : "b3b7d3be-1e79-4dde-a9c2-b741df6dc0ec",
+      "link" : {
+        "ref" : "content",
+        "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/publishers/b3b7d3be-1e79-4dde-a9c2-b741df6dc0ec"
+      },
+      "name" : [ {
+        "value" : "Rough Trade"
+      } ],
+      "type" : [ {
+        "value" : "Publisher",
+        "pureId" : 367,
+        "uri" : "/dk/atira/pure/publisher/publishertypes/publisher/publisher"
+      } ]
+    },
+    "publicationDate" : {
+      "year" : 1980
+    },
+    "confidential" : false,
+    "info" : {
+      "createdBy" : "a_user",
+      "createdDate" : "2016-03-28T09:32:48.911+0000",
+      "modifiedBy" : "a_user",
+      "modifiedDate" : "2017-05-05T13:46:26.084+0000"
+    },
+    "title" : [ {
+      "value" : "Grotesque (After the Gramme)"
+    } ],
+    "type" : [ {
+      "value" : "Dataset",
+      "pureId" : 238690044,
+      "uri" : "/dk/atira/pure/dataset/datasettypes/dataset/dataset"
+    } ],
+    "relatedProjects" : [ {
+      "uuid" : "44ca6661-b4d6-410d-b071-b91c79c352a9",
+      "link" : {
+        "ref" : "content",
+        "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/projects/44ca6661-b4d6-410d-b071-b91c79c352a9"
+      },
+      "name" : [ {
+        "value" : "Fall Heads Roll"
+      } ],
+      "type" : [ {
+        "value" : "Standard",
+        "pureId" : 239542414,
+        "uri" : "/dk/atira/pure/upmproject/upmprojecttypes/upmproject/standard"
+      } ]
+    } ],
+    "workflow" : [ {
+      "value" : "Validated",
+      "workflowStep" : "validated"
+    } ],
+    "visibility" : [ {
+      "value" : "Public - No restriction",
+      "key" : "FREE"
+    } ],
+    "personAssociations" : [ {
+      "pureId" : 241587355,
+      "person" : {
+        "uuid" : "42639468-62fd-4165-a430-c70a7c03d948",
+        "link" : {
+          "ref" : "content",
+          "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/persons/42639468-62fd-4165-a430-c70a7c03d948"
+        },
+        "name" : [ {
+          "value" : "Mark E. Smith"
+        } ]
+      },
+      "name" : {
+        "firstName" : "Mark E.",
+        "lastName" : "Smith"
+      },
+      "personRole" : [ {
+        "value" : "Creator",
+        "pureId" : 238690057,
+        "uri" : "/dk/atira/pure/dataset/roles/dataset/creator"
+      } ],
+      "organisationalUnits" : [ {
+        "uuid" : "42aabe6a-5b0e-4776-a2bd-90c0849be6e7",
+        "link" : {
+          "ref" : "content",
+          "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/organisational-units/42aabe6a-5b0e-4776-a2bd-90c0849be6e7"
+        },
+        "name" : [ {
+          "value" : "The Fall"
+        } ],
+        "type" : [ {
+          "value" : "School",
+          "pureId" : 330,
+          "uri" : "/dk/atira/pure/organisation/organisationtypes/organisation/school"
+        } ]
+      } ]
+    }, {
+      "pureId" : 241587356,
+      "name" : {
+        "firstName" : "Steve",
+        "lastName" : "Hanley"
+      },
+      "personRole" : [ {
+        "value" : "Creator",
+        "pureId" : 238690057,
+        "uri" : "/dk/atira/pure/dataset/roles/dataset/creator"
+      } ]
+    }, {
+      "pureId" : 241587357,
+      "person" : {
+        "uuid" : "1bf52422-bf46-4527-83a7-66c0f35fb421",
+        "link" : {
+          "ref" : "content",
+          "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/persons/1bf52422-bf46-4527-83a7-66c0f35fb421"
+        },
+        "name" : [ {
+          "value" : "Marc Riley"
+        } ]
+      },
+      "name" : {
+        "firstName" : "Marc",
+        "lastName" : "Riley"
+      },
+      "personRole" : [ {
+        "value" : "Creator",
+        "pureId" : 238690057,
+        "uri" : "/dk/atira/pure/dataset/roles/dataset/creator"
+      } ]
+    } ],
+    "organisationalUnits" : [ {
+      "uuid" : "42aabe6a-5b0e-4776-a2bd-90c0849be6e7",
+      "link" : {
+        "ref" : "content",
+        "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/organisational-units/42aabe6a-5b0e-4776-a2bd-90c0849be6e7"
+      },
+      "name" : [ {
+        "value" : "The Fall"
+      } ],
+      "type" : [ {
+        "value" : "School",
+        "pureId" : 330,
+        "uri" : "/dk/atira/pure/organisation/organisationtypes/organisation/school"
+      } ]
+    } ],
+    "relatedResearchOutputs" : [
+      {
+      "uuid" : "lk83ed12-191e-425d-a072-c5ee0b7811ed",
+      "link" : {
+        "ref" : "content",
+        "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/research-outputs/lk83ed12-191e-425d-a072-c5ee0b7811ed"
+      },
+      "name" : [ {
+        "value" : "The Frenz Experiment"
+      } ],
+      "type" : [ {
+        "value" : "Article",
+        "pureId" : 1070,
+        "uri" : "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article"
+      } ]
+      },
+      {
+      "uuid" : "fc73ed12-191e-425d-a072-c5ee0b7811ed",
+      "link" : {
+        "ref" : "content",
+        "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/research-outputs/fc73ed12-191e-425d-a072-c5ee0b7811ed"
+      },
+      "name" : [ {
+        "value" : "The Weird and the Eerie"
+      } ],
+      "type" : [ {
+        "value" : "Article",
+        "pureId" : 1070,
+        "uri" : "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article"
+      } ]
+    } ],
+    "documents": [
+      {
+        "pureId": 241900740,
+        "title": "Grotesque_After_the_Gramme.zip",
+        "url": "https://an_institution.with_pure.ac.uk/ws/files/241900740/Supporting_Data.zip",
+        "creator": "ff23",
+        "created": "2016-04-12T08:15:07.631+0000",
+        "documentType": [ {
+            "value": "Dataset",
+            "pureId": 238972918,
+            "uri": "/dk/atira/pure/dataset/documents/dataset"
+        } ],
+        "documentLicense": [ {
+          "value": "CC BY",
+          "pureId": 238972942,
+          "uri": "/dk/atira/pure/dataset/documentlicenses/cc-by"
+        } ],
+        "visibility": [ {
+          "value": "Public - No restriction",
+          "key": "FREE"
+        } ]
+      } ]
+  } ],
+  "navigationLink" : [ {
+    "ref" : "prev",
+    "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/datasets?order=modified&size=1&offset=0"
+  }, {
+    "ref" : "next",
+    "href" : "https://an_institution.with_pure.ac.uk/ws/api/512/datasets?order=modified&size=1&offset=2"
+  } ]
+}

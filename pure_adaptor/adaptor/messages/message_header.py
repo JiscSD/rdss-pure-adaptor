@@ -46,7 +46,7 @@ class RDSSMessageHeader(object):
         'MetadataDelete'
     )
 
-    MESSAGE_API_VERSION = '1.2.1'
+    MESSAGE_API_VERSION = '3.0.2'
 
     UUID_REGEX = re.compile(r'''
             ^[0-9a-f]{8}
@@ -140,6 +140,7 @@ class RDSSMessageHeader(object):
             'messageTimings': self._message_timings(now),
             'messageHistory': self._message_history(now),
             'version': self.MESSAGE_API_VERSION,
+            'generator': 'pure-adaptor'
         }
 
         if correlation_id:

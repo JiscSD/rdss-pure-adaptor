@@ -31,18 +31,6 @@
         "published"
       ]
     },
-    "eduPersonScopedAffiliation": {
-      "enum": [
-        "student",
-        "staff",
-        "faculty",
-        "employee",
-        "member",
-        "affiliate",
-        "alum",
-        "libraryWalkIn"
-      ]
-    },
     "fileUse": {
       "enum": [
         "originalFile",
@@ -137,10 +125,7 @@
     "personIdentifierType": {
       "enum": [
         "ORCID",
-        "FOAF",
-        "Twitter",
-        "eduPersonTargetedID",
-        "eduPersonPrincipleName"
+        "researcherId"
       ]
     },
     "personRole": {
