@@ -139,6 +139,7 @@ class RDSSMessageHeader(object):
             'messageType': self._message_type(message_type),
             'messageTimings': self._message_timings(now),
             'messageHistory': self._message_history(now),
+            'messageSequence': self._message_sequence(str(uuid.uuid4()), 1, 1),
             'version': self.MESSAGE_API_VERSION,
             'generator': 'pure-adaptor'
         }
@@ -148,10 +149,6 @@ class RDSSMessageHeader(object):
 
         if return_address:
             fields['returnAddress'] = return_address
-
-        if message_sequence:
-            fields['messageSequence'] = self._message_sequence(
-                *message_sequence)
 
         if error_code:
             fields['errorCode'] = self._error_code(error_code)
