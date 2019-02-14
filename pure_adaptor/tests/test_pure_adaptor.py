@@ -107,7 +107,7 @@ def test_uuids_added_to_data():
     })
 
     with patch.dict(os.environ, **env), requests_mock.mock() as m:
-        m.get('http://riswebtest.st-andrews.ac.uk/portal/'
+        m.get('https://riswebtest.st-andrews.ac.uk/ws/'
               'files/241900740/Supporting_Data.zip', text='')
         m.get('http://somewhere.over/the/rainbow/datasets', text=response)
         m.head('http://somewhere.over/the/rainbow/datasets')
