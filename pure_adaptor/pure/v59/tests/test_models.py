@@ -5,7 +5,7 @@ import pytest
 import shutil
 import tempfile
 
-from ..models import PureDataset, ws_url_remap
+from ..models import PureDataset
 from pure_adaptor.pure.base import JMESCustomFunctions
 
 from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient
@@ -154,8 +154,7 @@ class TestPureDataset(object):
         assert self.pure_dataset.modified_date == self.now
 
     def test_files(self):
-        assert self.pure_dataset.files == [
-            (ws_url_remap(u), n) for u, n in self.url_name_pairs]
+        assert self.pure_dataset.files == self.url_name_pairs
 
     def test_original_metadata(self):
         assert self.pure_dataset.original_metadata == self.mock_dataset
@@ -171,9 +170,3 @@ class TestPureDataset(object):
 
     def teardown(self):
         pass
-
-
-def test_ws_url_remap():
-    url = 'https://pure_endpoint_url.ac.uk/ws/files/an_id/test_file.pdf'
-    url_map = 'http://pure_endpoint_url.ac.uk/portal/files/an_id/test_file.pdf'
-    assert ws_url_remap(url) == url_map
