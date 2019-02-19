@@ -8,6 +8,7 @@ from .pure.base import JMESCustomFunctions
 from .adaptor.s3_bucket import BucketUploader
 from .adaptor.kinesis_client import KinesisClient
 from .adaptor.state_storage import AdaptorStateStore, DatasetState
+from .adaptor.validation_client import SchemaValidationClient
 from .adaptor.messages import MetadataCreate, MetadataUpdate
 
 from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient
@@ -15,6 +16,13 @@ from rdsslib.taxonomy.taxonomy_client import TaxonomyGitClient
 
 TAXONOMY_SCHEMA_REPO = 'https://github.com/JiscRDSS/taxonomyschema.git'
 GIT_TAG = 'v0.1.0'
+
+SCHEMA_VERSION = '3.0.2'
+SCHEMA_IDS = {
+    'message': 'https://www.jisc.ac.uk/rdss/schema/messages/message_schema.json/#',
+    'message_body': 'https://www.jisc.ac.uk/rdss/schema/research_object.json/#/definitions/object'
+}
+
 logger = logging.getLogger(__name__)
 
 
@@ -25,6 +33,7 @@ class PureAdaptor(object):
                  api_url,
                  api_key,
                  instance_id,
+                 schema_validator_url,
                  output_stream,
                  invalid_stream,
                  watermark_table_name,
@@ -53,6 +62,11 @@ class PureAdaptor(object):
                                                 invalid_stream,
                                                 error_stream)
             self.pure_api = self.pure.API(api_url, api_key)
+            self.schema_validator = SchemaValidationClient(
+                schema_validator_url,
+                SCHEMA_VERSION,
+                SCHEMA_IDS
+            )
         except Exception:
             logging.exception('PureAdaptor Initialisation failed.')
 
@@ -80,13 +94,15 @@ class PureAdaptor(object):
             dataset.pure_uuid)
 
         if not prev_dataset_state.message_body or not prev_dataset_state.successful_create:
-            message_creator = MetadataCreate(self.instance_id)
+            message_creator = MetadataCreate(
+                self.instance_id, self.schema_validator)
             message = message_creator.generate(
                 dataset.rdss_canonical_metadata
             )
 
         elif dataset_state != prev_dataset_state:
-            message_creator = MetadataUpdate(self.instance_id)
+            message_creator = MetadataUpdate(
+                self.instance_id, self.schema_validator)
             message = message_creator.generate(
                 dataset.versioned_rdss_canonical_metadata(
                     prev_dataset_state.object_uuid

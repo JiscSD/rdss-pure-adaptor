@@ -1,7 +1,6 @@
 boto3==1.7.84
 GitPython
 jmespath
-jsonschema
 moto
 pre-commit
 pytest
