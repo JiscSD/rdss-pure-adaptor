@@ -62,7 +62,7 @@ def _setup_mock_environment():
         'PURE_API_VERSION': 'v59',
         'PURE_API_URL': 'http://somewhere.over/the/rainbow',
         'PURE_API_KEY_SSM_PARAMETER_NAME': 'x-marks-the-spot',
-        'SCHEMA_VALIDATION_URL': 'http://schema.validation/service',
+        'SCHEMA_VALIDATOR_URL': 'http://schema.validation/service',
         'INSTANCE_ID': 'mock-instance-id',
         'WATERMARK_TABLE_NAME': 'watermark_table',
         'PROCESSED_TABLE_NAME': 'processed_table',
