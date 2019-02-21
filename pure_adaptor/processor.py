@@ -49,7 +49,7 @@ class PureAdaptor(object):
         except ValueError:
             # Flow limit incorrectly set during build/deploy
             logging.exception('Flow Limit not an integer')
-            sys.exit(2)
+            raise
 
         self.pure_flow_limit = flow_limit
 
@@ -69,6 +69,7 @@ class PureAdaptor(object):
             )
         except Exception:
             logging.exception('PureAdaptor Initialisation failed.')
+            raise
 
     def _poll_for_changed_datasets(self):
         """ Scrape the API for datasets that have changed since the last time
