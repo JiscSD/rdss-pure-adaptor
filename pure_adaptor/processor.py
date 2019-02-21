@@ -1,8 +1,6 @@
 import os
 import logging
 
-import sys
-
 from .pure import versioned_pure_interface
 from .pure.base import JMESCustomFunctions
 from .adaptor.s3_bucket import BucketUploader
@@ -44,16 +42,9 @@ class PureAdaptor(object):
         self.instance_id = instance_id
         self.api_version = api_version
         self.pure = versioned_pure_interface(api_version)
-        try:
-            flow_limit = int(pure_flow_limit)
-        except ValueError:
-            # Flow limit incorrectly set during build/deploy
-            logging.exception('Flow Limit not an integer')
-            raise
-
-        self.pure_flow_limit = flow_limit
 
         try:
+            self.pure_flow_limit = int(pure_flow_limit)
             self.state_store = AdaptorStateStore(
                 watermark_table_name,
                 processed_table_name)
