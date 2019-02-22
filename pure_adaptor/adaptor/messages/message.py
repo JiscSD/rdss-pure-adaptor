@@ -1,18 +1,16 @@
 import logging
-from .validator import RDSSMessageValidator
 from .message_header import RDSSMessageHeader
 
 logger = logging.getLogger(__name__)
-
-message_validator = RDSSMessageValidator()
 
 
 class BaseRDSSMessageCreator:
     message_class = ''
     message_type = ''
 
-    def __init__(self, instance_id):
+    def __init__(self, instance_id, schema_validator):
         self._header = RDSSMessageHeader(instance_id)
+        self.schema_validator = schema_validator
 
     def generate(self, message_body):
         message_header = self._header.generate(
@@ -20,7 +18,7 @@ class BaseRDSSMessageCreator:
             self.message_type,
         )
         logger.info('Generating message %s', message_header['messageId'])
-        return RDSSMessage(message_header, message_body)
+        return RDSSMessage(self.schema_validator, message_header, message_body)
 
 
 class MetadataCreate(BaseRDSSMessageCreator):
@@ -35,13 +33,24 @@ class MetadataUpdate(BaseRDSSMessageCreator):
 
 class RDSSMessage:
 
-    def __init__(self, message_header, message_body):
+    def __init__(self, schema_validator, message_header, message_body):
         self._message = {
             'messageHeader': message_header,
             'messageBody': message_body
         }
+        self.schema_validator = schema_validator
         self.validation_errors = []
-        self.validate_body()
+        self._validate('message_body', self._message['messageBody'])
+        self._validate('message', self._message)
+
+    def _validate(self, id_name, json_element):
+        _response = self.schema_validator.validate_json_against_schema(
+            id_name,
+            json_element
+        )
+        if not bool(_response['valid']):
+            self.validation_errors.extend(_response['error_list'])
+            self._set_error(*self.error_info)
 
     def _set_error(self, error_code, error_description):
         logger.info('Setting the following error on message: %s - %s',
@@ -49,20 +58,15 @@ class RDSSMessage:
         self._message['messageHeader']['errorCode'] = error_code
         self._message['messageHeader']['errorDescription'] = error_description
 
-    def validate_body(self):
-        body_errors = message_validator.message_body_errors(
-            self._message['messageBody']
-        )
-        if body_errors:
-            self.validation_errors.extend(body_errors)
-            self._set_error(*self.error_info)
-
     @property
     def error_info(self):
         if self.is_valid:
             return '', ''
         else:
-            return 'GENERR001', ' | '.join(self.validation_errors)
+            return 'GENERR001', ' |\n'.join(
+                '{}: {}'.format(e['path'], e['message'])
+                for e in self.validation_errors
+            )
 
     @property
     def is_valid(self):

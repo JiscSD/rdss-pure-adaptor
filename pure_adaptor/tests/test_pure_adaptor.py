@@ -62,6 +62,7 @@ def _setup_mock_environment():
         'PURE_API_VERSION': 'v59',
         'PURE_API_URL': 'http://somewhere.over/the/rainbow',
         'PURE_API_KEY_SSM_PARAMETER_NAME': 'x-marks-the-spot',
+        'SCHEMA_VALIDATOR_URL': 'http://schema.validation/service',
         'INSTANCE_ID': 'mock-instance-id',
         'WATERMARK_TABLE_NAME': 'watermark_table',
         'PROCESSED_TABLE_NAME': 'processed_table',
@@ -83,6 +84,12 @@ def test_main_attempts_fetch_dataset_with_api_key():
     with patch.dict(os.environ, **env), requests_mock.mock() as m:
         m.get('http://somewhere.over/the/rainbow/datasets', text='{}')
         m.head('http://somewhere.over/the/rainbow/datasets')
+        m.get('http://schema.validation/specification_information/3.0.2/',
+              json={'schema_identifiers': [
+                    'https://www.jisc.ac.uk/rdss/schema/messages/message_schema.json/#',
+                    'https://www.jisc.ac.uk/rdss/schema/research_object.json/#/definitions/object'
+                    ]}
+              )
         main()
 
     assert m.last_request.headers['api-key'] == 'secret-pure-key'
@@ -111,6 +118,14 @@ def test_uuids_added_to_data():
               'files/241900740/Supporting_Data.zip', text='')
         m.get('http://somewhere.over/the/rainbow/datasets', text=response)
         m.head('http://somewhere.over/the/rainbow/datasets')
+        m.get('http://schema.validation/specification_information/3.0.2/',
+              json={'schema_identifiers': [
+                    'https://www.jisc.ac.uk/rdss/schema/messages/message_schema.json/#',
+                    'https://www.jisc.ac.uk/rdss/schema/research_object.json/#/definitions/object'
+                    ]}
+              )
+        m.post('http://schema.validation/schema_validation/3.0.2/',
+               json={'valid': True})
         main()
 
     kinesis_client = boto3.client('kinesis', region_name='eu-west-2')
