@@ -39,6 +39,6 @@ six==1.11.0
 urllib3==1.22
 virtualenv==15.1.0
 websocket-client==0.44.0
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 wrapt==1.10.11
 xmltodict==0.11.0
