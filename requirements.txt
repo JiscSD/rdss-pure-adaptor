@@ -16,7 +16,7 @@ docutils==0.14
 google-compute-engine==2.7.1
 identify==1.0.6
 idna==2.6
-Jinja2==2.9.6
+Jinja2==2.11.3
 jmespath==0.9.3
 jsonpickle==0.9.5
 jsonschema==2.6.0
